@@ -4,6 +4,6 @@ public class Date {
 
 	private int month;
 
-	private int years;
+	private int year;
 
 }
