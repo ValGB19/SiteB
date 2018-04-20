@@ -343,3 +343,6 @@ public class UserTest extends DBSpec {
 # Licence
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
+
+Pivotal Tracker:
+https://www.pivotaltracker.com/projects/2163709/settings
