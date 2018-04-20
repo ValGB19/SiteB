@@ -1,5 +1,5 @@
 public class Fixture {
 
-	private char League;
+	private String League;
 
 }

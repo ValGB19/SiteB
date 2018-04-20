@@ -1,5 +1,7 @@
+import java.util.Date;
+
 public class Match {
 
-	private int hora;
+	private Date date;
 
 }
