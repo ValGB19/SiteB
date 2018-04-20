@@ -1,5 +1,5 @@
 public class Team {
 
-	private char name;
+	private String name;
 
 }

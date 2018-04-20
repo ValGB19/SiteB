@@ -1,9 +1,9 @@
 public class TResult {
 
-	private char Local;
+	private String Local;
 
-	private char Visit;
+	private String Visit;
 
-	private char Tie;
+	private String Tie;
 
 }
