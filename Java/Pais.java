@@ -1,8 +1,6 @@
 package java;
 
-public class Team {
-
-	private String id;
+public class Pais {
 
 	private String name;
 

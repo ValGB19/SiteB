@@ -1,13 +1,15 @@
+package java;
+
 public class User {
 
-	private char Surname;
+	private int dni;
 
-	private char Name;
+	private String name;
 
-	private int DNI;
+	private String surname;
 
-	private char E-mail;
+	private String password;
 
-	private char Password;
+	private String email;
 
 }
