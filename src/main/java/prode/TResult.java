@@ -1,9 +1,13 @@
+package java;
+
 public class TResult {
 
-	private String Local;
+	private char visit;
 
-	private String Visit;
+	private char tie;
 
-	private String Tie;
+	private char local;
+
+	private char suspended;
 
 }

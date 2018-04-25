@@ -1,5 +1,7 @@
+package java;
+
 public class Fixture {
 
-	private String League;
+	private String league;
 
 }

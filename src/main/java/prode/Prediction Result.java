@@ -1,5 +1,7 @@
+package java;
+
 public class Prediction Result {
 
-	private boolean acierto;
+	private int score;
 
 }
