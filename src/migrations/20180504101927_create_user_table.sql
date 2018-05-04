@@ -1,5 +1,6 @@
 CREATE TABLE users (
-  username VARCHAR(128) PRIMARY KEY,
+  id int auto_increment PRIMARY KEY,
+  username VARCHAR(128),
   password VARCHAR(128),
   dni int,
   email VARCHAR(128),
