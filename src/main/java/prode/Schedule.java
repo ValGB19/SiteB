@@ -1,6 +1,6 @@
 package java;
 
-public class Schudele {
+public class Schedule {
 
 	private int number;
 

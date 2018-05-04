@@ -1,6 +1,7 @@
 CREATE TABLE users (
   username VARCHAR(128) PRIMARY KEY,
   password VARCHAR(128),
+  dni int,
   email VARCHAR(128),
   name VARCHAR(128),
   surname VARCHAR(128),

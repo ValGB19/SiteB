@@ -1,6 +1,6 @@
 package java;
 
-public class Pais {
+public class Country {
 
 	private String name;
 
