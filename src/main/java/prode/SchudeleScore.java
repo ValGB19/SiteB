@@ -1,6 +1,6 @@
 package java;
 
-public class Schudele Score  {
+public class SchudeleScore  {
 
 	private int score;
 

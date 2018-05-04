@@ -1,6 +1,6 @@
 package java;
 
-public class Match Prediction {
+public class MatchPrediction {
 
 	private TResult prediction;
 

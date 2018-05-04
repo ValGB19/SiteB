@@ -11,7 +11,7 @@
   <properties>
     <activejdbc.version>2.0</activejdbc.version>
     <environments>development.test,development</environments>
-    <project.basedir>/Users/franco/unrc/Materias/Disenio/2018/prode-app</project.basedir>
+   
 
   </properties>
 

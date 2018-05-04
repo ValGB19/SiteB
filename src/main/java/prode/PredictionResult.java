@@ -1,6 +1,6 @@
 package java;
 
-public class Prediction Result {
+public class PredictionResult{
 
 	private int score;
 

@@ -1,6 +1,6 @@
 package java;
 
-public class Result Match {
+public class ResultMatch {
 
 	private TResult result;
 

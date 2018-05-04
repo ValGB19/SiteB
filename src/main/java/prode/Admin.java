@@ -1,5 +1,6 @@
 package java;
 
-public class Admin extends User {
+//hay que volver a poner la herencia --nks
+public class Admin{
 
 }
