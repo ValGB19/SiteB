@@ -1,6 +1,8 @@
 package java;
 
-public class Fixture {
+import org.javalite.activejdbc.Model;
+
+public class Fixture extends Model {
 
 	private String league;
 

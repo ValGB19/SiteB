@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id int auto_increment PRIMARY KEY,
   username VARCHAR(128),
   password VARCHAR(128),

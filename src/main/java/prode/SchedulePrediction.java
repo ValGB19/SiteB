@@ -1,5 +1,7 @@
 package java;
 
-public class SchedulePrediction{
+import org.javalite.activejdbc.Model;
+
+public class SchedulePrediction extends Model{
 
 }
