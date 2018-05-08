@@ -2,9 +2,7 @@ package prode;
 
 import org.javalite.activejdbc.Model;
 
-public class MatchPrediction extends Model{
-
-	private TPrediction prediction;
+public class ScheduleScore extends Model  {
 
 	private int score;
 

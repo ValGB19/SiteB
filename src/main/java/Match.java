@@ -1,9 +1,8 @@
-package prode;
+package java;
 
-import org.javalite.activejdbc.Model;
 import java.util.Date;
 
-public class Match extends Model {
+public class Match {
 
 	private Date day;
 
