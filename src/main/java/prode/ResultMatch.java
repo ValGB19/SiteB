@@ -1,6 +1,8 @@
 package java;
 
-public class ResultMatch {
+import org.javalite.activejdbc.Model;
+
+public class ResultMatch extends Model {
 
 	private TResult result;
 

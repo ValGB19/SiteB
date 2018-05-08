@@ -1,6 +1,8 @@
 package java;
 
-public class TResult {
+import org.javalite.activejdbc.Model;
+
+public class TResult extends Model {
 
 	private char visit;
 

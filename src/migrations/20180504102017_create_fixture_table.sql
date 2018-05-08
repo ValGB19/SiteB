@@ -1,4 +1,4 @@
-CREATE TABLE fixtures (
+CREATE TABLE IF NOT EXISTS fixtures (
   id int(11) auto_increment PRIMARY KEY,
   league VARCHAR(128),
   created_at DATETIME,
