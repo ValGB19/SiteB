@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS matchs(
   result ENUM ('visit','tie','local','suspended'),
   schedule INT,
   fixture_id INT,
+  local_team_id INT,
+  visit_team_id INT,
   created_at DATETIME,
   updated_at DATETIME
 )ENGINE=InnoDB;
