@@ -27,8 +27,14 @@ public class UserTest {
   @Test
   public void validatePrecenseOfUsernames(){
       User user = new User();
-      user.set("username", "");
+      user.set("nick","","password","123","dni","5");
+      assertEquals(user.isValid(), false);
+  }
 
+  @Test
+  public void validatePrecenseOfPasswords(){
+      User user = new User();
+      user.set("nick", "asd","password","");
       assertEquals(user.isValid(), false);
   }
 }

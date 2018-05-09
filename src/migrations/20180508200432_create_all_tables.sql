@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS users (
   country_id INT,
   fixture_id INT,
   created_at DATETIME,
-  updated_at DATETIME
+  updated_at DATETIME,
+  CHECK (dni> 0)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS matchPredictions;
@@ -19,7 +20,8 @@ CREATE TABLE IF NOT EXISTS matchPredictions(
   prediction ENUM ('visit','tie','local') not null,
   score INT,
   created_at DATETIME,
-  updated_at DATETIME
+  updated_at DATETIME,
+  CHECK (score >= 0)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS matchs;
@@ -40,7 +42,8 @@ CREATE TABLE IF NOT EXISTS countrys(
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(128) not null,
   created_at DATETIME,
-  updated_at DATETIME
+  updated_at DATETIME,
+  UNIQUE (name)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS fixtures;
@@ -49,7 +52,8 @@ CREATE TABLE IF NOT EXISTS fixtures(
   league VARCHAR(128) not null,
   user_id INT,
   created_at DATETIME,
-  updated_at DATETIME
+  updated_at DATETIME,
+  UNIQUE (league)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS matchPredictions;
@@ -70,6 +74,7 @@ CREATE TABLE IF NOT EXISTS teams(
   name VARCHAR(128) NOT NULL,
   created_at DATETIME,
   updated_at DATETIME
+  UNIQUE (name)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS scheduleScores;
