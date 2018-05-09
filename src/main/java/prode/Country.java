@@ -4,6 +4,8 @@ import org.javalite.activejdbc.Model;
 
 public class Country extends Model{
 
-	private String name;
+	static{
+    validatePresenceOf("name").message("Please, provide name");
+    }
 
 }

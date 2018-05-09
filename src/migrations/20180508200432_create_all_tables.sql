@@ -50,10 +50,16 @@ DROP TABLE IF EXISTS fixtures;
 CREATE TABLE IF NOT EXISTS fixtures(
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
   league VARCHAR(128) not null,
-  user_id INT,
   created_at DATETIME,
   updated_at DATETIME,
   UNIQUE (league)
+)ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS users_fixtures;
+CREATE TABLE IF NOT EXISTS users_fixtures(
+  user_id INT,
+  fixture_id INT,
+  PRIMARY KEY (user_id,fixture_id)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS matchPredictions;
