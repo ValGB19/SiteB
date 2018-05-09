@@ -11,13 +11,9 @@ import org.javalite.activejdbc.annotations.BelongsToParents;
 import java.util.Date;
 
 public class Match extends Model {
-
-	private Date day;
-
-	private TResult result;
-
-	private int schedule;
-
-	private int id;
+	static{
+    validatePresenceOf("day").message("Please, provide date");
+    validatePresenceOf("schedule").message("Please, provide schedule");
+  }
 
 }
