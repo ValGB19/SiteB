@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS countries(
 DROP TABLE IF EXISTS fixtures;
 CREATE TABLE IF NOT EXISTS fixtures(
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
-  league VARCHAR(128) not null,
+  league VARCHAR(128) NOT NULL,
   created_at DATETIME,
   updated_at DATETIME,
   UNIQUE (league)
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS users_fixtures(
   PRIMARY KEY (user_id,fixture_id)
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS matchPredictiones;
+DROP TABLE IF EXISTS match_predictions;
 CREATE TABLE IF NOT EXISTS matchPredictiones(
   id INT AUTO_INCREMENT PRIMARY KEY,
   prediction ENUM ('visit','tie','local'),
