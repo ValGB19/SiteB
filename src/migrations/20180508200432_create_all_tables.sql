@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS users_fixtures(
   PRIMARY KEY (user_id,fixture_id)
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS match_predictions;
-CREATE TABLE IF NOT EXISTS matchPredictiones(
+DROP TABLE IF EXISTS matches_predictions;
+CREATE TABLE IF NOT EXISTS matches_predictions(
   id INT AUTO_INCREMENT PRIMARY KEY,
   prediction ENUM ('visit','tie','local'),
   score INT,
