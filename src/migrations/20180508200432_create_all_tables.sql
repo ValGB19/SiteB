@@ -14,16 +14,6 @@ CREATE TABLE IF NOT EXISTS users (
   CHECK (dni> 0)
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS matchPredictiones;
-CREATE TABLE IF NOT EXISTS matchPredictiones(
-  id INT(11) AUTO_INCREMENT PRIMARY KEY,
-  prediction ENUM ('visit','tie','local') not null,
-  score INT,
-  created_at DATETIME,
-  updated_at DATETIME,
-  CHECK (score >= 0)
-)ENGINE=InnoDB;
-
 DROP TABLE IF EXISTS matches;
 CREATE TABLE IF NOT EXISTS matches(
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -63,8 +53,8 @@ CREATE TABLE IF NOT EXISTS users_fixtures(
   PRIMARY KEY (user_id,fixture_id)
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS matches_predictions;
-CREATE TABLE IF NOT EXISTS matches_predictions(
+DROP TABLE IF EXISTS match_predictions;
+CREATE TABLE IF NOT EXISTS match_predictions(
   id INT AUTO_INCREMENT PRIMARY KEY,
   prediction ENUM ('visit','tie','local'),
   score INT,
