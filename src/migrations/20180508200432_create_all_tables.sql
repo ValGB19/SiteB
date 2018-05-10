@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS teams(
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(128) NOT NULL,
   created_at DATETIME,
-  updated_at DATETIME
+  updated_at DATETIME,
   UNIQUE (name)
 )ENGINE=InnoDB;
 

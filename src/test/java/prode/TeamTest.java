@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class TeamTest {
   @Before
   public void before(){
-    Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true", "franco", "franco");
+    Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true", "root", "root");
     System.out.println("TeamTest setup");
     Base.openTransaction();
   }
@@ -27,8 +27,7 @@ public class TeamTest {
   @Test
   public void validatePrecenseOfTeam(){
       Team team = new Team();
-      user.set("name", "");
-
-      assertEquals(name.isValid(), false);
+      team.set("name", "");
+      assertEquals(team.isValid(), false);
   }
 }
