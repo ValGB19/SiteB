@@ -25,7 +25,7 @@ public class ScheduleScoreTest {
   }
 
   @Test
-  public void validatePrecenseOfScore(){
+  public void validatePrecenseOfValidScore(){
       ScheduleScore scheduleScore = new ScheduleScore();
       scheduleScore.set("score",-3);
       assertEquals(scheduleScore.isValid(), false);

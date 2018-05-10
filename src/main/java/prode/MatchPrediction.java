@@ -4,6 +4,6 @@ import org.javalite.activejdbc.Model;
 
 public class MatchPrediction extends Model{
 	static{
-    validatePresenceOf("prediction").message("Please, provide date");
-  }
+    	validatePresenceOf("prediction").message("Please, provide a prediction");
+  	}
 }

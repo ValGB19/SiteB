@@ -30,4 +30,12 @@ public class TeamTest {
       team.set("name", "");
       assertEquals(team.isValid(), false);
   }
+
+  @Test
+  public void validateUniqueName(){
+    new Team().set("name", "Chascomus").saveIt();
+    Team teamTest = new Team();
+    teamTest.set("name", "Chascomus");
+    assertEquals(teamTest.isValid(), false);
+  }
 }

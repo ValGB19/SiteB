@@ -30,4 +30,18 @@ public class UsersFixturesTest {
       usersFixturesTest.set("user_id","","fixture_id","");
       assertEquals(usersFixturesTest.isValid(), false);
   }
+
+  @Test
+  public void validatePrecenseOfRelacion2(){
+      UsersFixtures usersFixturesTest = new UsersFixtures();
+      usersFixturesTest.set("user_id","","fixture_id",5);
+      assertEquals(usersFixturesTest.isValid(), false);
+  }
+
+  @Test
+  public void validatePrecenseOfRelacion3(){
+      UsersFixtures usersFixturesTest = new UsersFixtures();
+      usersFixturesTest.set("user_id", 5,"fixture_id","");
+      assertEquals(usersFixturesTest.isValid(), false);
+  }
 }
