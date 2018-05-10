@@ -83,11 +83,12 @@ CREATE TABLE IF NOT EXISTS teams(
   UNIQUE (name)
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS scheduleScores;
-CREATE TABLE IF NOT EXISTS scheduleScores(
+DROP TABLE IF EXISTS schedule_scores;
+CREATE TABLE IF NOT EXISTS schedule_scores(
   id INT AUTO_INCREMENT PRIMARY KEY,
   score INT DEFAULT 0,
-  user_id INT,
+  user_id INT NOT NULL,
   created_at DATETIME,
-  updated_at DATETIME
+  updated_at DATETIME,
+  CHECK (score >= 0)
 )ENGINE=InnoDB;
