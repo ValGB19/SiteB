@@ -14,6 +14,7 @@ public class Match extends Model {
 	static{
     validatePresenceOf("day").message("Please, provide date");
     validatePresenceOf("schedule").message("Please, provide schedule");
+    validateWith(new EnumeMatchValidator());
   }
 
 }
