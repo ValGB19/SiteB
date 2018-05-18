@@ -14,19 +14,6 @@ CREATE TABLE IF NOT EXISTS users (
   CHECK (dni> 0)
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS matches;
-CREATE TABLE IF NOT EXISTS matches(
-  id INT(11) AUTO_INCREMENT PRIMARY KEY,
-  day DATE not null,
-  result ENUM ('visit','tie','local','suspended'),
-  schedule INT,
-  fixture_id INT,
-  local_team_id INT,
-  visit_team_id INT,
-  CHECK (local_team_id != visit_team_id),
-  created_at DATETIME,
-  updated_at DATETIME
-)ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS countries;
 CREATE TABLE IF NOT EXISTS countries(
@@ -51,6 +38,20 @@ CREATE TABLE IF NOT EXISTS users_fixtures(
   user_id INT,
   fixture_id INT,
   PRIMARY KEY (user_id,fixture_id)
+)ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS matches;
+CREATE TABLE IF NOT EXISTS matches(
+  id INT(11) AUTO_INCREMENT PRIMARY KEY,
+  day DATE not null,
+  result ENUM ('visit','tie','local','suspended'),
+  schedule INT,
+  fixture_id INT,
+  local_team_id INT,
+  visit_team_id INT,
+  CHECK (local_team_id != visit_team_id),
+  created_at DATETIME,
+  updated_at DATETIME
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS match_predictions;

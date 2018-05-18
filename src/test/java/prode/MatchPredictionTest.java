@@ -1,7 +1,7 @@
 package prode;
 
 import prode.MatchPrediction;
-
+import java.util.Date;
 import org.javalite.activejdbc.Base;
 import org.junit.After;
 import org.junit.Before;
@@ -36,5 +36,12 @@ public class MatchPredictionTest {
       MatchPrediction matchPrediction = new MatchPrediction();
       matchPrediction.set("prediction", null);
       assertEquals(matchPrediction.isValid(), false);
+  }
+
+  @Test
+  public void validateEnum(){
+    MatchPrediction matchTest = new MatchPrediction();
+    matchTest.set("prediction", "suspended");
+    assertEquals(matchTest.isValid(), false);
   }
 }

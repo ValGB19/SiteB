@@ -39,4 +39,11 @@ public class MatchTest {
     assertEquals(matchTest.isValid(), false);
   }
 
+  @Test
+  public void validateEnum(){
+    Match matchTest = new Match();
+    matchTest.set("day", new Date(2010,4,12), "result", "No Gano Riber");
+    assertEquals(matchTest.isValid(), false);
+  }
+
 }

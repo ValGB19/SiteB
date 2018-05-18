@@ -4,13 +4,13 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.ValidatorAdapter;
 
 public class EnumeMatchPredictionValidator extends ValidatorAdapter {
-   void validate(Model m){
+  public void validate(Model m){
        	boolean valid = false;
      
-		  Object value = m.get("result");
+		  Object value = m.get("prediction");
 
         if(null == value) {
-            m.addValidator(this, "result");
+            m.addValidator(this, "prediction");
             valid = true;
         }else{
           if(!(value instanceof String)) {

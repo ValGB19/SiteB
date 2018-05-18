@@ -4,7 +4,7 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.ValidatorAdapter;
 
 public class EnumeMatchValidator extends ValidatorAdapter {
-   void validate(Model m){
+   public void validate(Model m){
        	boolean valid = false;
      
 		Object value = m.get("result");
