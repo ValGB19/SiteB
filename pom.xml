@@ -36,10 +36,16 @@
     </dependency>
 
     <dependency>
-	    <groupId>com.sparkjava</groupId>
-	    <artifactId>spark-core</artifactId>
-	    <version>2.7.2</version>
-	</dependency>
+      <groupId>com.sparkjava</groupId>
+      <artifactId>spark-core</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.github.spullara.mustache.java</groupId>
+      <artifactId>compiler</artifactId>
+      <version>0.9.5</version>
+    </dependency>
 
   </dependencies>
 
@@ -50,17 +56,17 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.18.1</version>
         <configuration>
-            <reportFormat>brief</reportFormat>
-            <trimStackTrace>true</trimStackTrace>
-            <useFile>false</useFile>
-            <includes>
-                <include>**/*Spec*.java</include>
-                <include>**/*Test*.java</include>
-            </includes>
-            <excludes>
-                <exclude>**/helpers/*</exclude>
-                <exclude>**/*$*</exclude>
-            </excludes>
+          <reportFormat>brief</reportFormat>
+          <trimStackTrace>true</trimStackTrace>
+          <useFile>false</useFile>
+          <includes>
+            <include>**/*Spec*.java</include>
+            <include>**/*Test*.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/helpers/*</exclude>
+            <exclude>**/*$*</exclude>
+          </excludes>
         </configuration>
       </plugin>
 
@@ -69,12 +75,12 @@
         <artifactId>activejdbc-instrumentation</artifactId>
         <version>${activejdbc.version}</version>
         <executions>
-            <execution>
-                <phase>process-classes</phase>
-                <goals>
-                    <goal>instrument</goal>
-                </goals>
-            </execution>
+          <execution>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>instrument</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
 
@@ -83,26 +89,26 @@
         <artifactId>db-migrator-maven-plugin</artifactId>
         <version>${activejdbc.version}</version>
         <configuration>
-            <configFile>${project.basedir}/src/main/resources/database.properties</configFile>
-            <environments>${environments}</environments>
+          <configFile>${project.basedir}/src/main/resources/database.properties</configFile>
+          <environments>${environments}</environments>
         </configuration>
         <executions>
-            <execution>
-                <id>dev_migrations</id>
-                <phase>validate</phase>
-                <goals>
-                    <goal>migrate</goal>
-                </goals>
-            </execution>
+          <execution>
+            <id>dev_migrations</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>migrate</goal>
+            </goals>
+          </execution>
         </executions>
         <dependencies>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>6.0.6</version>
-        </dependency>
-      </dependencies>
-    </plugin>
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.6</version>
+          </dependency>
+        </dependencies>
+      </plugin>
 
 
     </plugins>
