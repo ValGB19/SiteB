@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registro | PRODE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+
+   <body>
+   <div id="principal">
+    <div class="form-group">
+      <h3> Ingrese sus datos</h3>
+      <br>
+      <form action="" method="post" name="formRegistro">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label for="nombre" class="input-group-text" id="">Nombre y apellido</label>
+          </div>
+          <input id="nombre" type="text" class="form-control">
+          <input type="text" class="form-control">
+        </div>
+      <br>
+   
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label for="username" class="input-group-text" id="basic-addon1">@</label>
+        </div>
+      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+       <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">Check disponibilidad</button>
+       </div>
+      </div>    
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label for="mail" class="input-group-text" id="email">Email</label>
+          </div>
+          <input id="mail" type="email" class="form-control" placeholder="example@example.com">
+        </div>
+      <br>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">Options</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01">
+          <option selected>Choose...</option>
+          <option value="1">One</option>
+        </select>
+      </div>  
+      <br>
+      <button class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Registrarse</button>
+        
+      </form>
+    </div>  
+   </div>
+  </body>
+</html>
