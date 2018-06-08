@@ -10,6 +10,17 @@ body{
  * borde de un pixel con redondeado, y rellenado
  * a la izquierda y derecha
  */
+
+#titulo{
+	width: 400px;
+	margin: 50px auto;
+	background-color: springgreen;
+    border: 1px solid #ECE8E8;
+	height: 70px;
+	border-radius:20px;
+	padding: 0px 9px 0px 9px;
+}
+
 #Contenedor{
 	width: 400px;
 	margin: 50px auto;
