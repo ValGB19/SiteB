@@ -16,7 +16,7 @@ import spark.template.*;
 public class App{
     
     public static void main( String[] args ){
-        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true?useSSL=false", "root", "root");
+        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true", "root", "root");
 
         Map map = new HashMap();
 	    map.put("name", "Sam");
