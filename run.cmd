@@ -10,8 +10,7 @@ setlocal EnableDelayedExpansion
 set "string=findstr /R "^^" target\dependency\logfile.txt"
 for /f %%a in ('!string!') do set _CLASPATH=!_CLASPATH!%%a;
 set _CLASPATH= !_CLASPATH!"%cd%\target\classes"
-Set _CLASPATH=!_CLASPATH:"=!
-echo !_CLASPATH!
+set _CLASPATH=!_CLASPATH:"=!
 del target\dependency\logfile.txt
 
 
