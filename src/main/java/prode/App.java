@@ -17,7 +17,7 @@ public class App{
     
     public static void main( String[] args ){
        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true", "root", "root");
-       Spark.staticFiles.location("./views/public");
+       staticFiles.location("/public");
        Map map = new HashMap();
 	    map.put("name", "Sam");
 	    map.put("value", 1000);
