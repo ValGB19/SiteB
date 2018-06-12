@@ -84,8 +84,7 @@
           </execution>
         </executions>
       </plugin>
-
-      <plugin>
+	<plugin>
         <groupId>org.javalite</groupId>
         <artifactId>db-migrator-maven-plugin</artifactId>
         <version>${activejdbc.version}</version>
@@ -111,6 +110,7 @@
         </dependencies>
       </plugin>
 
+      
 
     </plugins>
   </build>

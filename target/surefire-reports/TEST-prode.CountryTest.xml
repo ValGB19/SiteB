@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="prode.CountryTest" time="0.363" tests="6" errors="6" skipped="0" failures="0">
+  <properties>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk-i386/jre/lib/i386"/>
+    <property name="java.vm.version" value="25.171-b11"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="/home/nico/Descargas/SiteB"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="OpenJDK Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="AR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/nico/Descargas/SiteB"/>
+    <property name="java.runtime.version" value="1.8.0_171-8u171-b11-1~deb9u1-b11"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-8-openjdk-i386/jre/lib/endorsed"/>
+    <property name="os.arch" value="i386"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Linux"/>
+    <property name="classworlds.conf" value="/opt/apache-maven-3.5.3/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib/i386:/usr/lib/i386-linux-gnu/jni:/lib/i386-linux-gnu:/usr/lib/i386-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="maven.conf" value="/opt/apache-maven-3.5.3/conf"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot Tiered Compilers"/>
+    <property name="os.version" value="4.9.0-6-686-pae"/>
+    <property name="library.jansi.path" value="/opt/apache-maven-3.5.3/lib/jansi-native"/>
+    <property name="user.home" value="/home/nico"/>
+    <property name="user.timezone" value="Etc/UTC"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="nico"/>
+    <property name="java.class.path" value="/opt/apache-maven-3.5.3/boot/plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="32"/>
+    <property name="java.home" value="/usr/lib/jvm/java-8-openjdk-i386/jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="es"/>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_171"/>
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-8-openjdk-i386/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="securerandom.source" value="file:/dev/./urandom"/>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk-i386/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk-i386/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk-i386/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk-i386/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk-i386/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk-i386/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk-i386/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk-i386/jre/classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="/opt/apache-maven-3.5.3"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase name="validateUniqueName" classname="prode.CountryTest" time="0.09">
+    <error message="Failed to connect to JDBC URL: jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true" type="org.javalite.activejdbc.InitException"><![CDATA[org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true
+	at sun.reflect.GeneratedConstructorAccessor31.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.core.exceptions.ExceptionFactory.createException(ExceptionFactory.java:54)
+	at com.mysql.cj.core.exceptions.ExceptionFactory.createException(ExceptionFactory.java:73)
+	at com.mysql.cj.mysqla.authentication.MysqlaAuthenticationProvider.proceedHandshakeWithPluggableAuthentication(MysqlaAuthenticationProvider.java:564)
+	at com.mysql.cj.mysqla.authentication.MysqlaAuthenticationProvider.connect(MysqlaAuthenticationProvider.java:204)
+	at com.mysql.cj.mysqla.io.MysqlaProtocol.connect(MysqlaProtocol.java:1414)
+	at com.mysql.cj.mysqla.MysqlaSession.connect(MysqlaSession.java:132)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:1726)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:1596)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:633)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:347)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:219)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at org.javalite.activejdbc.DB.open(DB.java:108)
+	at org.javalite.activejdbc.DB.open(DB.java:89)
+	at org.javalite.activejdbc.Base.open(Base.java:62)
+	at prode.CountryTest.before(CountryTest.java:15)
+]]></error>
+    <system-out><![CDATA[CountryTest tearDown
+]]></system-out>
+    <system-err><![CDATA[Fri Jun 08 14:22:50 UTC 2018 WARN: Establishing SSL connection without server's identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn't set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to 'false'. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.
+]]></system-err>
+  </testcase>
+  <testcase name="validateUniqueName" classname="prode.CountryTest" time="0.091">
+    <error message="Cannot rollback transaction, connection &apos;default&apos; not available" type="org.javalite.activejdbc.DBException">org.javalite.activejdbc.DBException: Cannot rollback transaction, connection 'default' not available
+	at org.javalite.activejdbc.DB.rollbackTransaction(DB.java:747)
+	at org.javalite.activejdbc.Base.rollbackTransaction(Base.java:314)
+	at prode.CountryTest.after(CountryTest.java:23)
+</error>
+  </testcase>
+  <testcase name="validatePrecenseOfSomethingInName" classname="prode.CountryTest" time="0.142">
+    <error message="Failed to connect to JDBC URL: jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true" type="org.javalite.activejdbc.InitException"><![CDATA[org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true
+	at sun.reflect.GeneratedConstructorAccessor31.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.core.exceptions.ExceptionFactory.createException(ExceptionFactory.java:54)
+	at com.mysql.cj.core.exceptions.ExceptionFactory.createException(ExceptionFactory.java:73)
+	at com.mysql.cj.mysqla.authentication.MysqlaAuthenticationProvider.proceedHandshakeWithPluggableAuthentication(MysqlaAuthenticationProvider.java:564)
+	at com.mysql.cj.mysqla.authentication.MysqlaAuthenticationProvider.connect(MysqlaAuthenticationProvider.java:204)
+	at com.mysql.cj.mysqla.io.MysqlaProtocol.connect(MysqlaProtocol.java:1414)
+	at com.mysql.cj.mysqla.MysqlaSession.connect(MysqlaSession.java:132)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:1726)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:1596)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:633)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:347)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:219)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at org.javalite.activejdbc.DB.open(DB.java:108)
+	at org.javalite.activejdbc.DB.open(DB.java:89)
+	at org.javalite.activejdbc.Base.open(Base.java:62)
+	at prode.CountryTest.before(CountryTest.java:15)
+]]></error>
+    <system-out><![CDATA[CountryTest tearDown
+]]></system-out>
+    <system-err><![CDATA[Fri Jun 08 14:22:50 UTC 2018 WARN: Establishing SSL connection without server's identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn't set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to 'false'. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.
+]]></system-err>
+  </testcase>
+  <testcase name="validatePrecenseOfSomethingInName" classname="prode.CountryTest" time="0.143">
+    <error message="Cannot rollback transaction, connection &apos;default&apos; not available" type="org.javalite.activejdbc.DBException">org.javalite.activejdbc.DBException: Cannot rollback transaction, connection 'default' not available
+	at org.javalite.activejdbc.DB.rollbackTransaction(DB.java:747)
+	at org.javalite.activejdbc.Base.rollbackTransaction(Base.java:314)
+	at prode.CountryTest.after(CountryTest.java:23)
+</error>
+  </testcase>
+  <testcase name="validatePrecenseOfName" classname="prode.CountryTest" time="0.131">
+    <error message="Failed to connect to JDBC URL: jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true" type="org.javalite.activejdbc.InitException"><![CDATA[org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true
+	at sun.reflect.GeneratedConstructorAccessor31.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.core.exceptions.ExceptionFactory.createException(ExceptionFactory.java:54)
+	at com.mysql.cj.core.exceptions.ExceptionFactory.createException(ExceptionFactory.java:73)
+	at com.mysql.cj.mysqla.authentication.MysqlaAuthenticationProvider.proceedHandshakeWithPluggableAuthentication(MysqlaAuthenticationProvider.java:564)
+	at com.mysql.cj.mysqla.authentication.MysqlaAuthenticationProvider.connect(MysqlaAuthenticationProvider.java:204)
+	at com.mysql.cj.mysqla.io.MysqlaProtocol.connect(MysqlaProtocol.java:1414)
+	at com.mysql.cj.mysqla.MysqlaSession.connect(MysqlaSession.java:132)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:1726)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:1596)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:633)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:347)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:219)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at org.javalite.activejdbc.DB.open(DB.java:108)
+	at org.javalite.activejdbc.DB.open(DB.java:89)
+	at org.javalite.activejdbc.Base.open(Base.java:62)
+	at prode.CountryTest.before(CountryTest.java:15)
+]]></error>
+    <system-out><![CDATA[CountryTest tearDown
+]]></system-out>
+    <system-err><![CDATA[Fri Jun 08 14:22:51 UTC 2018 WARN: Establishing SSL connection without server's identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn't set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to 'false'. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.
+]]></system-err>
+  </testcase>
+  <testcase name="validatePrecenseOfName" classname="prode.CountryTest" time="0.132">
+    <error message="Cannot rollback transaction, connection &apos;default&apos; not available" type="org.javalite.activejdbc.DBException">org.javalite.activejdbc.DBException: Cannot rollback transaction, connection 'default' not available
+	at org.javalite.activejdbc.DB.rollbackTransaction(DB.java:747)
+	at org.javalite.activejdbc.Base.rollbackTransaction(Base.java:314)
+	at prode.CountryTest.after(CountryTest.java:23)
+</error>
+  </testcase>
+</testsuite>
