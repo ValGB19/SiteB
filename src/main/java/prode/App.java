@@ -24,8 +24,10 @@ public class App{
 	    map.put("taxed_value", 1000 - (1000 * 0.4));
 	    map.put("in_ca", true);
 
+	    get("/inicio", (req, res) -> "./prueba/inicio.html");
+
 	    get("/hello", (req, res) -> {
-	        return new ModelAndView(map, "./views/hello.mustache");
+	        return new ModelAndView(map, "./prueba/inicio.html");
 	    		}, new MustacheTemplateEngine()
 	    );
         Base.close();
