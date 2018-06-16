@@ -101,6 +101,7 @@ footer {
 }
 
 #customers td, #customers th {
+	align-content: center;
     border: 1px solid #ddd;
     padding: 20px;
     text-align: center;
