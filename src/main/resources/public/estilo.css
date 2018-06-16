@@ -3,13 +3,18 @@ Al cuerpo de la
 pagina se aplica el tamaño de fuente
  */
 body{
-	font-size: 12px;
+	background: url(D.jpg);
+    background-repeat: no-repeat;
+
+	background-size: 100%, 100%;
 }
 /**
  * se aplica el ancho, margen centrado
  * borde de un pixel con redondeado, y rellenado
  * a la izquierda y derecha
  */
+
+
 
 #titulo{
 	width: 800px;
@@ -72,11 +77,23 @@ body{
 	font-size: 14px;
 }
 
-/**
- * En las siguientes lineas
- * se define el diseño adaptable, para que
- * se muestre en los dispositivos móviles
- */
+footer {
+    font-size: 13px;
+	position: absolute;
+    left: 0px;
+	bottom: -80px;
+    height: 40px;
+    width: 100%;
+    line-height: 40px;
+    text-align: center;
+    background: #f5f5f5;
+    border-top: 1px solid #ddd;
+    
+    overflow: hidden;
+    
+}
+
+
 
 /*parte del menu desplegable*/
 *	       {
@@ -128,22 +145,3 @@ body{
 				right:-140px;
 				top:0px;
 			}
-
-
-
-/******************************************/
-/***    DISEÑO PARA MOVILES 320        ****/
-/******************************************/
-@media only screen and (max-width:320px){
-#Contenedor{
-	width: 100%;
-	height: auto;
-	margin: 0px;
-}
-
-/******************************************/
-/***    DISEÑO PARA MOVILES 240        ****/
-/******************************************/
-@media only screen and (max-width:240px){
-	
-}

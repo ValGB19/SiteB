@@ -3,6 +3,7 @@
 ::mvn install
 ::"*******************  COLLECTING DEPENDENCIES  *********************************"
 ::mvn dependency:copy-dependencies
+cmd /c mvn clean install dependency:copy-dependencies
 
 forfiles /p target\dependency\ /c "cmd /c echo @path >> logfile.txt"
 set _CLASPATH=
