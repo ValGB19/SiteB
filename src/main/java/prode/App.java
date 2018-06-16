@@ -21,6 +21,14 @@ public class App{
 	        return new ModelAndView(map, "./src/main/resources/inicio.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
+	    get("/perfil", (req, res) -> {
+	        return new ModelAndView(map, "./src/main/resources/perfil.mustache");
+	    		}, new MustacheTemplateEngine()
+	    );
+	    get("/prode", (req, res) -> {
+	        return new ModelAndView(map, "./src/main/resources/prode.mustache");
+	    		}, new MustacheTemplateEngine()
+	    );
        Base.close();
     }
 }
