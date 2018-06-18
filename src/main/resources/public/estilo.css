@@ -1,20 +1,8 @@
-/*
-Al cuerpo de la
-pagina se aplica el tamaño de fuente
- */
 body{
 	background: url(D.jpg);
     background-repeat: no-repeat;
-
 	background-size: 100%, 100%;
 }
-/**
- * se aplica el ancho, margen centrado
- * borde de un pixel con redondeado, y rellenado
- * a la izquierda y derecha
- */
-
-
 
 #titulo{
 	width: 800px;
@@ -31,7 +19,7 @@ body{
 	margin: 50px auto;
 	background-color: #F3EDED;
     border: 1px solid #ECE8E8;
-	height: 400px;
+	height: 470px;
 	border-radius:8px;
 	padding: 0px 9px 0px 9px;
 }
@@ -41,7 +29,7 @@ body{
 	margin: 50px auto;
 	background-color: #F3EDED;
     border: 1px solid #ECE8E8;
-	height: 400px;
+	height: 600px;
 	border-radius:8px;
 	padding: 0px 9px 0px 9px;
 }
@@ -87,9 +75,7 @@ body{
     text-align: center;
     background: #f5f5f5;
     border-top: 1px solid #ddd;
-    margin-top: -3em;
-    overflow: hidden;
-    
+    margin-top: -3em; 
 }
 
 /*tabla prode prediccion*/

@@ -7,6 +7,7 @@ import java.util.List;
 public class User extends Model {
 
   public int totalScore(){
+
     List<MatchPrediction> puntajes = MatchPrediction.where("user_id = ? and score <>", this.getId(),null);
     int res = 0;
     

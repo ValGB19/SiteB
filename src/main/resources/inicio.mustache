@@ -14,23 +14,23 @@
 					<img src="club9_car3.png" width="100" height="100"/>
 					<div class="btn-group-vertical">
 						<br>
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<label for="usernamelogin" class="input-group-text" id="usernamelogin">Usuario</label>
+						<form method="post" id="FormEntrar">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<label for="usernamelogin" class="input-group-text">Usuario</label>
+								</div>
+								<input id="usernamelogin" type="text" class="form-control" required placeholder="example123">
 							</div>
-							<input id="usernamelogin" type="text" class="form-control" placeholder="example123">
-						</div>
-						<form action="" method="post" name="FormEntrar">
-						<br>
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<label for="usernamelogin" class="input-group-text" id="usernamelogin">Contraseña</label>
+							<br>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<label for="pswLogin" class="input-group-text" id="usernamelogin">Contraseña</label>
+								</div>
+								<input id="pswLogin" type="password" name="contra" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
 							</div>
-							<input type="password" name="contra" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
-						</div>
-						<br>
-						<button class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit" href="127.0.0.1:4567/perfil">Entrar</button>
-						<div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>
+							<br>
+							<button class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit" href="127.0.0.1:4567/perfil">Entrar</button>
+							<div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>
 						</form>
 					</div>
 				</div>
@@ -40,37 +40,57 @@
 						<br>
 						<h3> Ingrese sus datos</h3>
 						<br>
-						<form action="" method="post" name="formRegistro">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<label for="nombre" class="input-group-text" id="">Nombre y apellido</label>
-									</div>
-									<input id="nombre" type="text" class="form-control">
-									<input type="text" class="form-control">
+						<form method="post" id="form-registro" name="form-registro">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<label for="nombre" class="input-group-text" id="">Nombre y apellido</label>
 								</div>
+								<input id="nombre" name="nombre" type="text" class="form-control" required>
+								<input id="apellido" name="apellido" type="text" class="form-control" required>
+							</div>
 							<br>
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
-									<label for="username" class="input-group-text" id="basic-addon1">@</label>
+									<label for="rUsername" class="input-group-text" id="basic-addon1">@</label>
 								</div>
-								<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+								<input id="rUsername" name="rUsername" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
 								<div class="input-group-append">
-									<button class="btn btn-outline-secondary" type="button">Check disponibilidad</button>
+									<button class="btn btn-outline-secondary" type="button" id="checkUsername">Check disponibilidad</button>
 								</div>
-							</div>    
+							</div> 
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<label for="rdni" class="input-group-text" id="basic-addon1">DNI:</label>
+								</div>
+								<input id="rdni" name="rdni" type="number" class="form-control" placeholder="12345678" aria-label="12345678" maxlength="8" minlength="8" size="8" aria-describedby="basic-addon1" required>
+							</div> 
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<label for="pswRegister" class="input-group-text" id="usernamelogin">Contraseña</label>
+								</div>
+								<input id="pswRegister" name="pswRegister" type="password" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
+							</div>
+							<br>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<label for="pswValida" class="input-group-text" id="usernamelogin">Contraseña otra vez</label>
+								</div>
+								<input id="pswValida" name="pswValida" type="password" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
+							</div>  
+							<br>    
 							<div class="input-group">
 								<div class="input-group-prepend">
 								<label for="mail" class="input-group-text" id="email">Email</label>
 								</div>
-								<input id="mail" type="email" class="form-control" placeholder="example@example.com">
+								<input id="mail" name="mail" type="email" class="form-control" placeholder="example@example.com" required>
 							</div>
 							<br>
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
-										<label class="input-group-text" for="inputGroupSelect01">Pais</label>
+										<label class="input-group-text" for="inputGroupSelect01" required>Pais</label>
 									</div>
-									<select class="custom-select" id="inputGroupSelect01">
-										<option selected>Seleccione su pais...</option>
+									<select class="custom-select" id="rpais" name="rpais">
+										<option selected value="Argentina">Seleccione su pais...</option>
 										{{#paisl}} <option value={{.}}>{{.}}</option> {{/paisl}}
 									</select>
 								</div>  
