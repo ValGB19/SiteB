@@ -21,7 +21,7 @@ public class App{
 
 	public static Filter  bef = (req,res) -> {
 	    	if (!Base.hasConnection()) {
-	    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true", "root", "root");
+	    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
 			}
 	    };
 
