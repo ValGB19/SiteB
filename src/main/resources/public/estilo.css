@@ -1,7 +1,12 @@
 body{
-	background: url(D.jpg);
-    background-repeat: no-repeat;
-	background-size: 100%, 100%;
+	background: rgba(73,155,234,1);
+	background: -moz-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(73,155,234,1)), color-stop(20%, rgba(98,208,227,1)), color-stop(32%, rgba(82,201,66,1)), color-stop(51%, rgba(117,227,102,1)), color-stop(64%, rgba(82,201,66,1)), color-stop(100%, rgba(73,155,234,1)));
+	background: -webkit-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
+	background: -o-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
+	background: -ms-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
+	background: linear-gradient(to bottom, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#499bea', GradientType=0 );
 }
 
 #titulo{
@@ -67,14 +72,6 @@ body{
 
 .pie {
     font-size: 13px;
-	position: absolute;
-    left: 0px;
-	bottom: -80px;
-    height: 40px;
-    width: 100%;
-    text-align: center;
-    background: #f5f5f5;
-    border-top: 1px solid #ddd;
     margin-top: -3em; 
 }
 
@@ -103,59 +100,3 @@ body{
     background-color: #4CAF50;
     color: white;
 }
-
-/*menu de /prode*/
-
-
-/*parte del menu desplegable*/
-	*{
-		margin:0px;
-		padding:0px;
-	}
-
-	#header {
-		margin-right: auto;
-		width:500px;
-		font-family:Arial, Helvetica, sans-serif;
-	}
-
-	ul, ol {
-		list-style:none;
-	}
-
-	.nav > li {
-		float:left;
-	}
-
-	.nav li a {
-		background-color:#000;
-		color:#fff;
-		text-decoration:none;
-		padding:10px 12px;
-		display:block;
-	}
-
-	.nav li a:hover {
-		background-color:#434343;
-	}
-
-	.nav li ul {
-		display:none;
-		position:absolute;
-		min-width:140px;
-	}
-
-	.nav li:hover > ul {
-		display:block;
-	}
-
-	.nav li ul li {
-		position:relative;
-	}
-
-	.nav li ul li ul {
-		right:-140px;
-		top:0px;
-	}
-
-
