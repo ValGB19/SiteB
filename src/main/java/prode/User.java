@@ -28,4 +28,8 @@ public class User extends Model {
     validateEmailOf("email").message("Please, provide a valid email");
     validateWith(new UniquenessValidator("email")).message("This email is already registered.");
   }
+
+  public static User log(String user, String psw){
+        return User.findFirst(user, psw);
+    }
 }

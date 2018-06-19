@@ -13,24 +13,20 @@ import spark.template.*;
 
 public class App{
     
-	public static Filter  afre = (req,res) -> {
-	    	if (Base.hasConnection()) {
-	    		Base.close();
-			}
-	    };
-
-	public static Filter  bef = (req,res) -> {
-	    	if (!Base.hasConnection()) {
-	    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
-			}
-	    };
-
-
     public static void main( String[] args ){
 	   	staticFiles.location("/public");
     	
-        before("*", bef);
-        after("*", afre);
+        before("*", (req,res) -> {
+	    	if (!Base.hasConnection()) {
+	    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
+			}
+	   	});
+        
+        after("*", (req,res) -> {
+	    	if (Base.hasConnection()) {
+	    		Base.close();
+			}
+	    });
         
         Map map = new HashMap();
 	    map.put("paisl", Country.getAllCountrys());
@@ -40,6 +36,30 @@ public class App{
 	    );
 	    
 	    post("/", (req, res) -> {
+	    	//inicio sesion
+	    	boolean log = false;
+	    	String mes="";
+	    	String usernameL = req.queryParams("usernamelogin");
+	    	String pswL = req.queryParams("pswLogin");
+	    	if(usernameL!=null && pswL!=null){
+	    		if(User.log(usernameL,pswL)!=null){
+	    			req.session().attribute("username", usernameL);
+		    		log = true;
+	    		}else{
+	    			mes="Los datos ingresados son incorrectos";
+	    		}
+	    	}else{
+	    		mes="Complete todos los campos";
+	    	}
+	    	if(log){
+	    		res.redirect("/perfil");
+		    }else{
+		    	res.status(401);
+		    	Map<String,String> p = new HashMap();
+		    	p.put("error", mes);
+		    	return new ModelAndView(p, "./src/main/resources/inicio.mustache");
+		    }new MustacheTemplateEngine();
+
 	    	String nombre = req.queryParams("nombre");
 	    	String apellido = req.queryParams("apellido");
 	    	String nick = req.queryParams("rUsername");
@@ -48,7 +68,7 @@ public class App{
 	    	String mail = req.queryParams("mail");
 	    	String pais = req.queryParams("rpais");
 	    	String dni = req.queryParams("rdni");
-	    	if (pwd.equals(pwd2)) {
+	    	if (pwd.equals(pwd2) && dni.length() == 8) {
 	    		User temp = new User();
 	    		temp.set("name", nombre);
 	    		temp.set("surname", apellido);
@@ -59,6 +79,7 @@ public class App{
 	    		temp.set("country_id", Country.findFirst("name = ?", pais).get("id"));
 	    		temp.save();
 			}
+
 	    	return new ModelAndView(map, "./src/main/resources/inicio.mustache");
         	}, new MustacheTemplateEngine()
 	    );
