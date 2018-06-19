@@ -34,6 +34,11 @@ public class App{
 	        return new ModelAndView(map, "./src/main/resources/inicio.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
+
+	    get("/perfil", (req, res) -> {
+	        return new ModelAndView(map, "./src/main/resources/perfil.mustache");
+	    		}, new MustacheTemplateEngine()
+	    );
 	    
 	    post("/", (req, res) -> {
 	    	//inicio sesion
@@ -55,10 +60,9 @@ public class App{
 	    		res.redirect("/perfil");
 		    }else{
 		    	res.status(401);
-		    	Map<String,String> p = new HashMap();
-		    	p.put("error", mes);
-		    	return new ModelAndView(p, "./src/main/resources/inicio.mustache");
-		    }new MustacheTemplateEngine();
+		    	//Map<String,String> p = new HashMap();
+		    	map.put("error", mes);
+		    }
 
 	    	String nombre = req.queryParams("nombre");
 	    	String apellido = req.queryParams("apellido");
