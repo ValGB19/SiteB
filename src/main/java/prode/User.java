@@ -33,6 +33,14 @@ public class User extends Model {
   public String getSurnameUser(){
     return this.getString("surname");
   }
+  
+  public Integer getUserId(){
+	    return this.getInteger("id");
+  }
+  
+  public List<Fixture> getFixtures() {
+	  return this.getAll(Fixture.class);
+  }
 
   public static boolean log(String user, String psw){
       return User.findFirst("nick = ? and password = ?",user, psw) != null;

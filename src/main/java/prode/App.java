@@ -22,7 +22,6 @@ public class App{
 	   	before("/loged/*", (req,res) -> {
 	    	if (req.session().attribute("logueado") == null) {
 	    		res.redirect("/");
-        		return null;
 	    	}
 	   	});
 	   	
@@ -40,7 +39,7 @@ public class App{
 			}
 	    });
         
-
+        
         
         get("/", (req, res) -> {
         	if (req.session().attribute("logueado") != null) {
@@ -50,8 +49,8 @@ public class App{
 	        return new ModelAndView(map, "./src/main/resources/inicio.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
-
-	    post("/", (req, res) -> {
+        
+        post("/", (req, res) -> {
 	    	String nick = req.queryParams("rUsername");
 	    	String pwd = req.queryParams("pswRegister");
 	    	String pwd2 = req.queryParams("pswValida"); 	
@@ -61,7 +60,6 @@ public class App{
 	    	String pais = req.queryParams("rpais");
 	    	String dni = req.queryParams("rdni");
 	    	String pm = req.queryParams("clave");
-	    	
 	    	if (pwd2 == null && dni == null && apellido == null) {
 	    		boolean log = false;
 		    	String mes="";
