@@ -20,8 +20,10 @@ public class App{
         Map map = new HashMap();
         
 	   	before("/loged/*", (req,res) -> {
-	    	if (req.session().attribute("logueado") == null)
-				halt(401,"Usuario no logueado");
+	    	if (req.session().attribute("logueado") == null) {
+	    		res.redirect("/");
+        		return null;
+	    	}
 	   	});
 	   	
         before("*", (req,res) -> {
@@ -41,18 +43,15 @@ public class App{
 
         
         get("/", (req, res) -> {
+        	if (req.session().attribute("logueado") != null) {
+        		res.redirect("/loged/perfil");
+        		return null;
+			}
 	        return new ModelAndView(map, "./src/main/resources/inicio.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
 
-	    get("/perfil", (req, res) -> {
-	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
-	    		}, new MustacheTemplateEngine()
-	    );
-	    
 	    post("/", (req, res) -> {
-	    	//inicio sesion
-	    	
 	    	String nick = req.queryParams("rUsername");
 	    	String pwd = req.queryParams("pswRegister");
 	    	String pwd2 = req.queryParams("pswValida"); 	
@@ -134,17 +133,18 @@ public class App{
 	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
+	    
 	    get("/loged/prode", (req, res) -> {
 	        return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
-	    		}, new MustacheTemplateEngine()
-	    );
+	    	}, new MustacheTemplateEngine());
 	    
-	  //Control de  Exceptions
-/*
-    	exception(Exception.class, (exception, request, response) -> {
-
-    		response.body( exception.getMessage());
-
-		});*/
+	    get("/exit", (req, res) -> {
+        	if (req.session().attribute("logueado") != null) {
+        		req.session().removeAttribute("logueado");
+        		res.redirect("/");
+        		return null;
+			}
+        	res.redirect("/");
+    		return null;});
     }
 }
