@@ -70,9 +70,15 @@ public class App{
 		    	System.out.println(usernameL);
 		    	if(usernameL!=null && pswL!=null){
 		    		if(User.log(usernameL,pswL)){
+		    			//User aux = User.getUser(usernameL);
 		    			req.session().attribute("username", usernameL);
 		    			req.attribute("logueado", true);
 			    		log = true;
+						String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
+						String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
+			    		map.put("nic", usernameL);
+			    		map.put("name", name);
+			    		map.put("surname", surname);
 		    		}else{
 		    			mes="Los datos ingresados son incorrectos";
 		    		}
