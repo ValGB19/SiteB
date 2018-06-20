@@ -93,7 +93,7 @@ public class App{
 	    		mape.put("errrr", mes);
 	    		return new ModelAndView(mape, "./src/main/resources/inicio.mustache");
 	    	}
-	    	boolean e = false;
+	    	boolean e = true;
 	    	if (pwd.equals(pwd2) && dni.length() <= 8) {
 	    		
 	    		User temp = new User();
@@ -104,10 +104,15 @@ public class App{
 	    		temp.set("password", pwd);
 	    		temp.set("dni", Integer.parseInt(dni));
 	    		temp.set("country_id", Country.findFirst("name = ?", pais).get("id"));
-	    		if ("nose".equals(pm)) 
-	    			temp.set("admin", true);
-	    		
-	    		e = temp.save();
+	    		if(pm != null){
+	    			if ("traemelapromocionmessi".equals(pm)) 
+	    				temp.set("admin", 1);
+	    			else{
+	    				e = false;
+			    		temp.set("dni", null);
+	    			}
+	    		}
+	    		e &= temp.save();
 			}
 	    	if (!e) {
 	    		ArrayList tmp = new ArrayList();
@@ -123,6 +128,9 @@ public class App{
 				}
 	    		if (User.findFirst("email = ?", mail) != null) {
 	    			tmp.add("*Ese email ya esta registrado");
+				}
+				if ("traemelapromocionmessi".equals(pm)&&pm!=null) {
+	    			tmp.add("*Palabla magica incorrecta");
 				}
 				map.put("errorr", tmp);
 				System.out.println("No se registro");
