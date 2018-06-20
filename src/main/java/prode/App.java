@@ -5,6 +5,7 @@ import prode.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import spark.*;
@@ -36,7 +37,8 @@ public class App{
 	    });
         
         Map map = new HashMap();
-	    map.put("paisl", Country.getAllCountrys());
+        List paises = Country.getAllCountrys();
+	    map.put("paisl", paises);
         get("/", (req, res) -> {
 	        return new ModelAndView(map, "./src/main/resources/inicio.mustache");
 	    		}, new MustacheTemplateEngine()
@@ -77,12 +79,15 @@ public class App{
 		    	}else{
 		    		mes="Complete todos los campos";
 		    	}
+		    	HashMap mape = new HashMap();
+		    	mape.put("paisl", paises);
+		    	mape.put("errrr", mes);
 		    	if(log){
 		    		res.redirect("/perfil");
 		    		return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 			    }
 	    		
-		    	return new ModelAndView(map, "./src/main/resources/inicio.mustache");
+		    	return new ModelAndView(mape, "./src/main/resources/inicio.mustache");
 	    	}
 	    	boolean e = false;
 	    	if (pwd.equals(pwd2) && dni.length() <= 8) {
