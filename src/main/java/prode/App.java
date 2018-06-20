@@ -17,6 +17,12 @@ public class App{
     public static void main( String[] args ){
 	   	staticFiles.location("/public");
     	
+	   	before("/loged/*", (req,res) -> {
+	    	if (!Base.hasConnection()) {
+	    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
+			}
+	   	});
+	   	
         before("*", (req,res) -> {
 	    	if (!Base.hasConnection()) {
 	    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
@@ -37,33 +43,13 @@ public class App{
 	    );
 
 	    get("/perfil", (req, res) -> {
-	        return new ModelAndView(map, "./src/main/resources/perfil.mustache");
+	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
 	    
 	    post("/", (req, res) -> {
 	    	//inicio sesion
-	    	boolean log = false;
-	    	/*String mes="";
-	    	String usernameL = req.queryParams("usernamelogin");
-	    	String pswL = req.queryParams("pswLogin");
-	    	if(usernameL!=null && pswL!=null){
-	    		if(User.log(usernameL,pswL)!=null){
-	    			req.session().attribute("username", usernameL);
-		    		log = true;
-	    		}else{
-	    			mes="Los datos ingresados son incorrectos";
-	    		}
-	    	}else{
-	    		mes="Complete todos los campos";
-	    	}
-	    	if(log){
-	    		res.redirect("/perfil");
-		    }else{
-		    	res.status(401);
-		    	//Map<String,String> p = new HashMap();
-		    	map.put("error", mes);
-		    }*/
+	    	
 	    	String nick = req.queryParams("rUsername");
 	    	String pwd = req.queryParams("pswRegister");
 	    	String pwd2 = req.queryParams("pswValida"); 	
@@ -72,12 +58,35 @@ public class App{
 	    	String mail = req.queryParams("mail");
 	    	String pais = req.queryParams("rpais");
 	    	String dni = req.queryParams("rdni");
+	    	String pm = req.queryParams("clave");
 	    	
 	    	if (pwd2 == null && dni == null && apellido == null) {
-	    		return new ModelAndView(map, "./src/main/resources/perfil.mustache");
+	    		boolean log = false;
+		    	String mes="";
+		    	String usernameL = req.queryParams("usernamelogin");
+		    	String pswL = req.queryParams("pswLogin");
+		    	System.out.println(usernameL);
+		    	if(usernameL!=null && pswL!=null){
+		    		if(User.log(usernameL,pswL)){
+		    			req.session().attribute("username", usernameL);
+		    			req.attribute("logueado", true);
+			    		log = true;
+		    		}else{
+		    			mes="Los datos ingresados son incorrectos";
+		    		}
+		    	}else{
+		    		mes="Complete todos los campos";
+		    	}
+		    	if(log){
+		    		res.redirect("/perfil");
+		    		return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
+			    }
+	    		
+		    	return new ModelAndView(map, "./src/main/resources/inicio.mustache");
 	    	}
 	    	boolean e = false;
 	    	if (pwd.equals(pwd2) && dni.length() <= 8) {
+	    		
 	    		User temp = new User();
 	    		temp.set("name", nombre);
 	    		temp.set("surname", apellido);
@@ -86,6 +95,9 @@ public class App{
 	    		temp.set("password", pwd);
 	    		temp.set("dni", Integer.parseInt(dni));
 	    		temp.set("country_id", Country.findFirst("name = ?", pais).get("id"));
+	    		if ("nose".equals(pm)) 
+	    			temp.set("admin", true);
+	    		
 	    		e = temp.save();
 			}
 	    	if (!e) {
@@ -106,17 +118,17 @@ public class App{
 				map.put("errorr", tmp);
 				System.out.println("No se registro");
 			}
-	    	
 	    	return new ModelAndView(map, "./src/main/resources/inicio.mustache");
+	    	
         	}, new MustacheTemplateEngine()
 	    );
 
 	    get("/perfil", (req, res) -> {
-	        return new ModelAndView(map, "./src/main/resources/perfil.mustache");
+	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
-	    get("/prode", (req, res) -> {
-	        return new ModelAndView(map, "./src/main/resources/prode.mustache");
+	    get("/loged/prode", (req, res) -> {
+	        return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
 	    
