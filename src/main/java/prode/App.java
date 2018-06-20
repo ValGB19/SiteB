@@ -73,6 +73,11 @@ public class App{
 		    			req.session().attribute("username", usernameL);
 		    			req.session().attribute("logueado", true);
 			    		log = true;
+						String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
+						String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
+			    		map.put("nic", usernameL);
+			    		map.put("name", name);
+			    		map.put("surname", surname);
 			    		System.out.println("Loged "+ usernameL);
 		    		}else{
 		    			mes="Los datos ingresados son incorrectos";
