@@ -29,7 +29,7 @@ public class User extends Model {
     validateWith(new UniquenessValidator("email")).message("This email is already registered.");
   }
 
-  public static User log(String user, String psw){
-        return User.findFirst(user, psw);
+  	public static boolean log(String user, String psw){
+        return User.findFirst("nick = ? and password = ?",user, psw) != null;
     }
 }

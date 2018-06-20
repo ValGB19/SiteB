@@ -1,4 +1,4 @@
-{{>header}}
+{{>public/header}}
 		<title>Login | PRODE</title>
 		<br>
 		<div class="container-fluid">
@@ -15,14 +15,14 @@
 								<div class="input-group-prepend">
 									<label for="usernamelogin" class="input-group-text">Usuario</label>
 								</div>
-								<input id="usernamelogin" type="text" class="form-control" required placeholder="example123">
+								<input id="usernamelogin" name="usernamelogin" type="text" class="form-control" required placeholder="example123">
 							</div>
 							<br>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label for="pswLogin" class="input-group-text">Contraseña</label>
 								</div>
-								<input id="pswLogin" type="password" name="contra" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
+								<input id="pswLogin" name="pswLogin" type="password" name="contra" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
 							</div>
 							<br>
 							<button class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit" href="127.0.0.1:4567/perfil">Entrar</button>
@@ -106,4 +106,4 @@
 				</div>
 			</div>
 		</div>
-{{>footer}}
+{{>public/footer}}
