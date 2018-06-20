@@ -10,10 +10,8 @@ public class Country extends Model{
 
 	@SuppressWarnings("rawtypes")
 	public static List getAllCountrys() {
-		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode_test?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
-    	List s = Country.findAll().collect("name");
-    	Base.close();
-		return s;
+		return findAll().collect("name");
+		
 	}
 	
 	static{
