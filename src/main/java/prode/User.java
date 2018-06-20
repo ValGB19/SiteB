@@ -7,13 +7,10 @@ import java.util.List;
 public class User extends Model {
 
   public int totalScore(){
-
     List<MatchPrediction> puntajes = MatchPrediction.where("user_id = ? and score <>", this.getId(),null);
     int res = 0;
-    
     for (MatchPrediction x : puntajes)
       res += x.getInteger("score");
-
     return res;
   }
 
@@ -30,6 +27,6 @@ public class User extends Model {
   }
 
   	public static boolean log(String user, String psw){
-        return User.findFirst("nick = ? and password = ?",user, psw) != null;
+  		return User.findFirst("nick = ? and password = ?",user, psw) != null;
     }
 }
