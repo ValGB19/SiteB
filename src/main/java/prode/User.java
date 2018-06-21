@@ -7,13 +7,10 @@ import java.util.List;
 public class User extends Model {
 
   public int totalScore(){
-
     List<MatchPrediction> puntajes = MatchPrediction.where("user_id = ? and score <>", this.getId(),null);
     int res = 0;
-    
     for (MatchPrediction x : puntajes)
       res += x.getInteger("score");
-
     return res;
   }
 
@@ -29,7 +26,23 @@ public class User extends Model {
     validateWith(new UniquenessValidator("email")).message("This email is already registered.");
   }
 
-  public static User log(String user, String psw){
-        return User.findFirst(user, psw);
-    }
+   public String getNameUser(){
+    return this.getString("name");
+  }
+
+  public String getSurnameUser(){
+    return this.getString("surname");
+  }
+  
+  public Integer getUserId(){
+	    return this.getInteger("id");
+  }
+  
+  public List<Fixture> getFixtures() {
+	  return this.getAll(Fixture.class);
+  }
+
+  public static boolean log(String user, String psw){
+      return User.findFirst("nick = ? and password = ?",user, psw) != null;
+  }
 }
