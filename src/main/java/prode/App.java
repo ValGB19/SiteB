@@ -53,8 +53,10 @@ public class App{
         post("/", (req, res) -> {
         	String usernameL = req.queryParams("usernamelogin");
 	    	String pswL = req.queryParams("pswLogin");
+	    	System.out.println(usernameL + " " + pswL);
+			HashMap mape = new HashMap();
+
 	    	if (pswL != null && usernameL != null) {
-	    		System.out.println(usernameL +" "+ pswL);
 	    		boolean log = false;
 		    	String mes="";
 		    		if(User.log(usernameL,pswL)){
@@ -76,13 +78,18 @@ public class App{
 		    		res.redirect("/loged/perfil");
 		    		return null;
 				}
-		    	HashMap mape = new HashMap();
 	    		mape.putAll(map);
 	    		mape.put("errrr", mes);
-	    		return new ModelAndView(mape, "./src/main/resources/inicio.mustache");
-	    	}else{
-	    		return gg(req,res);
-	    	}}, new MustacheTemplateEngine());
+	    	}
+	    	return new ModelAndView(mape, "./src/main/resources/inicio.mustache");
+	    }, new MustacheTemplateEngine()
+	    );
+
+        post("/r", (req, res) -> {
+	    	map.putAll(gg(req,res));
+	    	res.redirect("/");
+	    	return null;
+	    });
 
 	    get("/loged/perfil", (req, res) -> {
 	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
@@ -105,7 +112,7 @@ public class App{
 	    
     }    
 
-    public static spark.ModelAndView gg (spark.Request req, spark.Response res) {
+    public static HashMap gg (spark.Request req, spark.Response res) {
     	String nick = req.queryParams("rUsername");
 		String pwd = req.queryParams("pswRegister");
 		String pwd2 = req.queryParams("pswValida"); 	
@@ -116,7 +123,7 @@ public class App{
 		String dni = req.queryParams("rdni");
 		String pm = req.queryParams("clave");
 		boolean e = false;
-    	if (pwd.equals(pwd2) && dni.length() <= 8 && (pm == null || "traemelapromocionmessi".equals(pm))) {
+    	if (pwd.equals(pwd2) && dni.length() <= 8) {
     		User temp = new User();
     		temp.set("name", nombre);
     		temp.set("surname", apellido);
@@ -125,9 +132,20 @@ public class App{
     		temp.set("password", pwd);
     		temp.set("dni", Integer.parseInt(dni));
     		temp.set("country_id", Country.findFirst("name = ?", pais).get("id"));
- 			temp.set("admin", pm != null);
-    		e = temp.save();
+ 			temp.set("admin", "traemelapromocionmessi".equals(pm));
+ 			if ("traemelapromocionmessi".equals(pm) || pm == null || pm.isEmpty()) {
+ 				e = temp.save();
+ 			}
+    		
 		}
+		System.out.println(nombre);
+		System.out.println(apellido);
+		System.out.println(nick);
+		System.out.println(mail);
+		System.out.println(pwd);
+		System.out.println(pwd2);
+		System.out.println(dni);
+		System.out.println(pais);
 		HashMap mape = new HashMap();
     	if (!e) {
     		ArrayList tmp = new ArrayList();
@@ -151,7 +169,7 @@ public class App{
 			mape.put("paisl", Country.getAllCountrys());
 			System.out.println("No se registro");
 		}
-    	return new ModelAndView(mape, "./src/main/resources/inicio.mustache");
+    	return mape;
     };
     
 }
