@@ -53,7 +53,8 @@ public class App{
         post("/", (req, res) -> {
         	String usernameL = req.queryParams("usernamelogin");
 	    	String pswL = req.queryParams("pswLogin");
-	    	if (pswL == null || usernameL == null) {
+	    	if (pswL != null && usernameL != null) {
+	    		System.out.println(usernameL +" "+ pswL);
 	    		boolean log = false;
 		    	String mes="";
 		    		if(User.log(usernameL,pswL)){
@@ -130,7 +131,7 @@ public class App{
     	if (!e) {
     		ArrayList tmp = new ArrayList();
     		tmp.add("Datos incorrectos");
-    		if (pwd != pwd2) {
+    		if (!pwd.equals(pwd2)) {
     			tmp.add("*Las contrase?s no coinciden");
 			}
     		if (User.findFirst("nick = ?",nick) != null) {
@@ -142,7 +143,7 @@ public class App{
     		if (User.findFirst("email = ?", mail) != null) {
     			tmp.add("*Ese email ya esta registrado");
 			}
-			if ("traemelapromocionmessi".equals(pm) && pm!=null) {
+			if (!"traemelapromocionmessi".equals(pm) && pm!=null) {
     			tmp.add("*Palabla magica incorrecta");
 			}
 			mape.put("errorr", tmp);
