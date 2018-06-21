@@ -90,6 +90,7 @@ public class App{
 	    );
 	    
 	    get("/loged/prode", (req, res) -> {
+	    	map.put("fixs", Fixture.getAllFixtures());
 	        return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
 	    	}, new MustacheTemplateEngine());
 	    
