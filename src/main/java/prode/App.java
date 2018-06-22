@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import spark.*;
 import static spark.Spark.*;
@@ -101,18 +102,11 @@ public class App{
 	    	String m = req.session().attribute("username");
 	    	User u = (User.findFirst("nick = ?",m));
 	    	List<MatchPrediction> mpu = u.getMatchPrediction();
-	    	ArrayList<String[]> p = new ArrayList<String[]>(); 
-	    	/*/for (MatchPrediction a: mpu) {
+	    	ArrayList<Object[]> p = new ArrayList<Object[]>(); 
+	    	for (MatchPrediction a: mpu) {
 	    		p.add(a.getPartePerfil());
-	    	}*/
-	    	String[] c = new String[]{"2","0","9"};
-	    	p.add(c);
-	    	/*List<MatchPrediction> mpu = u.getMatchPrediction();
-	    	/for (MatchPrediction a: mpu) {
-	    		p.add(a.getPartePerfil());
-	    	}*/
-	    	
-	    	map.put("predUser", p);
+	    	}
+	    	map.put("predUser", filtroFuerte(p));
 	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
@@ -183,4 +177,30 @@ public class App{
 		}
     	return mape;
     };
+    
+    public static ArrayList<Object[]> filtroFuerte(ArrayList<Object[]> x){
+    	HashMap<String, HashMap> f = new HashMap();
+    	HashMap<String, Integer> p = new HashMap();
+    	for (Object[] objects : x) {
+    		if (f.containsKey(objects[0])) {
+    			p = f.get(objects[0]);
+				if (p.containsKey(objects[1])) {
+					p.replace((String) objects[1], p.get(objects[1])+ (Integer) objects[2]);
+				}else{
+					p.put((String) objects[1], (Integer) objects[2]);
+				}
+			}else{
+				p = new HashMap();
+				f.put((String)objects[0], p);
+				p.put((String) objects[1], (Integer) objects[2]);
+			}
+		}
+    	ArrayList<Object[]> res = new ArrayList<Object[]>();
+    	for (String c :f.keySet()) {
+			for(Object m : f.get(c).keySet()){
+				res.add(new Object[]{c,m,f.get(c).get(m)});
+			}
+		}
+    	return res;
+    }
 }
