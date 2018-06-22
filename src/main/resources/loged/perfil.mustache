@@ -34,13 +34,13 @@
 					<th>Mi Puntaje</th>
 				  </tr>
 				  
-				  {{#each predUser}}
+				  {{#predUser}}
 				  <tr>
-					<td>{{@1}}:{{this}}</td>
+					<td>{{.}}</td>
 					<td>{{.}}</td>
 					<td>{{.}}</td>
 				  </tr>
-				  {{/each predUser}}
+				  {{/predUser}}
 				</table>
 			</div>
 		</div>
