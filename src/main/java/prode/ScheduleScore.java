@@ -17,10 +17,10 @@ public class ScheduleScore extends Model {
 	}
 	
 	public Integer getAcum(Fixture e, User u) {
-		LazyList<ScheduleScore> l = Model.findAll();
+		LazyList<ScheduleScore> l = findAll();
 		int i = 0;
-		this.getFixture().getInteger("id");
-		l.removeIf((p) -> p.getFixture().getInteger("id") != i);
+		i = this.getFixture().getInteger("id");
+		//l.removeIf((p) -> p.getFixture().getInteger("id") != i);
 		int res = 0;
 		for (ScheduleScore scheduleScore : l) {
 			res += scheduleScore.getInteger("score");
