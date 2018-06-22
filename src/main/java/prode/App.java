@@ -18,6 +18,14 @@ public class App{
     public static void main( String[] args ){
 
 	   	staticFiles.location("/public");
+		notFound((req, res) -> {
+			if (req.session().attribute("logueado") == null) {
+	    		res.redirect("/");
+	    	}
+       		res.redirect("/loged/perfil");
+    		return null;
+		});
+
         Map map = new HashMap();
         
 	   	before("/loged/*", (req,res) -> {
@@ -55,33 +63,29 @@ public class App{
 	    	String pswL = req.queryParams("pswLogin");
 	    	System.out.println(usernameL + " " + pswL);
 			HashMap mape = new HashMap();
-
-	    	if (pswL != null && usernameL != null) {
-	    		boolean log = false;
-		    	String mes="";
-		    		if(User.log(usernameL,pswL)){
-		    			req.session(true);
-		    			req.session().attribute("username", usernameL);
-		    			req.session().attribute("logueado", true);
-			    		log = true;
-						String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
-						String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
-			    		map.put("nic", usernameL);
-			    		map.put("name", name);
-			    		map.put("surname", surname);
-			    		System.out.println("Loged "+ usernameL);
-		    		}else{
-		    			mes="Los datos ingresados son incorrectos";
-		    		}
-	    	
-		    	if(log){
-		    		res.redirect("/loged/perfil");
-		    		return null;
-				}
-	    		mape.putAll(map);
-	    		mape.put("errrr", mes);
-	    	}
-	    	return new ModelAndView(mape, "./src/main/resources/inicio.mustache");
+	    	boolean log = false;
+		    String mes="";
+		    	if(User.log(usernameL,pswL)){
+		    		req.session(true);
+		    		req.session().attribute("username", usernameL);
+		    		req.session().attribute("logueado", true);
+			   		log = true;
+					String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
+					String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
+			   		map.put("nic", usernameL);
+			   		map.put("name", name);
+			   		map.put("surname", surname);
+			   		System.out.println("Loged "+ usernameL);
+		    	}else{
+		   			mes="Los datos ingresados son incorrectos";
+		    	}
+		   	if(log){
+	    		res.redirect("/loged/perfil");
+	    		return null;
+			}
+	    	res.redirect("/");
+    		map.put("errrr", mes);
+	    	return null;
 	    }, new MustacheTemplateEngine()
 	    );
 
@@ -134,17 +138,8 @@ public class App{
  			temp.set("admin", "traemelapromocionmessi".equals(pm));
  			if ("traemelapromocionmessi".equals(pm) || pm == null || pm.isEmpty()) {
  				e = temp.save();
- 			}
-    		
+ 			}	
 		}
-		System.out.println(nombre);
-		System.out.println(apellido);
-		System.out.println(nick);
-		System.out.println(mail);
-		System.out.println(pwd);
-		System.out.println(pwd2);
-		System.out.println(dni);
-		System.out.println(pais);
 		HashMap mape = new HashMap();
     	if (!e) {
     		ArrayList tmp = new ArrayList();
