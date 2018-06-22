@@ -45,9 +45,11 @@ public class User extends Model {
 	  return this.getAll(Fixture.class);
   }
   
+  //lista predictions de user que tienen un puntaje
   public List<MatchPrediction> getMatchPrediction(){
 	  List<MatchPrediction> l = new ArrayList<MatchPrediction>();
-	  l.addAll(this.getAll(MatchPrediction.class).collectDistinct("score", "!=", null));
+	  l.addAll(this.getAll(MatchPrediction.class));
+	  l.removeIf((MatchPrediction p) -> p.getInteger("score") == null);
 	  return l;
   }
 

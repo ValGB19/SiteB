@@ -100,10 +100,11 @@ public class App{
 	    	String m = req.session().attribute("username");
 	    	User u = (User.findFirst("nick = ?",m));
 	    	List<MatchPrediction> mpu = u.getMatchPrediction();
-	    	ArrayList p = new ArrayList(); 
+	    	ArrayList<Object[]> p = new ArrayList<Object[]>(); 
 	    	for (MatchPrediction a: mpu) {
 	    		p.add(a.getPartePerfil());
 	    	}
+	    	
 	    	map.put("predUser", p);
 	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
