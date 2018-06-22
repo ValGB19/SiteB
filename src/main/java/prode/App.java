@@ -3,6 +3,7 @@ package prode;
 import org.javalite.activejdbc.Base;
 import prode.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,7 +97,14 @@ public class App{
 	    });
 
 	    get("/loged/perfil", (req, res) -> {
-	    	
+	    	String m = req.session().attribute("username");
+	    	User u = (User.findFirst("nick = ?",m));
+	    	List<MatchPrediction> mpu = u.getMatchPrediction();
+	    	ArrayList p = new ArrayList(); 
+	    	for (MatchPrediction a: mpu) {
+	    		p.add(a.getPartePerfil());
+	    	}
+	    	map.put("predUser", p);
 	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );

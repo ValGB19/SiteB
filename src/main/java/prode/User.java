@@ -27,6 +27,11 @@ public class User extends Model {
     validateEmailOf("email").message("Please, provide a valid email");
     validateWith(new UniquenessValidator("email")).message("This email is already registered.");
   }
+  
+  public User getUser(String us) {
+	return User.findFirst("nick = ?",us);
+	  
+  }
 
    public String getNameUser(){
     return this.getString("name");
