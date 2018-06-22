@@ -100,7 +100,6 @@ public class App{
 	    get("/loged/perfil", (req, res) -> {
 	    	String m = req.session().attribute("username");
 	    	User u = (User.findFirst("nick = ?",m));
-<<<<<<< HEAD
 	    	List<MatchPrediction> mpu = u.getMatchPrediction();
 	    	ArrayList<String[]> p = new ArrayList<String[]>(); 
 	    	/*/for (MatchPrediction a: mpu) {
@@ -108,15 +107,11 @@ public class App{
 	    	}*/
 	    	String[] c = new String[]{"2","0","9"};
 	    	p.add(c);
-=======
-	    	ArrayList p = new ArrayList(); 
 	    	/*List<MatchPrediction> mpu = u.getMatchPrediction();
 	    	/for (MatchPrediction a: mpu) {
 	    		p.add(a.getPartePerfil());
 	    	}*/
 	    	
-	    	p.add(new Object[]{"a","b","c"});
->>>>>>> a85e114b8752e28c2fde4b54ee3f317fe64a8ee0
 	    	map.put("predUser", p);
 	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
