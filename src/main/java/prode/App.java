@@ -92,7 +92,7 @@ public class App{
 	    );
 
         post("/r", (req, res) -> {
-	    	map.putAll(gg(req,res));
+	    	map.putAll(Ensalada.gg(req,res));
 	    	res.redirect("/");
 	    	return null;
 	    });
