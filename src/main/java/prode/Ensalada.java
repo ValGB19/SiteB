@@ -6,17 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import spark.*;
+import static spark.Spark.*;
+import spark.template.*;
+
 import org.javalite.activejdbc.Base;
 
 public class Ensalada{
-	public Array[][][] jugadasUser(){
-		String query ="select u.id mp.score mp.match_id from users u, match_predictions mp where (u.id=mp.user_id) and (mp.score!=null)";
-		List<Map> jug = Base.findAll(query);
-		return null;
-	}
-	
+		
     @SuppressWarnings("rawtypes")
-	public static HashMap gg (spark.Request req, spark.Response res) {
+	public static HashMap register (Request req, Response res) {
     	String nick = req.queryParams("rUsername");
 		String pwd = req.queryParams("pswRegister");
 		String pwd2 = req.queryParams("pswValida"); 	
@@ -66,4 +65,90 @@ public class Ensalada{
 		}
     	return mape;
     };
+    
+    
+    public static  Filter redicInic = (req,res) -> {
+    	if (req.session().attribute("logueado") == null) {
+    		res.redirect("/");
+    	}
+   	};
+   	
+   	static Map map = new HashMap();
+   	
+    public static  Filter getCountrys = (req,res) -> {
+    	if (!Base.hasConnection()) {
+    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
+    	    map.put("paisl", Country.getAllCountrys());
+		}
+   	};
+   	
+   	public static Filter conecBase=(req,res) -> {
+    	if (Base.hasConnection()) {
+    		Base.close();
+		}
+    };
+
+    public static Filter closeSesion = (req, res) -> {
+    	if (req.session().attribute("logueado") != null) {
+    		req.session().removeAttribute("logueado");
+    		res.redirect("/");
+    	}
+    	res.redirect("/");
+    };
+    
+    public static TemplateViewRoute redicPerfil=(req, res) -> {
+    	if (req.session().attribute("logueado") != null) {
+    		res.redirect("/loged/perfil");
+    		return null;
+		}
+        return new ModelAndView(map, "./src/main/resources/inicio.mustache");
+    };
+    
+    public static TemplateViewRoute login=(req, res) -> {
+    	String usernameL = req.queryParams("usernamelogin");
+    	String pswL = req.queryParams("pswLogin");
+    	System.out.println(usernameL + " " + pswL);
+    	boolean log = false;
+	    String mes="";
+	    	if(User.log(usernameL,pswL)){
+	    		req.session(true);
+	    		req.session().attribute("username", usernameL);
+	    		req.session().attribute("logueado", true);
+		   		log = true;
+				String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
+				String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
+		   		map.put("nic", usernameL);
+		   		map.put("name", name);
+		   		map.put("surname", surname);
+		   		System.out.println("Loged "+ usernameL);
+	    	}else{
+	   			mes="Los datos ingresados son incorrectos";
+	    	}
+	   	if(log){
+    		res.redirect("/loged/perfil");
+    		return null;
+		}
+    	res.redirect("/");
+		map.put("errrr", mes);
+    	return null;
+    };
+    
+    public static TemplateViewRoute contain2Perfil=(req, res) -> {
+    	String m = req.session().attribute("username");
+    	User u = (User.findFirst("nick = ?",m));
+    	List<MatchPrediction> mpu = u.getMatchPrediction();
+    	ArrayList<Object[]> p = new ArrayList<Object[]>(); 
+    	for (MatchPrediction a: mpu) {
+    		p.add(a.getPartePerfil());
+    	}
+    	map.put("predUser", p);
+        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
+    };
+    
+    public static TemplateViewRoute mainFixtures=(req, res) -> {
+    	map.put("fixs", Fixture.getAllFixtures());
+        return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
+    };
+    
+    
 }
