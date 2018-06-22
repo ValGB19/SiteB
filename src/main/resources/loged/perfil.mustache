@@ -14,7 +14,7 @@
 				</div>
 				<div  align="center">
 					<div  class="form-group">			
-						<div class="btn-group float-right mt-2" >
+						<div class="btn-group float-right mt-2" align="center">
 				 			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/prode'">APOSTAR</button>
 				  			<button type="button" class="btn btn-danger"  onclick="location.href =''">Ver ganadores</button>
 						</div>
@@ -35,11 +35,11 @@
 				  </tr>
 				  
 				  {{#predUser}}
-				  <tr>
-					<td>{{.}}</td>
-					<td>{{.}}</td>
-					<td>{{.}}</td>
-				  </tr>
+				  	<tr>
+				  		{{#.}}
+				  		<td>{{.}}</td>
+				  		{{/.}}
+				  	</tr>
 				  {{/predUser}}
 				</table>
 			</div>
