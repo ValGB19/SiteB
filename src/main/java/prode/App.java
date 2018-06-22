@@ -5,6 +5,7 @@ import prode.User;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,13 +100,13 @@ public class App{
 	    get("/loged/perfil", (req, res) -> {
 	    	String m = req.session().attribute("username");
 	    	User u = (User.findFirst("nick = ?",m));
-	    	List<MatchPrediction> mpu = u.getMatchPrediction();
-	    	ArrayList<Object[]> p = new ArrayList<Object[]>(); 
-	    	/*/for (MatchPrediction a: mpu) {
+	    	ArrayList p = new ArrayList(); 
+	    	/*List<MatchPrediction> mpu = u.getMatchPrediction();
+	    	/for (MatchPrediction a: mpu) {
 	    		p.add(a.getPartePerfil());
 	    	}*/
-	    	Object[] c = new Object[]{1,2,3};
-	    	p.add(c);
+	    	
+	    	p.add(new Object[]{"a","b","c"});
 	    	map.put("predUser", p);
 	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
@@ -177,6 +178,4 @@ public class App{
 		}
     	return mape;
     };
-   
-    
 }
