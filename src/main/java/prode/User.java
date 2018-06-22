@@ -2,6 +2,8 @@ package prode;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.UniquenessValidator;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class User extends Model {
@@ -40,6 +42,12 @@ public class User extends Model {
   
   public List<Fixture> getFixtures() {
 	  return this.getAll(Fixture.class);
+  }
+  
+  public List<MatchPrediction> getMatchPrediction(){
+	  List<MatchPrediction> l = new ArrayList<MatchPrediction>();
+	  l.addAll(this.getAll(MatchPrediction.class).collectDistinct("score", "!=", null));
+	  return l;
   }
 
   public static boolean log(String user, String psw){
