@@ -14,7 +14,7 @@
 				</div>
 				<div  align="center">
 					<div  class="form-group">			
-						<div class="btn-group float-right mt-2" >
+						<div class="btn-group float-right mt-2" align="center">
 				 			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/prode'">APOSTAR</button>
 				  			<button type="button" class="btn btn-danger"  onclick="location.href =''">Ver ganadores</button>
 						</div>
@@ -34,11 +34,19 @@
 					<th>Mi Puntaje</th>
 				  </tr>
 				  {{#predUser}}
+<<<<<<< HEAD
+				  	<tr>
+				  		{{#.}}
+				  		<td>{{.}}</td>
+				  		{{/.}}
+				  	</tr>
+=======
 				  <tr>
 				  	{{#.}}
 					<td>{{.}}</td>
 					{{/.}}
 				  </tr>
+>>>>>>> a85e114b8752e28c2fde4b54ee3f317fe64a8ee0
 				  {{/predUser}}
 				</table>
 			</div>
