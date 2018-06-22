@@ -96,6 +96,7 @@ public class App{
 	    });
 
 	    get("/loged/perfil", (req, res) -> {
+	    	
 	        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
