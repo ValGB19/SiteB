@@ -1,5 +1,7 @@
 package prode;
 
+import java.util.List;
+
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 

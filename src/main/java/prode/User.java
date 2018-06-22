@@ -13,7 +13,7 @@ public class User extends Model {
       res += x.getInteger("score");
     return res;
   }
-
+  
   static{
     validatePresenceOf("nick").message("Please, provide your username");
     validateWith(new UniquenessValidator("nick")).message("This nickname is already taken.");
@@ -32,10 +32,6 @@ public class User extends Model {
 
   public String getSurnameUser(){
     return this.getString("surname");
-  }
-  
-  public Integer getUserId(){
-	    return this.getInteger("id");
   }
   
   public List<Fixture> getFixtures() {
