@@ -33,10 +33,13 @@ public class Match extends Model {
 	}
 	
 	public Object[] paraPredic() {
-		Object[] res = new Object[3];
+		Object[] res = new Object[2];
 		res[0] = Team.findFirst("id = ?",getInteger("local_team_id")).getString("name");
-		res[1] = getInteger("schedule");
-		res[2] = Team.findFirst("id = ?",getInteger("visit_team_id")).getString("name");
+		res[1] = Team.findFirst("id = ?",getInteger("visit_team_id")).getString("name");
 		return res;
+	}
+
+	public int idParaPred() {
+		return getInteger("id");
 	}
 }

@@ -173,12 +173,16 @@ public class Ensalada{
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	int fecha = l.get(0).getInteger("schedule");
     	l.removeIf((x)->x.getInteger("schedule") != fecha);
+        map.put("fechaVig",fecha);
     	
     	ArrayList<Object[]> p = new ArrayList<Object[]>();
+        ArrayList<Integer> ids=new ArrayList();
     	for (Match a: l) {
     		p.add(a.paraPredic());
+            ids.add(a.idParaPred());
     	}
     	map.put("jugarFix", p);
+        map.put("im",ids);
     	
     	res.redirect("/loged/prode");
     	return null;

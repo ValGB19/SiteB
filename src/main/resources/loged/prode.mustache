@@ -13,18 +13,25 @@
 		</div>
 		<div id="Contenedor1" align="center">
 			<div class="form-group">
+				<font color="Olive" face="Comic Sans MS,arial">
+					<h1 align="center"><i>Fecha N°{{fechaVig}}</i></h1>
+				</font>
+				<p></p>
 				<table id="customers">
 				  <tr>
-					<th></th>
+					<th>Local</th>
+					<th>Visitante</th>
 					<th>Tu jugada</th>
-					<th></th>
 				  </tr>
 				  <form method="post" action="/r" id="form-registro" name="form-registro">
 				  	{{#jugarFix}} 
 				  	<tr>
-				  		{{#.}}
+				  	{{#.}}
 					<td>{{.}}</td>
+					{{/.}}
+
 					<th>
+					{{#im}}
 					<fieldset id="{{.}}">
 						<label>
 							<input type="radio" name="l1" value="Local"> L
@@ -36,11 +43,15 @@
 							<input type="radio" name="v1" value="Visita"> V
 						</label>
 					</fieldset>
+					{{/im}}
 					</th>
-					<td>{{.}}</td>
-				    </tr>
-				    {{/.}}
-				    {{/jugarFix}}
+					
+					{{/jugarFix}}
+					
+					</tr>
+					
+
+				    
 				  </form>
 				</table>
 			</div>
