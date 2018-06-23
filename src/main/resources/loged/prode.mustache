@@ -26,13 +26,10 @@
 				  <form method="post" action="/r" id="form-registro" name="form-registro">
 				  	{{#jugarFix}} 
 				  	<tr>
-				  	{{#.}}
-					<td>{{.}}</td>
-					{{/.}}
-
+				  		{{#.}}
+					<td>{{visit}}</td>
 					<th>
-					{{#im}}
-					<fieldset id="{{.}}">
+					<fieldset id="{{id}}">
 						<label>
 							<input type="radio" name="l1" value="Local"> L
 						</label>
@@ -43,15 +40,11 @@
 							<input type="radio" name="v1" value="Visita"> V
 						</label>
 					</fieldset>
-					{{/im}}
 					</th>
-					
-					{{/jugarFix}}
-					
-					</tr>
-					
-
-				    
+					<td>{{local}}</td>
+						{{/.}}
+				    </tr>
+				    {{/jugarFix}}
 				  </form>
 				</table>
 			</div>

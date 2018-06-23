@@ -1,0 +1,2 @@
+alter table match_predictions
+drop column scheduleScore_id;

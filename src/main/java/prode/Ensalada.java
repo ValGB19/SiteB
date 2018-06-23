@@ -16,6 +16,7 @@ public class Ensalada{
 		
     @SuppressWarnings("rawtypes")
 	public static HashMap register (Request req, Response res) {
+    	
     	String nick = req.queryParams("rUsername");
 		String pwd = req.queryParams("pswRegister");
 		String pwd2 = req.queryParams("pswValida"); 	
@@ -169,23 +170,42 @@ public class Ensalada{
             return null;    
         }
         r = f.get(i-1);
-        
+        req.session().attribute("lastFixture",r);
+
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	int fecha = l.get(0).getInteger("schedule");
     	l.removeIf((x)->x.getInteger("schedule") != fecha);
-        map.put("fechaVig",fecha);
-    	
-    	ArrayList<Object[]> p = new ArrayList<Object[]>();
-        ArrayList<Integer> ids=new ArrayList();
+    	map.put("fechaVig",fecha);
+    	ArrayList p = new ArrayList();
     	for (Match a: l) {
     		p.add(a.paraPredic());
-            ids.add(a.idParaPred());
     	}
     	map.put("jugarFix", p);
-        map.put("im",ids);
-    	
     	res.redirect("/loged/prode");
     	return null;
+    };
+
+    public static TemplateViewRoute cargarPrediction = (req,res) ->{
+        String fix = req.session().attribute("lastFixture");
+        String user = req.session().attribute("username");
+        int idU = new User().getUser(user).getInteger("id");
+        List<Match> l = new Fixture().getFix(fix).getMatch();
+        int fecha = l.get(0).getInteger("schedule");
+        l.removeIf((x)->x.getInteger("schedule") != fecha);
+        for (Match a: l) {
+            Integer idM=a.getInteger("id");
+            MatchPrediction pred = new MatchPrediction();
+            pred.set("match_id", idM);
+            pred.set("user_id", idU);
+            pred.set("prediction", req.queryParams(idM.toString()));
+            pred.save();
+        }
+        UsersFixtures uf = new UsersFixtures();
+        uf.set("user_id", idU);
+        uf.set("fixture_id",fix);
+        uf.save();
+        res.redirect("/loged/prode");
+        return null;
     };
     
     public static TemplateViewRoute mainFixtures=(req, res) -> {
