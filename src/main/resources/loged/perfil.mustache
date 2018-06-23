@@ -14,9 +14,10 @@
 				</div>
 				<div  align="center">
 					<div  class="form-group">			
-						<div class="btn-group float-right mt-2" align="center">
+						<div class="btn-group float-right mt-2" align="justify">
+							<button {{#admin}} type="button" {{/admin}} {{^admin}} hidden="true" {{/admin}} class="btn btn-danger" onclick="location.href = '/loged/carga'"><a href="">Carga</a></button>
 				 			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/prode'">APOSTAR</button>
-				  			<button type="button" class="btn btn-danger"  onclick="location.href =''">Ver ganadores</button>
+				  			<button type="button" class="btn btn-danger"  onclick="location.href =''">Ver resultados</button>
 						</div>
 					</div>
 				</div>
