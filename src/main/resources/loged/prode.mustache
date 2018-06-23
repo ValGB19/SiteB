@@ -6,7 +6,9 @@
 	<div class="row">
 		<div id="Contenedor" align="center">
 			<ul>
-			{{#fixs}}<div> <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false">{{.}}</button></div><br>{{/fixs}}
+			<form method="post" action="/x" id="form-list-apuestas" name="form-list-apuestas">
+				{{#fixs}}<div> <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
+			</form>
 			</ul>
 		</div>
 		<div id="Contenedor1" align="center">
@@ -17,10 +19,12 @@
 					<th>Tu jugada</th>
 					<th></th>
 				  </tr>
-				  <tr>
-					<td>Argentina</td>
+				  <form method="post" action="/r" id="form-registro" name="form-registro">
+				  	{{#lista}}
+				  	<tr>
+					<td>{{.}}</td>
 					<th>
-					<fieldset>
+					<fieldset id="{{.}}">
 						<label>
 							<input type="radio" name="l1" value="Local"> L
 						</label>
@@ -28,66 +32,14 @@
 							<input type="radio" name="e1" value="Empate"> E
 						</label>
 						<label>
-							<input type="radio" name="v1" value="Visita"> G
+							<input type="radio" name="v1" value="Visita"> V
 						</label>
 					</fieldset>
 					</th>
-					<td>Islandia</td>
-					</tr>
-
-					<tr>
-					<td>Argentina</td>
-					<th>
-					<fieldset>
-						<label>
-							<input type="radio" name="l2" value="Local"> L
-						</label>
-						<label>	
-							<input type="radio" name="e2" value="Empate"> E
-						</label>
-						<label>
-							<input type="radio" name="v2" value="Visita"> G
-						</label>
-					</fieldset>
-					</th>
-					<td>Islandia</td>
-				  </tr>
-
-				  <tr>
-					<td>Argentina</td>
-					<th>
-					<fieldset>
-						<label>
-							<input type="radio" name="l3" value="Local"> L
-						</label>
-						<label>
-							<input type="radio" name="e3" value="Empate"> E
-						</label>
-						<label>
-							<input type="radio" name="v3" value="Visita"> G
-						</label>
-					</fieldset>
-					</th>
-					<td>Islandia</td>
-					</tr>
-
-					<tr>
-					<td>Argentina</td>
-					<th>
-					<fieldset>
-						<label>
-							<input type="radio" name="l4" value="Local"> L
-						</label>
-						<label>
-							<input type="radio" name="e4" value="Empate"> E
-						</label>
-						<label>
-							<input type="radio" name="v4" value="Visita"> G
-						</label>
-					</fieldset>
-					</th>
-					<td>Islandia</td>
-				  </tr>
+					<td>{{.}}</td>
+				    </tr>
+				    {{/lista}}
+				  </form>
 				</table>
 			</div>
 		</div>
