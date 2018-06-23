@@ -128,7 +128,7 @@ public class Ensalada{
     		return null;
 		}
     	res.redirect("/");
-    	map.clear();
+    	//map.clear();
 		map.put("errrr", mes);
     	return null;
     };

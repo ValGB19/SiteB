@@ -42,7 +42,7 @@ public class App{
         post("/", Ensalada.login, new MustacheTemplateEngine());
 
         post("/r", (req, res) -> {
-        	//map.clear();
+        	map.clear();
 	    	map.putAll(Ensalada.register(req,res));
 	    	res.redirect("/");
 	    	return null;
