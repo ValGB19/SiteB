@@ -65,14 +65,17 @@ public class Ensalada{
     	return mape;
     };
     
+	static Map map = new HashMap();
     
-    public static  Filter redicInic = (req,res) -> {
+    
+    
+    public static Filter redicInic = (req,res) -> {
     	if (req.session().attribute("logueado") == null) {
     		res.redirect("/");
     	}
    	};
    	
-   	static Map map = new HashMap();
+   
    	
     public static  Filter getCountrys = (req,res) -> {
     	if (!Base.hasConnection()) {
@@ -95,6 +98,12 @@ public class Ensalada{
     	res.redirect("/");
     };
     
+    public static TemplateViewRoute redicInicSesion=(req, res) -> {
+    	map.putAll(register(req,res));
+    	res.redirect("/");
+    	return null;
+    };
+
     public static TemplateViewRoute redicPerfil=(req, res) -> {
     	if (req.session().attribute("logueado") != null) {
     		res.redirect("/loged/perfil");

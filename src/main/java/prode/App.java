@@ -41,12 +41,7 @@ public class App{
         
         post("/", Ensalada.login, new MustacheTemplateEngine());
 
-        post("/r", (req, res) -> {
-        	map.clear();
-	    	map.putAll(Ensalada.register(req,res));
-	    	res.redirect("/");
-	    	return null;
-	    });
+        post("/r", Ensalada.redicInicSesion,new MustacheTemplateEngine());
 
 	    get("/loged/perfil", Ensalada.contain2Perfil, new MustacheTemplateEngine());
 	    
