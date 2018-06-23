@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
 
 import spark.*;
 import static spark.Spark.*;
@@ -211,6 +212,26 @@ public class Ensalada{
     public static TemplateViewRoute mainFixtures=(req, res) -> {
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
+    };
+    
+    public static TemplateViewRoute verResults=(req, res) -> {
+    	List<User> lisu= new UsersFixtures().getAllPlayers();
+    	ArrayList<HashMap> allUs = new ArrayList();
+    	for(User u : lisu) {
+    		List<MatchPrediction> mpu = u.getMatchPrediction();
+    		ArrayList<Object[]> p = new ArrayList<Object[]>(); 
+        	for (MatchPrediction a: mpu) {
+        		p.add(a.getPartePerfil());
+        	}
+        	HashMap datosUs = new HashMap();
+        	datosUs.put("resul", filtroFuerte(p));
+        	datosUs.put("nick", u.getString("nick"));
+        	allUs.add(datosUs);
+    	}
+    	Collections.sort(allUs, (x,y)-> ((String) x.get("nick")).compareTo((String) y.get("nick")));
+    	map.put("players", allUs);
+    	map.put("fixs", Fixture.getAllFixtures());
+        return new ModelAndView(map, "./src/main/resources/loged/results.mustache");
     };
     
     public static ArrayList<Object[]> filtroFuerte(ArrayList<Object[]> x){

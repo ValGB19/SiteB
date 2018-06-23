@@ -32,6 +32,10 @@ public class User extends Model {
 	return User.findFirst("nick = ?",us);
 	  
   }
+  
+  public User getUser(int us) {
+		return User.findFirst("id = ?",us);
+  }
 
    public String getNameUser(){
     return this.getString("name");
