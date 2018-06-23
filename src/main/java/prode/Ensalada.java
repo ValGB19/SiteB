@@ -97,7 +97,10 @@ public class Ensalada{
     public static Filter closeSesion = (req, res) -> {
     	if (req.session().attribute("logueado") != null) {
     		req.session().removeAttribute("logueado");
-    		res.redirect("/");
+    		if(req.session().attribute("admin") != null) {
+    			req.session().removeAttribute("admin");
+    			map.remove("admin");
+    		}
     	}
     	res.redirect("/");
     };
@@ -126,6 +129,10 @@ public class Ensalada{
 	    		req.session(true);
 	    		req.session().attribute("username", usernameL);
 	    		req.session().attribute("logueado", true);
+	    		if(User.findFirst("nick = ?", usernameL).getBoolean("admin")) {
+	    			req.session().attribute("admin", true);
+	    			map.put("admin", true);
+	    		}
 		   		log = true;
 				String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
 				String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
