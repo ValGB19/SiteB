@@ -1,5 +1,6 @@
 package prode;
 
+import java.util.HashMap;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
@@ -32,11 +33,12 @@ public class Match extends Model {
 		return getInteger("visit_team_id");
 	}
 	
-	public Object[] paraPredic() {
-		Object[] res = new Object[3];
-		res[0] = Team.findFirst("id = ?",getInteger("local_team_id")).getString("name");
-		res[1] = getInteger("schedule");
-		res[2] = Team.findFirst("id = ?",getInteger("visit_team_id")).getString("name");
+	public HashMap paraPredic() {
+		HashMap res = new HashMap();
+		res.put("local",Team.findFirst("id = ?",getInteger("local_team_id")).getString("name"));
+		res.put("id",getInteger("schedule"));
+		res.put("visit",Team.findFirst("id = ?",getInteger("visit_team_id")).getString("name"));
+
 		return res;
 	}
 }

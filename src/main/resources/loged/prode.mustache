@@ -23,9 +23,9 @@
 				  	{{#jugarFix}} 
 				  	<tr>
 				  		{{#.}}
-					<td>{{.}}</td>
+					<td>{{visit}}</td>
 					<th>
-					<fieldset id="{{.}}">
+					<fieldset id="{{id}}">
 						<label>
 							<input type="radio" name="l1" value="Local"> L
 						</label>
@@ -37,9 +37,9 @@
 						</label>
 					</fieldset>
 					</th>
-					<td>{{.}}</td>
+					<td>{{local}}</td>
+						{{/.}}
 				    </tr>
-				    {{/.}}
 				    {{/jugarFix}}
 				  </form>
 				</table>

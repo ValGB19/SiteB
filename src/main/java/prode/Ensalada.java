@@ -174,10 +174,11 @@ public class Ensalada{
     	int fecha = l.get(0).getInteger("schedule");
     	l.removeIf((x)->x.getInteger("schedule") != fecha);
     	
-    	ArrayList<Object[]> p = new ArrayList<Object[]>();
+    	ArrayList p = new ArrayList();
     	for (Match a: l) {
     		p.add(a.paraPredic());
     	}
+        HashMap z = new HashMap();
     	map.put("jugarFix", p);
     	
     	res.redirect("/loged/prode");
