@@ -40,7 +40,6 @@ public class App{
         before("*", (req,res) -> {
 	    	if (!Base.hasConnection()) {
 	    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
-	    	    map.put("paisl", Country.getAllCountrys());
 			}
 	   	});
         
@@ -50,13 +49,12 @@ public class App{
 			}
 	    });
         
-        
-        
         get("/", (req, res) -> {
         	if (req.session().attribute("logueado") != null) {
         		res.redirect("/loged/perfil");
         		return null;
 			}
+        	map.put("paisl", Country.getAllCountrys());
 	        return new ModelAndView(map, "./src/main/resources/inicio.mustache");
 	    		}, new MustacheTemplateEngine()
 	    );
@@ -87,12 +85,14 @@ public class App{
 	    		return null;
 			}
 	    	res.redirect("/");
+	    	map.clear();
     		map.put("errrr", mes);
 	    	return null;
 	    }, new MustacheTemplateEngine()
 	    );
 
         post("/r", (req, res) -> {
+        	map.clear();
 	    	map.putAll(Ensalada.gg(req,res));
 	    	res.redirect("/");
 	    	return null;
@@ -122,6 +122,7 @@ public class App{
         		res.redirect("/");
         		return null;
 			}
+        	map.clear();
         	res.redirect("/");
     		return null;});
 	    
