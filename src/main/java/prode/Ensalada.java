@@ -141,7 +141,7 @@ public class Ensalada{
     	for (MatchPrediction a: mpu) {
     		p.add(a.getPartePerfil());
     	}
-    	map.put("predUser", p);
+    	map.put("predUser", filtroFuerte(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
     };
     
@@ -150,5 +150,29 @@ public class Ensalada{
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
     };
     
-    
+    public static ArrayList<Object[]> filtroFuerte(ArrayList<Object[]> x){
+    	HashMap<String, HashMap> f = new HashMap();
+    	HashMap<Integer, Integer> p = new HashMap();
+    	for (Object[] objects : x) {
+    		if (f.containsKey(objects[0])) {
+    			p = f.get(objects[0]);
+				if (p.containsKey(objects[1])) {
+					p.replace((Integer) objects[1], p.get(objects[1])+ (Integer) objects[2]);
+				}else{
+					p.put((Integer) objects[1], (Integer) objects[2]);
+				}
+			}else{
+				p = new HashMap();
+				f.put((String)objects[0], p);
+				p.put((Integer) objects[1], (Integer) objects[2]);
+			}
+		}
+    	ArrayList<Object[]> res = new ArrayList<Object[]>();
+    	for (String c :f.keySet()) {
+			for(Object m : f.get(c).keySet()){
+				res.add(new Object[]{c,m,f.get(c).get(m)});
+			}
+		}
+    	return res;
+    }
 }
