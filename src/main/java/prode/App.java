@@ -30,7 +30,7 @@ public class App{
 		});
 
         Map map = new HashMap();
-        
+
 	   	before("/loged/*", Ensalada.redicInic);
 	   	
         before("*", Ensalada.getCountrys);

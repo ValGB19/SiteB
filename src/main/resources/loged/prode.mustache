@@ -1,7 +1,5 @@
 {{>header}}
-<head>
-	<title>A Jugar! | PRODE</title>
-</head>
+<title>A Jugar! | PRODE</title>
 <div class="container-fluid"> 
 	<div class="row">
 		<div id="Contenedor" align="center">
@@ -17,37 +15,31 @@
 					<h1 align="center"><i>Fecha N°{{fechaVig}}</i></h1>
 				</font>
 				<p></p>
+				<form method="post" action="/j" id="form-registro" name="form-registro">
 				<table id="customers">
 				  <tr>
 					<th>Local</th>
 					<th>Visitante</th>
 					<th>Tu jugada</th>
 				  </tr>
-				  <form method="post" action="/j" id="form-registro" name="form-registro">
 				  	{{#jugarFix}} 
 				  	<tr>
 				  		{{#.}}
 					<td>{{visit}}</td>
 					<th>
 					<fieldset id="{{id}}" name="{{id}}">
-						<label>
-							<input type="radio" name="l{{id}}" value="local"> L
-						</label>
-						<label>
-							<input type="radio" name="e{{id}}" value="tie"> E
-						</label>
-						<label>
-							<input type="radio" name="v{{id}}" value="visit"> V
-						</label>
+							<input type="radio" name="{{id}}" value="local"> L
+							<input type="radio" name="{{id}}" value="tie"> E
+							<input type="radio" name="{{id}}" value="visit"> V
 					</fieldset>
 					</th>
 					<td>{{local}}</td>
 						{{/.}}
 				    </tr>
 				    {{/jugarFix}}
-				    <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Apostar</button>
-				  </form>
 				</table>
+				<button class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Apostar</button>
+				  </form>
 			</div>
 		</div>
 	</div>
