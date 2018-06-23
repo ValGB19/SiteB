@@ -36,7 +36,7 @@ public class Match extends Model {
 	public HashMap paraPredic() {
 		HashMap res = new HashMap();
 		res.put("local",Team.findFirst("id = ?",getInteger("local_team_id")).getString("name"));
-		res.put("id",getInteger("schedule"));
+		res.put("id",getInteger("id"));
 		res.put("visit",Team.findFirst("id = ?",getInteger("visit_team_id")).getString("name"));
 
 		return res;

@@ -19,21 +19,21 @@
 					<th>Tu jugada</th>
 					<th></th>
 				  </tr>
-				  <form method="post" action="/r" id="form-registro" name="form-registro">
+				  <form method="post" action="/j" id="form-registro" name="form-registro">
 				  	{{#jugarFix}} 
 				  	<tr>
 				  		{{#.}}
 					<td>{{visit}}</td>
 					<th>
-					<fieldset id="{{id}}">
+					<fieldset id="{{id}}" name="{{id}}">
 						<label>
-							<input type="radio" name="l1" value="Local"> L
+							<input type="radio" name="l1" value="local"> L
 						</label>
 						<label>
-							<input type="radio" name="e1" value="Empate"> E
+							<input type="radio" name="e1" value="tie"> E
 						</label>
 						<label>
-							<input type="radio" name="v1" value="Visita"> V
+							<input type="radio" name="v1" value="visit"> V
 						</label>
 					</fieldset>
 					</th>
@@ -41,6 +41,7 @@
 						{{/.}}
 				    </tr>
 				    {{/jugarFix}}
+				    <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Apostar</button>
 				  </form>
 				</table>
 			</div>
