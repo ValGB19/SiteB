@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import spark.*;
-import static spark.Spark.*;
-
 import org.javalite.activejdbc.Base;
+
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
+import spark.*;
 
 
 public class Ensalada{
@@ -192,18 +193,22 @@ public class Ensalada{
         List<Match> l = new Fixture().getFix(fix).getMatch();
         int fecha = l.get(0).getInteger("schedule");
         l.removeIf((x)->x.getInteger("schedule") != fecha);
+        System.out.println(l.size());
         for (Match a: l) {
             Integer idM=a.getInteger("id");
             MatchPrediction pred = new MatchPrediction();
-            pred.set("match_id", idM);
-            pred.set("user_id", idU);
-            pred.set("prediction", req.queryParams(idM.toString()));
-            pred.save();
+            pred.setInteger("match_id", idM);
+            pred.setString("user_id", idU);
+            System.out.println( pred.setString("prediction", req.queryParams(idM.toString())));
+            System.out.println (pred.save());
         }
         UsersFixtures uf = new UsersFixtures();
-        uf.set("user_id", idU);
-        uf.set("fixture_id",new Fixture().getFix(fix).getInteger("id"));
-        uf.save();
+        if(uf.findFirst("user_id = ? and fixture_id = ?",idU, new Fixture().getFix(fix).getInteger("id")) == null) {
+        	 uf.set("user_id", idU);
+             uf.set("fixture_id",new Fixture().getFix(fix).getInteger("id"));
+             uf.save();
+        }
+       
         res.redirect("/loged/prode");
         return null;
     };
