@@ -48,7 +48,6 @@ public class App{
 	    get("/loged/prode", Ensalada.mainFixtures, new MustacheTemplateEngine());
 	    
 	    after("/exit", Ensalada.closeSesion);
-	    
     }    
     
 }

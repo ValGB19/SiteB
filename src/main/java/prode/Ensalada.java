@@ -8,7 +8,6 @@ import java.util.Map;
 
 import spark.*;
 import static spark.Spark.*;
-import spark.template.*;
 
 import org.javalite.activejdbc.Base;
 
@@ -138,6 +137,7 @@ public class Ensalada{
     		return null;
 		}
     	res.redirect("/");
+    	map.clear();
 		map.put("errrr", mes);
     	return null;
     };
