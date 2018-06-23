@@ -51,7 +51,7 @@ public class App{
 	    
 	    get("/loged/prode", Ensalada.mainFixtures, new MustacheTemplateEngine());
 	    
-	    get("/loged/resultads", Ensalada.verResults, new MustacheTemplateEngine());
+	    get("/loged/results", Ensalada.verResults, new MustacheTemplateEngine());
 	    
 	    after("/exit", Ensalada.closeSesion);
     }    
