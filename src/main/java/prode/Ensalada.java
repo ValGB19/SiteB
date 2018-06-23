@@ -202,7 +202,7 @@ public class Ensalada{
         }
         UsersFixtures uf = new UsersFixtures();
         uf.set("user_id", idU);
-        uf.set("fixture_id",fix);
+        uf.set("fixture_id",new Fixture().getFix(fix).getInteger("id"));
         uf.save();
         res.redirect("/loged/prode");
         return null;

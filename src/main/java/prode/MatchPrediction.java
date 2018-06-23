@@ -22,11 +22,6 @@ public class MatchPrediction extends Model{
 	}
 	
 	//@pre schedulescore asociado
-	public ScheduleScore getScheduleScore() {
-		return this.getAll(ScheduleScore.class).get(0);
-	}
-	
-	//@pre schedulescore asociado
 	public Match getMatch() {
 		return this.getAll(Match.class).get(0);
 	}
