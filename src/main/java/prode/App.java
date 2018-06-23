@@ -42,6 +42,8 @@ public class App{
         post("/", Ensalada.login, new MustacheTemplateEngine());
 
         post("/r", Ensalada.redicInicSesion,new MustacheTemplateEngine());
+        
+        post("/x", Ensalada.vistaProdeFecha,new MustacheTemplateEngine());
 
 	    get("/loged/perfil", Ensalada.contain2Perfil, new MustacheTemplateEngine());
 	    

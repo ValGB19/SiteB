@@ -11,6 +11,7 @@ import static spark.Spark.*;
 
 import org.javalite.activejdbc.Base;
 
+
 public class Ensalada{
 		
     @SuppressWarnings("rawtypes")
@@ -152,6 +153,30 @@ public class Ensalada{
     	}
     	map.put("predUser", filtroFuerte(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
+    };
+    
+    public static TemplateViewRoute vistaProdeFecha = (req,res) ->{
+    	//String league = req.queryParams(queryParam);
+    	List<String> f = Fixture.getAllFixtures();
+    	String r = null;
+    	int i=0;
+    	while((r==null||r=="null") && i<f.size()) {
+    		r=req.queryParams(f.get(i));
+    		i++;
+    	}
+        System.out.println(f.size()+" "+i);
+    	List<Match> l = new Fixture().getFix(r).getMatch();
+    	int fecha = l.get(0).getInteger("schedule");
+    	l.removeIf((x)->x.getInteger("schedule") != fecha);
+    	
+    	ArrayList<Object[]> p = new ArrayList<Object[]>();
+    	for (Match a: l) {
+    		p.add(a.paraPredic());
+    	}
+    	map.put("jugarFix", p);
+    	
+    	res.redirect("/loged/prode");
+    	return null;
     };
     
     public static TemplateViewRoute mainFixtures=(req, res) -> {

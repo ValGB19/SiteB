@@ -4,8 +4,6 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
 
-import java.util.Date;
-
 @BelongsToParents({
 	@BelongsTo(foreignKeyName="local_team_id",parent=Team.class),
 	@BelongsTo(foreignKeyName="visit_team_id",parent=Team.class)
@@ -32,14 +30,6 @@ public class Match extends Model {
 	
 	public int getVisit() {
 		return getInteger("visit_team_id");
-	}
-	
-	public Object[] getPartePerfil(){
-		Object[] res = new Object[3];
-		res[0] = ((Match) Match.findFirst("id = ?", getInteger("match_id"))).getFixture().getString("league") ;//getAll(Match.class).get(0).getFixture().getString("league");
-		res[1] = ((Match) Match.findFirst("id = ?", getInteger("match_id"))).getInteger("schedule");
-		res[2] = getInteger("score");
-		return res;
 	}
 	
 	public Object[] paraPredic() {

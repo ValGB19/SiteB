@@ -12,9 +12,13 @@ public class Fixture extends Model {
 		validatePresenceOf("league").message("Please, provide league");
   	}
 
-  	public static List getAllFixtures() {
+  	public static List<String> getAllFixtures() {
 		return findAll().collect("league");
 	}
+  	
+  	public Fixture getFix(String n) {
+  		return findFirst("league = ?",n);
+  	}
   	
   	public List getMatch() {
   		return Match.find("fixture_id = ? and result = ?", getInteger("id"), null).orderBy("schedule");
