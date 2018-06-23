@@ -20,8 +20,9 @@
 					<th></th>
 				  </tr>
 				  <form method="post" action="/r" id="form-registro" name="form-registro">
-				  	{{#lista}}
+				  	{{#jugarFix}} 
 				  	<tr>
+				  		{{#.}}
 					<td>{{.}}</td>
 					<th>
 					<fieldset id="{{.}}">
@@ -38,7 +39,8 @@
 					</th>
 					<td>{{.}}</td>
 				    </tr>
-				    {{/lista}}
+				    {{/.}}
+				    {{/jugarFix}}
 				  </form>
 				</table>
 			</div>

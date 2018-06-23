@@ -160,11 +160,16 @@ public class Ensalada{
     	List<String> f = Fixture.getAllFixtures();
     	String r = null;
     	int i=0;
-    	while((r==null||r=="null") && i<f.size()) {
+    	while(r == null && i<f.size()) {
     		r=req.queryParams(f.get(i));
     		i++;
     	}
-        System.out.println(f.size()+" "+i);
+        if (r == null) {
+            res.redirect("/loged/prode");
+            return null;    
+        }
+        r = f.get(i-1);
+        
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	int fecha = l.get(0).getInteger("schedule");
     	l.removeIf((x)->x.getInteger("schedule") != fecha);

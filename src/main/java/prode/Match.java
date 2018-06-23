@@ -17,7 +17,7 @@ public class Match extends Model {
 	
 	//@pre schedulescore asociado
 	public Fixture getFixture() {
-		return Fixture.findById(get("fixture_id"));
+		return Fixture.findFirst("id = ?",get("fixture_id"));
 	}
 	
 	public int getSchedule() {
@@ -33,11 +33,10 @@ public class Match extends Model {
 	}
 	
 	public Object[] paraPredic() {
-		Object[] res = new Object[4];
-		res[0] = getInteger("fixture_id");
-		res[1] = getInteger("schedule_id");
-		res[2] = getInteger("local_team_id");
-		res[3] = getInteger("visit_team_id");
+		Object[] res = new Object[3];
+		res[0] = Team.findFirst("id = ?",getInteger("local_team_id")).getString("name");
+		res[1] = getInteger("schedule");
+		res[2] = Team.findFirst("id = ?",getInteger("visit_team_id")).getString("name");
 		return res;
 	}
 }

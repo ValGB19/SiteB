@@ -21,6 +21,6 @@ public class Fixture extends Model {
   	}
   	
   	public List getMatch() {
-  		return Match.find("fixture_id = ? and result = ?", getInteger("id"), null).orderBy("schedule");
+  		return Match.find("fixture_id = ?", getInteger("id")).orderBy("schedule");
   	}
 }
