@@ -83,6 +83,16 @@
 	padding: 0px 9px 0px 9px;
 }
 
+#ContenedorPred{
+  width: 700px;
+  margin: 50px auto;
+  background-color: #F3EDED;
+  border: 1px solid #ECE8E8;
+  height: 750px;
+  border-radius:8px;
+  padding: 0px 9px 0px 9px;
+}
+
 #perfil{
   margin-right: 50px;
 }

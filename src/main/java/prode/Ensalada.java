@@ -102,6 +102,8 @@ public class Ensalada{
     			map.remove("admin");
     		}
     	}
+        map.remove("lastFixture");
+        map.remove("schedule");
     	res.redirect("/");
     };
     
@@ -166,7 +168,6 @@ public class Ensalada{
     };
     
     public static TemplateViewRoute vistaProdeFecha = (req,res) ->{
-    	//String league = req.queryParams(queryParam);
     	List<String> f = Fixture.getAllFixtures();
     	String r = null;
     	int i=0;
@@ -185,6 +186,7 @@ public class Ensalada{
     	int fecha = l.get(0).getInteger("schedule");
     	l.removeIf((x)->x.getInteger("schedule") != fecha);
     	map.put("fechaVig",fecha);
+        map.put("lastFixture",r);
     	ArrayList p = new ArrayList();
     	for (Match a: l) {
     		p.add(a.paraPredic());
@@ -240,6 +242,7 @@ public class Ensalada{
         	datosUs.put("nick", u.getString("nick"));
         	allUs.add(datosUs);
     	}
+    	allUs.removeIf((x)->((ArrayList) x.get("resul")).size()==0);
     	Collections.sort(allUs, (x,y)-> ((String) x.get("nick")).compareTo((String) y.get("nick")));
     	map.put("players", allUs);
     	map.put("fixs", Fixture.getAllFixtures());

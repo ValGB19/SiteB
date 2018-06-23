@@ -10,18 +10,14 @@
 					<img src="/club9_car3.png" width="100" height="100"/>
 					<br>
 					<br>
-					<p>Bienvenido {{name}} {{surname}}</p>	
+					<p><b>Bienvenido {{name}} {{surname}}!</b></p>	
 				</div>
 				<div  align="center">
 					<div  class="form-group">			
 						<div class="btn-group float-right mt-2" align="justify">
-							<button {{#admin}} type="button" {{/admin}} {{^admin}} hidden="true" {{/admin}} class="btn btn-danger" onclick="location.href = '/loged/carga'"><a href="">Carga</a></button>
+							<button {{#admin}} type="button" {{/admin}} {{^admin}} hidden="true" {{/admin}} class="btn btn-danger" onclick="location.href = '/loged/carga'">Carga</button>
 				 			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/prode'">APOSTAR</button>
-<<<<<<< HEAD
-				  			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/results'">Ver ganadores</button>
-=======
-				  			<button type="button" class="btn btn-danger"  onclick="location.href =''">Ver resultados</button>
->>>>>>> 84d7bd42b0022362879c7b7a96916a73c2062a71
+				  			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/results'">Ver resultados</button>
 						</div>
 					</div>
 				</div>
@@ -30,7 +26,9 @@
 		<div id="Contenedor1" align="center">
 			<div class="form-group">
 				<br>
-				<h3> MIS JUGADAS</h3>
+				<font color="Olive" face="Comic Sans MS,arial">
+					<h1 align="center"><i>Mis Jugadas</i></h1>
+				</font>
 				<br>
 				<table id="customers">
 				  <tr>
