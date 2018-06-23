@@ -15,4 +15,8 @@ public class Fixture extends Model {
   	public static List getAllFixtures() {
 		return findAll().collect("league");
 	}
+  	
+  	public List getMatch() {
+  		return Match.find("fixture_id = ? and result = ?", getInteger("id"), null).orderBy("schedule");
+  	}
 }

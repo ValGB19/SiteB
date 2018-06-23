@@ -19,10 +19,18 @@ public class Match extends Model {
 	
 	//@pre schedulescore asociado
 	public Fixture getFixture() {
-		return this.getAll(Fixture.class).get(0);
+		return Fixture.findById(get("fixture_id"));
 	}
 	
 	public int getSchedule() {
 		return this.getInteger("schedule");
+	}
+	
+	public int getLocal() {
+		return getInteger("local_team_id");
+	}
+	
+	public int getVisit() {
+		return getInteger("visit_team_id");
 	}
 }

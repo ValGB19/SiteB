@@ -10,9 +10,9 @@ public class MatchPrediction extends Model{
 	
 	public Object[] getPartePerfil(){
 		Object[] res = new Object[3];
-		res[0] = getAll(Match.class).get(0).getFixture().getString("league");
-		res[1] = getAll(Match.class).get(0).getInteger("schedule");
-		res[2] = this.getInteger("score");
+		res[0] = ((Match) Match.findFirst("id = ?", getInteger("match_id"))).getFixture().getString("league") ;//getAll(Match.class).get(0).getFixture().getString("league");
+		res[1] = ((Match) Match.findFirst("id = ?", getInteger("match_id"))).getInteger("schedule");
+		res[2] = getInteger("score");
 		return res;
 	}
 	

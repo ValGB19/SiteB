@@ -9,4 +9,8 @@ public class Team extends Model{
 		validatePresenceOf("name").message("Please, provide a team name");
 		validateWith(new UniquenessValidator("name")).message("This team name already exist.");
 	}
+	
+	public String getNameTeam(int id) {
+		return findFirst("id = ?", id).getString("name");
+	}
 }
