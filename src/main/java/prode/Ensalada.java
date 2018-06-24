@@ -8,8 +8,7 @@ import java.util.Map;
 import java.util.Collections;
 
 import org.javalite.activejdbc.Base;
-
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+import org.javalite.activejdbc.Model;
 
 import spark.*;
 
@@ -261,7 +260,16 @@ public class Ensalada{
         for (Match a: l) {
             Integer idM=a.getInteger("id");
             System.out.println(a.getClass());
-            if(req.queryParams(idM.toString()) != null) {
+            String s = req.queryParams(idM.toString());
+            if(s != null) {
+            	
+            	for(Model mp: MatchPrediction.find("match_id = ?", idM)) {
+            		if(s.equals(mp.getString("prediction")))
+            			mp.setInteger("score",3);            			
+            		else
+            			mp.setInteger("score",0);
+            		mp.save();
+            	}
             	a.setString("result", req.queryParams(idM.toString()));
             	a.save();
             }
