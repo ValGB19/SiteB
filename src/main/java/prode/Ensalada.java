@@ -215,7 +215,7 @@ public class Ensalada{
     	
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	int fecha = l.get(0).getInteger("schedule");
-    	l.removeIf((x)->x.getInteger("schedule") != fecha);
+    	l.removeIf((x)->x.getInteger("schedule") != fecha || x.getString("result") != null);
     	map.put("fechaVig",fecha);
     	map.put("lastFixture",r);
     	ArrayList p = new ArrayList();
