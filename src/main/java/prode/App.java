@@ -46,12 +46,16 @@ public class App{
         post("/x", Ensalada.vistaProdeFecha,new MustacheTemplateEngine());
 
         post("/j", Ensalada.cargarPrediction,new MustacheTemplateEngine());
+	    
+	    post("/a", Ensalada.cargaResulMatch,new MustacheTemplateEngine());
 
 	    get("/loged/perfil", Ensalada.contain2Perfil, new MustacheTemplateEngine());
 	    
 	    get("/loged/prode", Ensalada.mainFixtures, new MustacheTemplateEngine());
 	    
 	    get("/loged/results", Ensalada.verResults, new MustacheTemplateEngine());
+
+	    get("/loged/admin", Ensalada.mainFixtures, new MustacheTemplateEngine());
 	    
 	    after("/exit", Ensalada.closeSesion);
     }    

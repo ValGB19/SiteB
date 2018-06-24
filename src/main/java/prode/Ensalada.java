@@ -209,8 +209,8 @@ public class Ensalada{
             MatchPrediction pred = new MatchPrediction();
             pred.setInteger("match_id", idM);
             pred.setString("user_id", idU);
-            System.out.println( pred.setString("prediction", req.queryParams(idM.toString())));
-            System.out.println (pred.save());
+            pred.setString("prediction", req.queryParams(idM.toString()));
+            pred.save();
         }
         UsersFixtures uf = new UsersFixtures();
         if(uf.findFirst("user_id = ? and fixture_id = ?",idU, new Fixture().getFix(fix).getInteger("id")) == null) {
@@ -220,6 +220,21 @@ public class Ensalada{
         }
        
         res.redirect("/loged/prode");
+        return null;
+    };
+
+    public static TemplateViewRoute cargaResulMatch = (req,res) ->{
+        String fix = req.session().attribute("lastFixture");
+        List<Match> l = new Fixture().getFix(fix).getMatch();
+        int fecha = l.get(0).getInteger("schedule");
+        l.removeIf((x)->x.getInteger("schedule") != fecha);
+        for (Match a: l) {
+            Integer idM=a.getInteger("id");
+            a.setString("result", req.queryParams(idM.toString()));
+            a.save();
+        }
+       
+        res.redirect("/loged/admin");
         return null;
     };
     
