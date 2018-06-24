@@ -196,6 +196,36 @@ public class Ensalada{
     	res.redirect("/loged/prode");
     	return null;
     };
+    
+    public static TemplateViewRoute vistaProdeFecha2 = (req,res) ->{
+    	List<String> f = Fixture.getAllFixtures();
+    	String r = null;
+    	int i=0;
+    	while(r == null && i<f.size()) {
+    		r=req.queryParams(f.get(i));
+    		i++;
+    	}
+    	if (r == null) {
+    		res.redirect("/loged/prode");
+    		return null;    
+    	}
+    	r = f.get(i-1);
+    	req.session().attribute("lastFixture",r);
+    	int idU = new User().getUser(req.session().attribute("username")).getInteger("id");
+    	
+    	List<Match> l = new Fixture().getFix(r).getMatch();
+    	int fecha = l.get(0).getInteger("schedule");
+    	l.removeIf((x)->x.getInteger("schedule") != fecha);
+    	map.put("fechaVig",fecha);
+    	map.put("lastFixture",r);
+    	ArrayList p = new ArrayList();
+    	for (Match a: l) {
+    		p.add(a.paraPredic());
+    	}
+    	map.put("jugarFix", p);
+    	res.redirect("/loged/admin");
+    	return null;
+    };
 
     public static TemplateViewRoute cargarPrediction = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
@@ -230,8 +260,11 @@ public class Ensalada{
         l.removeIf((x)->x.getInteger("schedule") != fecha);
         for (Match a: l) {
             Integer idM=a.getInteger("id");
-            a.setString("result", req.queryParams(idM.toString()));
-            a.save();
+            System.out.println(a.getClass());
+            if(req.queryParams(idM.toString()) != null) {
+            	a.setString("result", req.queryParams(idM.toString()));
+            	a.save();
+            }
         }
        
         res.redirect("/loged/admin");
@@ -241,6 +274,11 @@ public class Ensalada{
     public static TemplateViewRoute mainFixtures=(req, res) -> {
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
+    };
+    
+    public static TemplateViewRoute mainFixtu=(req, res) -> {
+    	map.put("fixs", Fixture.getAllFixtures());
+        return new ModelAndView(map, "./src/main/resources/loged/admin.mustache");
     };
     
     public static TemplateViewRoute verResults=(req, res) -> {

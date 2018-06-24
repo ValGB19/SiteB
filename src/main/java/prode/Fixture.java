@@ -20,7 +20,7 @@ public class Fixture extends Model {
   		return findFirst("league = ?",n);
   	}
   	
-  	public List getMatch() {
+  	public List<Match> getMatch() {
   		return Match.find("fixture_id = ?", getInteger("id")).orderBy("schedule");
   	}
 }

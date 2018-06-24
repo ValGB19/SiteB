@@ -45,6 +45,8 @@ public class App{
         
         post("/x", Ensalada.vistaProdeFecha,new MustacheTemplateEngine());
 
+        post("/y", Ensalada.vistaProdeFecha2,new MustacheTemplateEngine());
+
         post("/j", Ensalada.cargarPrediction,new MustacheTemplateEngine());
 	    
 	    post("/a", Ensalada.cargaResulMatch,new MustacheTemplateEngine());
@@ -57,7 +59,7 @@ public class App{
 	    
 	    get("/loged/results", Ensalada.verResults, new MustacheTemplateEngine());
 
-	    get("/loged/admin", Ensalada.mainFixtures, new MustacheTemplateEngine());
+	    get("/loged/admin", Ensalada.mainFixtu, new MustacheTemplateEngine());
 	    
 	    after("/exit", Ensalada.closeSesion);
     }    
