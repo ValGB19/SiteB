@@ -213,7 +213,7 @@ public class Ensalada{
     	int idU = new User().getUser(req.session().attribute("username")).getInteger("id");
     	
     	List<Match> l = new Fixture().getFix(r).getMatch();
-    	l.removeIf((x)-> x.getString("result") != null);
+    	l.removeIf((x)-> x.getString("result") != null );
     	int fecha = l.get(0).getInteger("schedule");
     	l.removeIf((x)->x.getInteger("schedule") != fecha);
     	map.put("fechaVig",fecha);
