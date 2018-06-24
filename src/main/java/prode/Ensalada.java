@@ -181,10 +181,11 @@ public class Ensalada{
         }
         r = f.get(i-1);
         req.session().attribute("lastFixture",r);
+        int idU = new User().getUser(req.session().attribute("username")).getInteger("id");
 
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	int fecha = l.get(0).getInteger("schedule");
-    	l.removeIf((x)->x.getInteger("schedule") != fecha);
+    	l.removeIf((x)->x.getInteger("schedule") != fecha || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
     	map.put("fechaVig",fecha);
         map.put("lastFixture",r);
     	ArrayList p = new ArrayList();
@@ -203,7 +204,6 @@ public class Ensalada{
         List<Match> l = new Fixture().getFix(fix).getMatch();
         int fecha = l.get(0).getInteger("schedule");
         l.removeIf((x)->x.getInteger("schedule") != fecha);
-        System.out.println(l.size());
         for (Match a: l) {
             Integer idM=a.getInteger("id");
             MatchPrediction pred = new MatchPrediction();
@@ -289,4 +289,9 @@ public class Ensalada{
 		}
     	return res;
     }
+    
+    public static TemplateViewRoute carga=(req, res) -> {
+    	
+        return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
+    };
 }

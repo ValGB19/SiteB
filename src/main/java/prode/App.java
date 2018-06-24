@@ -50,6 +50,8 @@ public class App{
 	    post("/a", Ensalada.cargaResulMatch,new MustacheTemplateEngine());
 
 	    get("/loged/perfil", Ensalada.contain2Perfil, new MustacheTemplateEngine());
+
+	    get("/loged/carga", Ensalada.carga, new MustacheTemplateEngine());
 	    
 	    get("/loged/prode", Ensalada.mainFixtures, new MustacheTemplateEngine());
 	    
