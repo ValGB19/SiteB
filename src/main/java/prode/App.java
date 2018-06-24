@@ -48,6 +48,8 @@ public class App{
         post("/j", Ensalada.cargarPrediction,new MustacheTemplateEngine());
 
 	    get("/loged/perfil", Ensalada.contain2Perfil, new MustacheTemplateEngine());
+
+	    get("/loged/carga", Ensalada.carga, new MustacheTemplateEngine());
 	    
 	    get("/loged/prode", Ensalada.mainFixtures, new MustacheTemplateEngine());
 	    

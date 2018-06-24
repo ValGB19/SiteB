@@ -21,6 +21,10 @@ public class MatchPrediction extends Model{
 		return this.getAll(User.class).get(0);
 	}
 	
+	public boolean comprobaJuego(Integer idU, Integer idM) {
+		return null != MatchPrediction.findFirst("user_id = ? && match_id = ?", idU, idM); 
+	}
+	
 	//@pre schedulescore asociado
 	public Match getMatch() {
 		return this.getAll(Match.class).get(0);
