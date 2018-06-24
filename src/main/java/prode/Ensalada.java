@@ -275,6 +275,11 @@ public class Ensalada{
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
     };
+
+    public static TemplateViewRoute mainFixturesCarga=(req, res) -> {
+        map.put("fixs", Fixture.getAllFixtures());
+        return new ModelAndView(map, "./src/main/resources/loged/admin.mustache");
+    };
     
     public static TemplateViewRoute mainFixtu=(req, res) -> {
     	map.put("fixs", Fixture.getAllFixtures());
