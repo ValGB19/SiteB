@@ -24,4 +24,5 @@ public class UsersFixtures extends Model {
 		}
 		return listu;
 	}
+
 }

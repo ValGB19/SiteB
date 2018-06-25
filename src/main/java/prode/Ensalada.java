@@ -138,9 +138,11 @@ public class Ensalada{
 		   		log = true;
 				String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
 				String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
+                
 		   		map.put("nic", usernameL);
 		   		map.put("name", name);
 		   		map.put("surname", surname);
+                
 		   		System.out.println("Loged "+ usernameL);
 	    	}else{
 	   			mes="Los datos ingresados son incorrectos";
@@ -249,7 +251,7 @@ public class Ensalada{
              uf.save();
         }
        
-        res.redirect("/loged/prode");
+        res.redirect("/loged/perfil");
         return null;
     };
 
@@ -266,8 +268,10 @@ public class Ensalada{
             	a.save();
             }
         }
-       
-        res.redirect("/loged/admin");
+        
+        req.session().removeAttribute("lastFixture");
+        req.session().removeAttribute("schedule");
+        res.redirect("/loged/perfil");
         return null;
     };
     
