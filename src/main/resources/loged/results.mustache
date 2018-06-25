@@ -13,14 +13,14 @@
 					<th>Mi Puntaje</th>
 				  </tr>
 				  {{#players}}
-				  <tr>
 				  	{{#.}}
+					  	{{#resul}}
+				  	<tr>
 					  	<td>{{nick}}</td>
-					  	{{{#resul}}}
-							<td>{{.}}</td>
-						{{{#resul}}}
+							{{#. }}<td>{{.}}</td>{{/. }}
+				  		</tr>
+						{{/resul}}
 					{{/.}}
-				  </tr>
 				  {{/players}}
 				</table>
 			</div>

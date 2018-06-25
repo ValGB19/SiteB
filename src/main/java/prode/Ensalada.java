@@ -8,8 +8,7 @@ import java.util.Map;
 import java.util.Collections;
 
 import org.javalite.activejdbc.Base;
-
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+import org.javalite.activejdbc.Model;
 
 import spark.*;
 
@@ -184,10 +183,10 @@ public class Ensalada{
         r = f.get(i-1);
         req.session().attribute("lastFixture",r);
         int idU = new User().getUser(req.session().attribute("username")).getInteger("id");
-
     	List<Match> l = new Fixture().getFix(r).getMatch();
+    	 l.removeIf((x)-> new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
     	int fecha = l.get(0).getInteger("schedule");
-    	l.removeIf((x)->x.getInteger("schedule") != fecha || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
+    	l.removeIf((x)->x.getInteger("schedule") != fecha);
     	map.put("fechaVig",fecha);
         map.put("lastFixture",r);
     	ArrayList p = new ArrayList();
@@ -216,8 +215,9 @@ public class Ensalada{
     	int idU = new User().getUser(req.session().attribute("username")).getInteger("id");
     	
     	List<Match> l = new Fixture().getFix(r).getMatch();
+    	l.removeIf((x)-> x.getString("result") != null);
     	int fecha = l.get(0).getInteger("schedule");
-    	l.removeIf((x)->x.getInteger("schedule") != fecha || x.getString("result") != null);
+    	l.removeIf((x)->x.getInteger("schedule") != fecha);
     	map.put("fechaVig",fecha);
     	map.put("lastFixture",r);
     	ArrayList p = new ArrayList();
@@ -234,6 +234,7 @@ public class Ensalada{
         String user = req.session().attribute("username");
         int idU = new User().getUser(user).getInteger("id");
         List<Match> l = new Fixture().getFix(fix).getMatch();
+        l.removeIf((x)-> new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
         int fecha = l.get(0).getInteger("schedule");
         l.removeIf((x)->x.getInteger("schedule") != fecha);
         for (Match a: l) {
@@ -263,7 +264,16 @@ public class Ensalada{
         for (Match a: l) {
             Integer idM=a.getInteger("id");
             System.out.println(a.getClass());
-            if(req.queryParams(idM.toString()) != null) {
+            String s = req.queryParams(idM.toString());
+            if(s != null) {
+            	
+            	for(Model mp: MatchPrediction.find("match_id = ?", idM)) {
+            		if(s.equals(mp.getString("prediction")))
+            			mp.setInteger("score",3);            			
+            		else
+            			mp.setInteger("score",0);
+            		mp.save();
+            	}
             	a.setString("result", req.queryParams(idM.toString()));
             	a.save();
             }
@@ -311,6 +321,33 @@ public class Ensalada{
         return new ModelAndView(map, "./src/main/resources/loged/results.mustache");
     };
     
+    public static ArrayList<Object[]> fil(ArrayList<Object[]> x){
+    	HashMap<String, HashMap> f = new HashMap();
+    	HashMap<Integer, Integer> p = new HashMap();
+    	for (Object[] objects : x) {
+    		if (f.containsKey(objects[0])) {
+    			p = f.get(objects[0]);
+				if (p.containsKey(objects[1])) {
+					p.replace((Integer) objects[1], p.get(objects[1])+ (Integer) objects[2]);
+				}else{
+					p.put((Integer) objects[1], (Integer) objects[2]);
+				}
+			}else{
+				p = new HashMap();
+				f.put((String)objects[0], p);
+				p.put((Integer) objects[1], (Integer) objects[2]);
+			}
+		}
+    	ArrayList<Object[]> res = new ArrayList<Object[]>();
+    	for (String c :f.keySet()) {
+			for(Object m : f.get(c).keySet()){
+				res.add(new Object[]{f.get(c).get(m)});
+			}
+		}
+    	return res;
+    }
+    
+    
     public static ArrayList<Object[]> filtroFuerte(ArrayList<Object[]> x){
     	HashMap<String, HashMap> f = new HashMap();
     	HashMap<Integer, Integer> p = new HashMap();
@@ -337,8 +374,4 @@ public class Ensalada{
     	return res;
     }
     
-    public static TemplateViewRoute carga=(req, res) -> {
-    	
-        return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
-    };
 }
