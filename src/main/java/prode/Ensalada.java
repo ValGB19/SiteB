@@ -126,32 +126,31 @@ public class Ensalada{
     	System.out.println(usernameL + " " + pswL);
     	boolean log = false;
 	    String mes="";
-	    	if(User.log(usernameL,pswL)){
-	    		req.session(true);
-	    		req.session().attribute("username", usernameL);
-	    		req.session().attribute("logueado", true);
-	    		if(User.findFirst("nick = ?", usernameL).getBoolean("admin")) {
-	    			req.session().attribute("admin", true);
-	    			map.put("admin", true);
-	    		}
-		   		log = true;
-				String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
-				String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
-                
-		   		map.put("nic", usernameL);
-		   		map.put("name", name);
-		   		map.put("surname", surname);
-                
-		   		System.out.println("Loged "+ usernameL);
-	    	}else{
-	   			mes="Los datos ingresados son incorrectos";
-	    	}
+    	if(User.log(usernameL,pswL)){
+    		req.session(true);
+    		req.session().attribute("username", usernameL);
+    		req.session().attribute("logueado", true);
+    		if(User.findFirst("nick = ?", usernameL).getBoolean("admin")) {
+    			req.session().attribute("admin", true);
+    			map.put("admin", true);
+    		}
+	   		log = true;
+			String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
+			String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
+            
+	   		map.put("nic", usernameL);
+	   		map.put("name", name);
+	   		map.put("surname", surname);
+            
+	   		System.out.println("Loged "+ usernameL);
+    	}else{
+   			mes="Los datos ingresados son incorrectos";
+    	}
 	   	if(log){
     		res.redirect("/loged/perfil");
     		return null;
 		}
     	res.redirect("/");
-    	//map.clear();
 		map.put("errrr", mes);
     	return null;
     };
@@ -159,11 +158,15 @@ public class Ensalada{
     public static TemplateViewRoute contain2Perfil=(req, res) -> {
     	String m = req.session().attribute("username");
     	User u = (User.findFirst("nick = ?",m));
+    	int fix = new UsersFixtures().cantFixUser(u.getInteger("id"));
+    	int pred = (u.getTotalMatchPrediction()).size();
     	List<MatchPrediction> mpu = u.getMatchPrediction();
     	ArrayList<Object[]> p = new ArrayList<Object[]>(); 
     	for (MatchPrediction a: mpu) {
     		p.add(a.getPartePerfil());
     	}
+    	map.put("cantPred",pred);
+    	map.put("cantFix",fix);
     	map.put("predUser", filtroFuerte(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
     };
@@ -184,15 +187,17 @@ public class Ensalada{
         req.session().attribute("lastFixture",r);
         int idU = new User().getUser(req.session().attribute("username")).getInteger("id");
     	List<Match> l = new Fixture().getFix(r).getMatch();
-    	 l.removeIf((x)-> new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
-    	int fecha = l.get(0).getInteger("schedule");
-    	l.removeIf((x)->x.getInteger("schedule") != fecha);
-    	map.put("fechaVig",fecha);
-        map.put("lastFixture",r);
+    	l.removeIf((x)-> x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
     	ArrayList p = new ArrayList();
-    	for (Match a: l) {
-    		p.add(a.paraPredic());
-    	}
+    	if(l.size()!=0) {
+    		int fecha = l.get(0).getInteger("schedule");
+	    	l.removeIf((x)->x.getInteger("schedule") != fecha);
+	    	map.put("fechaVig",fecha);
+	        map.put("lastFixture",r);
+	    	for (Match a: l) {
+	    		p.add(a.paraPredic());
+	    	}
+    	}	
     	map.put("jugarFix", p);
     	res.redirect("/loged/prode");
     	return null;
@@ -216,13 +221,15 @@ public class Ensalada{
     	
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	l.removeIf((x)-> x.getString("result") != null);
-    	int fecha = l.get(0).getInteger("schedule");
-    	l.removeIf((x)->x.getInteger("schedule") != fecha);
-    	map.put("fechaVig",fecha);
-    	map.put("lastFixture",r);
     	ArrayList p = new ArrayList();
-    	for (Match a: l) {
-    		p.add(a.paraPredic());
+    	if(l.size()!=0) {
+	    	int fecha = l.get(0).getInteger("schedule");
+	    	l.removeIf((x)->x.getInteger("schedule") != fecha);
+	    	map.put("fechaVig",fecha);
+	    	map.put("lastFixture",r);
+	    	for (Match a: l) {
+	    		p.add(a.paraPredic());
+	    	}
     	}
     	map.put("jugarFix", p);
     	res.redirect("/loged/admin");
@@ -233,8 +240,9 @@ public class Ensalada{
         String fix = req.session().attribute("lastFixture");
         String user = req.session().attribute("username");
         int idU = new User().getUser(user).getInteger("id");
+        System.out.println("***************"+fix);
         List<Match> l = new Fixture().getFix(fix).getMatch();
-        l.removeIf((x)-> new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
+        l.removeIf((x)->  x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
         int fecha = l.get(0).getInteger("schedule");
         l.removeIf((x)->x.getInteger("schedule") != fecha);
         for (Match a: l) {
@@ -247,6 +255,7 @@ public class Ensalada{
         }
         UsersFixtures uf = new UsersFixtures();
         if(uf.findFirst("user_id = ? and fixture_id = ?",idU, new Fixture().getFix(fix).getInteger("id")) == null) {
+        	System.out.println(new Fixture().getFix(fix).getInteger("id"));
         	 uf.set("user_id", idU);
              uf.set("fixture_id",new Fixture().getFix(fix).getInteger("id"));
              uf.save();
@@ -259,26 +268,28 @@ public class Ensalada{
     public static TemplateViewRoute cargaResulMatch = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
         List<Match> l = new Fixture().getFix(fix).getMatch();
-        int fecha = l.get(0).getInteger("schedule");
-        l.removeIf((x)->x.getInteger("schedule") != fecha);
-        for (Match a: l) {
-            Integer idM=a.getInteger("id");
-            System.out.println(a.getClass());
-            String s = req.queryParams(idM.toString());
-            if(s != null) {
-            	
-            	for(Model mp: MatchPrediction.find("match_id = ?", idM)) {
-            		if(s.equals(mp.getString("prediction")))
-            			mp.setInteger("score",3);            			
-            		else
-            			mp.setInteger("score",0);
-            		mp.save();
-            	}
-            	a.setString("result", req.queryParams(idM.toString()));
-            	a.save();
-            }
-        }
-        
+        l.removeIf((x)-> x.getString("result") != null || "null".equals(x.getString("result")));
+        if(l.size()!=0) {
+	        int fecha = l.get(0).getInteger("schedule");
+	        l.removeIf((x)-> x.getInteger("schedule") != fecha);
+	        for (Match a: l) {
+	            Integer idM=a.getInteger("id");
+	            System.out.println(a.getClass());
+	            String s = req.queryParams(idM.toString());
+	            if(s != null) {
+	            	
+	            	for(Model mp: MatchPrediction.find("match_id = ?", idM)) {
+	            		if(s.equals(mp.getString("prediction")))
+	            			mp.setInteger("score",3);            			
+	            		else
+	            			mp.setInteger("score",0);
+	            		mp.save();
+	            	}
+	            	a.setString("result", req.queryParams(idM.toString()));
+	            	a.save();
+	            }
+	        }
+        }       
         req.session().removeAttribute("lastFixture");
         req.session().removeAttribute("schedule");
         res.redirect("/loged/perfil");
@@ -301,52 +312,21 @@ public class Ensalada{
     };
     
     public static TemplateViewRoute verResults=(req, res) -> {
-    	List<User> lisu= new UsersFixtures().getAllPlayers();
-    	ArrayList<HashMap> allUs = new ArrayList();
+    	List<User> lisu = new UsersFixtures().getAllPlayers();
+    	System.out.println(lisu.size());
+    	ArrayList allUs = new ArrayList();
     	for(User u : lisu) {
     		List<MatchPrediction> mpu = u.getMatchPrediction();
     		ArrayList<Object[]> p = new ArrayList<Object[]>(); 
         	for (MatchPrediction a: mpu) {
        			p.add(a.getPartePerfil());
         	}
-        	HashMap datosUs = new HashMap();
-        	datosUs.put("resul", filtroFuerte(p));
-        	datosUs.put("nick", u.getString("nick"));
-        	allUs.add(datosUs);
+        	allUs.add(filtroFuerte2(p,u.getString("nick")));
     	}
-    	allUs.removeIf((x)->((ArrayList) x.get("resul")).size()==0);
-    	Collections.sort(allUs, (x,y)-> ((String) x.get("nick")).compareTo((String) y.get("nick")));
     	map.put("players", allUs);
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/results.mustache");
-    };
-    
-    public static ArrayList<Object[]> fil(ArrayList<Object[]> x){
-    	HashMap<String, HashMap> f = new HashMap();
-    	HashMap<Integer, Integer> p = new HashMap();
-    	for (Object[] objects : x) {
-    		if (f.containsKey(objects[0])) {
-    			p = f.get(objects[0]);
-				if (p.containsKey(objects[1])) {
-					p.replace((Integer) objects[1], p.get(objects[1])+ (Integer) objects[2]);
-				}else{
-					p.put((Integer) objects[1], (Integer) objects[2]);
-				}
-			}else{
-				p = new HashMap();
-				f.put((String)objects[0], p);
-				p.put((Integer) objects[1], (Integer) objects[2]);
-			}
-		}
-    	ArrayList<Object[]> res = new ArrayList<Object[]>();
-    	for (String c :f.keySet()) {
-			for(Object m : f.get(c).keySet()){
-				res.add(new Object[]{f.get(c).get(m)});
-			}
-		}
-    	return res;
-    }
-    
+    }; 
     
     public static ArrayList<Object[]> filtroFuerte(ArrayList<Object[]> x){
     	HashMap<String, HashMap> f = new HashMap();
@@ -369,6 +349,32 @@ public class Ensalada{
     	for (String c :f.keySet()) {
 			for(Object m : f.get(c).keySet()){
 				res.add(new Object[]{c,m,f.get(c).get(m)});
+			}
+		}
+    	return res;
+    }
+    
+    public static ArrayList<Object[]> filtroFuerte2(ArrayList<Object[]> x,String username){
+    	HashMap<String, HashMap> f = new HashMap();
+    	HashMap<Integer, Integer> p = new HashMap();
+    	for (Object[] objects : x) {
+    		if (f.containsKey(objects[0])) {
+    			p = f.get(objects[0]);
+				if (p.containsKey(objects[1])) {
+					p.replace((Integer) objects[1], p.get(objects[1])+ (Integer) objects[2]);
+				}else{
+					p.put((Integer) objects[1], (Integer) objects[2]);
+				}
+			}else{
+				p = new HashMap();
+				f.put((String)objects[0], p);
+				p.put((Integer) objects[1], (Integer) objects[2]);
+			}
+		}
+    	ArrayList<Object[]> res = new ArrayList<Object[]>();
+    	for (String c :f.keySet()) {
+			for(Object m : f.get(c).keySet()){
+				res.add(new Object[]{username,c,m,f.get(c).get(m)});
 			}
 		}
     	return res;

@@ -188,3 +188,9 @@
     color: white;
 }
 
+footer {
+  position: relative;
+  text-align: center;
+  bottom: -80px;
+  font-size: 25px;
+}

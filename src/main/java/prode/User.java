@@ -56,6 +56,13 @@ public class User extends Model {
 	  l.removeIf((MatchPrediction p) -> p.getInteger("score") == null);
 	  return l;
   }
+  
+//lista de todas las predicciones
+  public List<MatchPrediction> getTotalMatchPrediction(){
+	  List<MatchPrediction> l = new ArrayList<MatchPrediction>();
+	  l.addAll(this.getAll(MatchPrediction.class));
+	  return l;
+  }
 
   public static boolean log(String user, String psw){
       return User.findFirst("nick = ? and password = ?",user, psw) != null;
