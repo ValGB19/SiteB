@@ -307,7 +307,7 @@ public class Ensalada{
     		List<MatchPrediction> mpu = u.getMatchPrediction();
     		ArrayList<Object[]> p = new ArrayList<Object[]>(); 
         	for (MatchPrediction a: mpu) {
-        		p.add(a.getPartePerfil());
+       			p.add(a.getPartePerfil());
         	}
         	HashMap datosUs = new HashMap();
         	datosUs.put("resul", filtroFuerte(p));
