@@ -1,8 +1,6 @@
 package prode;
 
 import org.javalite.activejdbc.Base;
-import prode.User;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,11 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import spark.*;
 import static spark.Spark.*;
 import spark.template.mustache.MustacheTemplateEngine;
 import spark.template.*;
+import Controladores;
 
 public class App{
     
@@ -31,35 +29,35 @@ public class App{
 
         Map map = new HashMap();
 
-	   	before("/loged/*", Ensalada.redicInic);
+	   	before("/loged/*", GeneralController.redicInic);
 	   	
-        before("*", Ensalada.getCountrys);
+        before("*", GeneralController.getCountrys);
         
-        after("*", Ensalada.conecBase);
+        after("*", GeneralController.conecBase);
         
-        get("/", Ensalada.redicPerfil, new MustacheTemplateEngine());
+        get("/", UserController.redicPerfil, new MustacheTemplateEngine());
         
-        post("/", Ensalada.login, new MustacheTemplateEngine());
+        post("/", UserController.login, new MustacheTemplateEngine());
 
-        post("/r", Ensalada.redicInicSesion,new MustacheTemplateEngine());
+        post("/r", UserControllers.redicInicSesion,new MustacheTemplateEngine());
         
-        post("/x", Ensalada.vistaProdeFecha,new MustacheTemplateEngine());
+        post("/x", FixtureController.vistaProdeFecha,new MustacheTemplateEngine());
 
-        post("/y", Ensalada.vistaProdeFecha2,new MustacheTemplateEngine());
+        post("/y", FixtureController.vistaProdeFecha2,new MustacheTemplateEngine());
 
-        post("/j", Ensalada.cargarPrediction,new MustacheTemplateEngine());
+        post("/j", PredictionController.cargarPrediction,new MustacheTemplateEngine());
 	    
-	    post("/a", Ensalada.cargaResulMatch,new MustacheTemplateEngine());
+	    post("/a", PredictionController.cargaResulMatch,new MustacheTemplateEngine());
 
-	    get("/loged/perfil", Ensalada.contain2Perfil, new MustacheTemplateEngine());
+	    get("/loged/perfil", UserController.contain2Perfil, new MustacheTemplateEngine());
 
-	    get("/loged/prode", Ensalada.mainFixtures, new MustacheTemplateEngine());
+	    get("/loged/prode", FixtureController.mainFixtures, new MustacheTemplateEngine());
 	    
-	    get("/loged/results", Ensalada.verResults, new MustacheTemplateEngine());
+	    get("/loged/results", GeneralController.verResults, new MustacheTemplateEngine());
 
-	    get("/loged/admin", Ensalada.mainFixtu, new MustacheTemplateEngine());
+	    get("/loged/admin", FixtureController.mainFixtu, new MustacheTemplateEngine());
 	    
-	    after("/exit", Ensalada.closeSesion);
+	    after("/exit", UserController.closeSesion);
     }    
     
 }
