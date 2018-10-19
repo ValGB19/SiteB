@@ -9,8 +9,11 @@ import java.util.Collections;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 import spark.*;
+import prode.*;
 
 public class PredictionController{
+	static Map map = new HashMap();
+
 	 public static TemplateViewRoute cargarPrediction = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
         String user = req.session().attribute("username");

@@ -9,8 +9,11 @@ import java.util.Collections;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 import spark.*;
+import prode.*;
 
 public class FixtureController{
+	static Map map = new HashMap();
+
 	 public static TemplateViewRoute mainFixtu=(req, res) -> {
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/admin.mustache");

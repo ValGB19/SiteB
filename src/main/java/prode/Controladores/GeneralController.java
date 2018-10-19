@@ -9,8 +9,9 @@ import java.util.Collections;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 import spark.*;
+import prode.*;
 
-public class Ensalada{
+public class GeneralController{
 		
     @SuppressWarnings("rawtypes")
 	

@@ -12,7 +12,7 @@ import spark.*;
 import static spark.Spark.*;
 import spark.template.mustache.MustacheTemplateEngine;
 import spark.template.*;
-import Controladores;
+import prode.Controladores.*;
 
 public class App{
     
@@ -39,7 +39,7 @@ public class App{
         
         post("/", UserController.login, new MustacheTemplateEngine());
 
-        post("/r", UserControllers.redicInicSesion,new MustacheTemplateEngine());
+        post("/r", UserController.redicInicSesion,new MustacheTemplateEngine());
         
         post("/x", FixtureController.vistaProdeFecha,new MustacheTemplateEngine());
 

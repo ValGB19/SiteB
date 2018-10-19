@@ -9,8 +9,12 @@ import java.util.Collections;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 import spark.*;
+import prode.*;
 
 public class UserController{
+
+    static Map map = new HashMap();
+
 	public static HashMap register (Request req, Response res) {
     	String nick = req.queryParams("rUsername");
 		String pwd = req.queryParams("pswRegister");
@@ -109,7 +113,7 @@ public class UserController{
         }
         map.put("cantPred",pred);
         map.put("cantFix",fix);
-        map.put("predUser", filtroFuerte(p));
+        map.put("predUser", GeneralController.filtroFuerte(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
     };
 
