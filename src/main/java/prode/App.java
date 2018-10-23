@@ -18,6 +18,8 @@ public class App{
     
     public static void main( String[] args ){
 
+    	Map map;
+
 	   	staticFiles.location("/public");
 		notFound((req, res) -> {
 			if (req.session().attribute("logueado") == null) {
@@ -26,8 +28,6 @@ public class App{
        		res.redirect("/loged/perfil");
     		return null;
 		});
-
-        Map map = new HashMap();
 
 	   	before("/loged/*", GeneralController.redicInic);
 	   	

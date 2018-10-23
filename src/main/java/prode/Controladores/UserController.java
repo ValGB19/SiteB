@@ -60,8 +60,6 @@ public class UserController{
     			tmp.add("*Palabla magica incorrecta");
 			}
 			mape.put("errorr", tmp);
-			mape.put("paisl", Country.getAllCountrys());
-			System.out.println("No se registro");
 		}
     	return mape;
     };
@@ -121,6 +119,8 @@ public class UserController{
         if (req.session().attribute("logueado") != null) {
             res.redirect("/loged/perfil");
             return null;
+        }else{
+            map.put("paisl", Country.getAllCountrys());           
         }
         return new ModelAndView(map, "./src/main/resources/inicio.mustache");
     };

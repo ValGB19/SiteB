@@ -27,7 +27,6 @@ public class GeneralController{
     public static  Filter getCountrys = (req,res) -> {
     	if (!Base.hasConnection()) {
     		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
-    	    map.put("paisl", Country.getAllCountrys());
 		}
    	};
    	
