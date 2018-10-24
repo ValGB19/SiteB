@@ -18,7 +18,6 @@ public class PredictionController{
         String fix = req.session().attribute("lastFixture");
         String user = req.session().attribute("username");
         int idU = new User().getUser(user).getInteger("id");
-        System.out.println("***************"+fix);
         List<Match> l = new Fixture().getFix(fix).getMatch();
         l.removeIf((x)->  x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
         int fecha = l.get(0).getInteger("schedule");
@@ -33,12 +32,10 @@ public class PredictionController{
         }
         UsersFixtures uf = new UsersFixtures();
         if(uf.findFirst("user_id = ? and fixture_id = ?",idU, new Fixture().getFix(fix).getInteger("id")) == null) {
-        	System.out.println(new Fixture().getFix(fix).getInteger("id"));
         	 uf.set("user_id", idU);
              uf.set("fixture_id",new Fixture().getFix(fix).getInteger("id"));
              uf.save();
         }
-       
         res.redirect("/loged/perfil");
         return null;
     };
@@ -52,13 +49,12 @@ public class PredictionController{
         List<Match> l = new Fixture().getFix(fix).getMatch();
         l.removeIf((x)-> x.getString("result") != null || "null".equals(x.getString("result")));
         if (l.size() == 0)
-            return null
+            return null;
 
         int fecha = l.get(0).getInteger("schedule");
 	    l.removeIf((x)-> x.getInteger("schedule") != fecha);
 	    for (Match a: l) {
             Integer idM=a.getInteger("id");
-	        System.out.println(a.getClass());
             String s = req.queryParams(idM.toString());
             if(s != null) {
             	for(Model mp: MatchPrediction.find("match_id = ?", idM)) {
