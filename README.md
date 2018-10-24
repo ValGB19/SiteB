@@ -1,13 +1,13 @@
-﻿<p align="right">
+﻿<h1 align="center">
+  	Prode
+</h1>
+<br>
+
+<p align="left">
   <a href="https://github.com/ValGB19/SiteB/blob/master/LICENSE.md">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License MIT">
   </a>
 </p>
-<h1 align="center">
-  <br>
-  	Prode
-  <br>
-</h1>
 
 ## Introduction
 
@@ -15,7 +15,7 @@ This repository was created with the intention of making a "Prode" for the subje
 
 
 
-# Contact
+## Contact
 
 Email de contacto: valeriagb.unrc@gmail.com
 
