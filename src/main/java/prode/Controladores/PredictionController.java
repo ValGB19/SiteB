@@ -45,32 +45,33 @@ public class PredictionController{
 
     public static TemplateViewRoute cargaResulMatch = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
-        List<Match> l = new Fixture().getFix(fix).getMatch();
-        l.removeIf((x)-> x.getString("result") != null || "null".equals(x.getString("result")));
-        if(l.size()!=0) {
-	        int fecha = l.get(0).getInteger("schedule");
-	        l.removeIf((x)-> x.getInteger("schedule") != fecha);
-	        for (Match a: l) {
-	            Integer idM=a.getInteger("id");
-	            System.out.println(a.getClass());
-	            String s = req.queryParams(idM.toString());
-	            if(s != null) {
-	            	
-	            	for(Model mp: MatchPrediction.find("match_id = ?", idM)) {
-	            		if(s.equals(mp.getString("prediction")))
-	            			mp.setInteger("score",3);            			
-	            		else
-	            			mp.setInteger("score",0);
-	            		mp.save();
-	            	}
-	            	a.setString("result", req.queryParams(idM.toString()));
-	            	a.save();
-	            }
-	        }
-        }       
         req.session().removeAttribute("lastFixture");
         req.session().removeAttribute("schedule");
         res.redirect("/loged/perfil");
+        
+        List<Match> l = new Fixture().getFix(fix).getMatch();
+        l.removeIf((x)-> x.getString("result") != null || "null".equals(x.getString("result")));
+        if (l.size() == 0)
+            return null
+
+        int fecha = l.get(0).getInteger("schedule");
+	    l.removeIf((x)-> x.getInteger("schedule") != fecha);
+	    for (Match a: l) {
+            Integer idM=a.getInteger("id");
+	        System.out.println(a.getClass());
+            String s = req.queryParams(idM.toString());
+            if(s != null) {
+            	for(Model mp: MatchPrediction.find("match_id = ?", idM)) {
+            		if(s.equals(mp.getString("prediction")))
+            			mp.setInteger("score",3);            			
+            		else
+            			mp.setInteger("score",0);
+            		mp.save();
+            	}
+            	a.setString("result", req.queryParams(idM.toString()));
+            	a.save();
+            }
+        }
         return null;
     };
 }
