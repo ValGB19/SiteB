@@ -53,7 +53,7 @@ public class App{
 
 	    get("/loged/prode", FixtureController.mainFixtures, new MustacheTemplateEngine());
 	    
-	    get("/loged/results", GeneralController.verResults, new MustacheTemplateEngine());
+	    get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
 
 	    get("/loged/admin", FixtureController.mainFixtu, new MustacheTemplateEngine());
 	    

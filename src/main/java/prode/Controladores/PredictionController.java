@@ -70,4 +70,21 @@ public class PredictionController{
         }
         return null;
     };
+
+    public static TemplateViewRoute verResults=(req, res) -> {
+    	List<User> lisu = new UsersFixtures().getAllPlayers();
+    	System.out.println(lisu.size());
+    	ArrayList allUs = new ArrayList();
+    	for(User u : lisu) {
+    		List<MatchPrediction> mpu = u.getMatchPrediction();
+    		ArrayList<Object[]> p = new ArrayList<Object[]>(); 
+        	for (MatchPrediction a: mpu) {
+       			p.add(a.getPartePerfil());
+        	}
+        	allUs.add(GeneralController.filtroFuerte2(p,u.getString("nick")));
+    	}
+    	map.put("players", allUs);
+    	map.put("fixs", Fixture.getAllFixtures());
+        return new ModelAndView(map, "./src/main/resources/loged/results.mustache");
+    }; 
 }
