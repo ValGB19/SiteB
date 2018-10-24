@@ -16,6 +16,8 @@ public class UserController{
     static Map map = new HashMap();
 
 	public static HashMap register (Request req, Response res) {
+        map.remove("errorLogin");
+        map.remove("errorRegister");
     	String nick = req.queryParams("rUsername");
 		String pwd = req.queryParams("pswRegister");
 		String pwd2 = req.queryParams("pswValida"); 	
@@ -59,12 +61,14 @@ public class UserController{
 			if (!"traemelapromocionmessi".equals(pm) && pm!=null) {
     			tmp.add("*Palabla magica incorrecta");
 			}
-			mape.put("errorr", tmp);
+			mape.put("errorRegister", tmp);
 		}
     	return mape;
     };
 
     public static TemplateViewRoute login=(req, res) -> {
+        map.remove("errorLogin");
+        map.remove("errorRegister");
         String usernameL = req.queryParams("usernamelogin");
         String pswL = req.queryParams("pswLogin");
         System.out.println(usernameL + " " + pswL);
@@ -95,7 +99,7 @@ public class UserController{
             return null;
         }
         res.redirect("/");
-        map.put("errrr", mes);
+        map.put("errorLogin", mes);
         return null;
     };
     
@@ -135,6 +139,8 @@ public class UserController{
         }
         map.remove("lastFixture");
         map.remove("schedule");
+        map.remove("errorLogin");
+        map.remove("errorRegister");
         res.redirect("/");
     };
     
