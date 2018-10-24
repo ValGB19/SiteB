@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.UniquenessValidator;
-import org.javalite.activejdbc.Base;
 
 public class Country extends Model{
 

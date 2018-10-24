@@ -1,13 +1,9 @@
 package prode.Controladores;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
-import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.Model;
 import spark.*;
 import prode.*;
 
@@ -22,11 +18,6 @@ public class FixtureController{
     public static TemplateViewRoute mainFixtures=(req, res) -> {
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
-    };
-
-    public static TemplateViewRoute mainFixturesCarga=(req, res) -> {
-        map.put("fixs", Fixture.getAllFixtures());
-        return new ModelAndView(map, "./src/main/resources/loged/admin.mustache");
     };
 
     public static TemplateViewRoute vistaProdeFecha2 = (req,res) ->{

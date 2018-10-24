@@ -1,24 +1,12 @@
 package prode;
 
-import org.javalite.activejdbc.Base;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import spark.*;
 import static spark.Spark.*;
 import spark.template.mustache.MustacheTemplateEngine;
-import spark.template.*;
 import prode.Controladores.*;
 
 public class App{
     
     public static void main( String[] args ){
-
-    	Map map;
 
 	   	staticFiles.location("/public");
 		notFound((req, res) -> {
