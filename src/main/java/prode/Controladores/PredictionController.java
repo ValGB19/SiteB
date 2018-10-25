@@ -72,14 +72,14 @@ public class PredictionController{
     };
 
     public static TemplateViewRoute verResults=(req, res) -> {
-    	List<User> lisu = new UsersFixtures().getAllPlayers();
-    	System.out.println(lisu.size());
+    	List<User> listUsers = new UsersFixtures().getAllPlayers();
+    	System.out.println(listUsers.size());
     	ArrayList allUs = new ArrayList();
-    	for(User u : lisu) {
+    	for(User u : listUsers) {
     		List<MatchPrediction> mpu = u.getMatchPrediction();
     		ArrayList<Object[]> p = new ArrayList<Object[]>(); 
         	for (MatchPrediction a: mpu) {
-       			p.add(a.getPartePerfil());
+       			p.add(new Object[]{a.getLeague(),a.getSchedule(),a.getScore()});
         	}
         	allUs.add(GeneralController.filtroFuerte2(p,u.getString("nick")));
     	}

@@ -1,13 +1,10 @@
 package prode.Controladores;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
 import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.Model;
 import spark.*;
 import prode.*;
 
@@ -69,7 +66,7 @@ public class GeneralController{
     		if (f.containsKey(objects[0])) {
     			p = f.get(objects[0]);
 				if (p.containsKey(objects[1])) {
-					p.replace((Integer) objects[1], p.get(objects[1])+ (Integer) objects[2]);
+					p.replace((Integer) objects[1], p.get(objects[1]) + (Integer) objects[2]);
 				}else{
 					p.put((Integer) objects[1], (Integer) objects[2]);
 				}

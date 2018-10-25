@@ -1,13 +1,9 @@
 package prode.Controladores;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
-import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.Model;
 import spark.*;
 import prode.*;
 
@@ -110,8 +106,8 @@ public class UserController{
         int pred = (u.getTotalMatchPrediction()).size();
         List<MatchPrediction> mpu = u.getMatchPrediction();
         ArrayList<Object[]> p = new ArrayList<Object[]>(); 
-        for (MatchPrediction a: mpu) {
-            p.add(a.getPartePerfil());
+        for (MatchPrediction a: mpu) { //change this. Make a function in fixture wich returns the total poinst of the user in a league
+            p.add(new Object[]{a.getLeague(),a.getSchedule(),a.getScore()});
         }
         map.put("cantPred",pred);
         map.put("cantFix",fix);

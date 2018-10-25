@@ -8,7 +8,7 @@ import spark.*;
 import prode.*;
 
 public class FixtureController{
-	static Map map = new HashMap();
+	static Map<String, Object> map = new HashMap<String, Object>();
 
 	 public static TemplateViewRoute mainFixtu=(req, res) -> {
     	map.put("fixs", Fixture.getAllFixtures());
@@ -38,7 +38,7 @@ public class FixtureController{
     	
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	l.removeIf((x)-> x.getString("result") != null);
-    	ArrayList p = new ArrayList();
+    	ArrayList<HashMap> p = new ArrayList<HashMap>();
     	if(l.size()!=0) {
 	    	int fecha = l.get(0).getInteger("schedule");
 	    	l.removeIf((x)->x.getInteger("schedule") != fecha);

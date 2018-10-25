@@ -8,12 +8,16 @@ public class MatchPrediction extends Model{
     	validateWith(new EnumeMatchPredictionValidator());
   	}
 	
-	public Object[] getPartePerfil(){
-		Object[] res = new Object[3];
-		res[0] = ((Match) Match.findFirst("id = ?", getInteger("match_id"))).getFixture().getString("league") ;//getAll(Match.class).get(0).getFixture().getString("league");
-		res[1] = ((Match) Match.findFirst("id = ?", getInteger("match_id"))).getInteger("schedule");
-		res[2] = getInteger("score");
-		return res;
+	public String getLeague(){
+		return ((Match) Match.findFirst("id = ?", getInteger("match_id"))).getFixture().getString("league");
+	}
+	
+	public Integer getSchedule(){
+		return ((Match) Match.findFirst("id = ?", getInteger("match_id"))).getInteger("schedule");
+	}
+	
+	public Integer getScore(){
+		return getInteger("score");
 	}
 	
 	//@pre user asociado
