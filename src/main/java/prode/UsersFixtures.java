@@ -18,17 +18,17 @@ public class UsersFixtures extends Model {
 		return User.findFirst("id = ?", getInteger("user_id"));
 	}
 	
-	public List getAllPlayers() {
-		List<Integer> idU = findAll().collect("user_id");
-		List<User> listu = new ArrayList<User>();
-		Set hs = new HashSet();
-		hs.addAll(idU);
-		idU.clear();
-		idU.addAll(hs);
-		for(Integer n:idU) {
-			listu.add(new User().getUser(n));
+	public List<User> getAllPlayers() {
+		List<Integer> listID = findAll().collect("user_id");
+		List<User> listUser = new ArrayList<User>();
+		Set<Integer> hs = new HashSet<Integer>();
+		hs.addAll(listID);
+		listID.clear();
+		listID.addAll(hs);
+		for(Integer n:listID) {
+			listUser.add(new User().getUser(n));
 		}
-		return listu;
+		return listUser;
 	}
 	
 	public int cantFixUser(int id) {

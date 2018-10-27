@@ -2,11 +2,9 @@ package prode.Controladores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.javalite.activejdbc.Base;
 import spark.*;
-import prode.*;
 
 public class GeneralController{
 		

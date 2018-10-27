@@ -34,11 +34,10 @@ public class FixtureController{
     	}
     	r = f.get(i-1);
     	req.session().attribute("lastFixture",r);
-    	int idU = new User().getUser(req.session().attribute("username")).getInteger("id");
     	
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	l.removeIf((x)-> x.getString("result") != null);
-    	ArrayList<HashMap> p = new ArrayList<HashMap>();
+    	ArrayList<HashMap<String,Object>> p = new ArrayList<HashMap<String,Object>>();
     	if(l.size()!=0) {
 	    	int fecha = l.get(0).getInteger("schedule");
 	    	l.removeIf((x)->x.getInteger("schedule") != fecha);
@@ -70,7 +69,7 @@ public class FixtureController{
         int idU = new User().getUser(req.session().attribute("username")).getInteger("id");
     	List<Match> l = new Fixture().getFix(r).getMatch();
     	l.removeIf((x)-> x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
-    	ArrayList p = new ArrayList();
+    	ArrayList<Map<String,Object>> p = new ArrayList<Map<String,Object>>();
     	if(l.size()!=0) {
     		int fecha = l.get(0).getInteger("schedule");
 	    	l.removeIf((x)->x.getInteger("schedule") != fecha);

@@ -1,18 +1,15 @@
 package prode.Controladores;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
-import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 import spark.*;
 import prode.*;
 
 public class PredictionController{
-	static Map map = new HashMap();
+	static Map<String,Object> map = new HashMap<String,Object>();
 
 	 public static TemplateViewRoute cargarPrediction = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
@@ -31,7 +28,7 @@ public class PredictionController{
             pred.save();
         }
         UsersFixtures uf = new UsersFixtures();
-        if(uf.findFirst("user_id = ? and fixture_id = ?",idU, new Fixture().getFix(fix).getInteger("id")) == null) {
+        if(UsersFixtures.findFirst("user_id = ? and fixture_id = ?",idU, new Fixture().getFix(fix).getInteger("id")) == null) {
         	 uf.set("user_id", idU);
              uf.set("fixture_id",new Fixture().getFix(fix).getInteger("id"));
              uf.save();
@@ -74,7 +71,7 @@ public class PredictionController{
     public static TemplateViewRoute verResults=(req, res) -> {
     	List<User> listUsers = new UsersFixtures().getAllPlayers();
     	System.out.println(listUsers.size());
-    	ArrayList allUs = new ArrayList();
+    	ArrayList<List<Object[]>> allUs = new ArrayList<List<Object[]>>();
     	for(User u : listUsers) {
     		List<MatchPrediction> mpu = u.getMatchPrediction();
     		ArrayList<Object[]> p = new ArrayList<Object[]>(); 

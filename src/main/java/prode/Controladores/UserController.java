@@ -9,9 +9,9 @@ import prode.*;
 
 public class UserController{
 
-    static Map map = new HashMap();
+    static Map<String, Object> map = new HashMap<String, Object>();
 
-	public static HashMap register (Request req, Response res) {
+	public static HashMap<String, Object> register (Request req, Response res) {
         map.remove("errorLogin");
         map.remove("errorRegister");
     	String nick = req.queryParams("rUsername");
@@ -38,9 +38,9 @@ public class UserController{
  				e = temp.save();
  			}	
 		}
-		HashMap mape = new HashMap();
+		HashMap<String, Object> mape = new HashMap<String, Object>();
     	if (!e) {
-    		ArrayList tmp = new ArrayList();
+    		ArrayList<String> tmp = new ArrayList<String>();
     		tmp.add("Datos incorrectos");
     		if (!pwd.equals(pwd2)) {
     			tmp.add("*Las contrase?s no coinciden");
