@@ -95,20 +95,10 @@ public class User extends Model {
 		}
 		return m;
 	}
-
-	// change name. Fill commentary
-	public List<List> arregloFiltrouno(List<List<Object>> a) {
-		List l = new ArrayList();
-		if (a == null | a.get(0) == null)
-			return null;
-		if (a.get(0).size() == 1) {
-			List r = new ArrayList();
-			l.add(foldrSuma(a));
-			r.add(l);
-			return r;
-		}
-		HashMap<Object, List<List<Object>>> m = agruparPorPrimerCampo(a); //renombrar
+	
+	private ArrayList unzip(HashMap<Object, List<List<Object>>> m) {
 		ArrayList res = new ArrayList();
+		List l = new ArrayList();
 		for (Object k : m.keySet()) {
 			for (List<Object> j : arregloFiltrouno(m.get(k))) {
 				l = new ArrayList();
@@ -118,5 +108,19 @@ public class User extends Model {
 			}
 		}
 		return res;
+	}
+
+	// change name. Fill commentary
+	public List<List> arregloFiltrouno(List<List<Object>> a) {
+		if (a == null | a.get(0) == null) return null;
+		if (a.get(0).size() == 1) {
+			List l = new ArrayList();
+			List r = new ArrayList();
+			l.add(foldrSuma(a));
+			r.add(l);
+			return r;
+		}
+		HashMap<Object, List<List<Object>>> m = agruparPorPrimerCampo(a); //renombrar
+		return unzip(m);
 	}
 }
