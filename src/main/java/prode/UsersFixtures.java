@@ -31,8 +31,8 @@ public class UsersFixtures extends Model {
 		return listUser;
 	}
 	
-	public int cantFixUser(int id) {
-		List<Integer> idU = findAll().collect("user_id");
+	public int cantFixUser(int id) { //ver sig code return this.find("user_id = ?", id).size()
+		List<Integer> idU = findAll().collect("user_id"); 
 		int i=0;
 		for(Integer n:idU) {
 			if(n==id)

@@ -105,13 +105,18 @@ public class UserController{
         int fix = new UsersFixtures().cantFixUser(u.getInteger("id"));
         int pred = (u.getTotalMatchPrediction()).size();
         List<MatchPrediction> mpu = u.getMatchPrediction();
-        ArrayList<Object[]> p = new ArrayList<Object[]>(); 
+        ArrayList<List<Object>> p = new ArrayList<List<Object>>(); 
+        List<Object> l;
         for (MatchPrediction a: mpu) { //change this. Make a function in fixture wich returns the total poinst of the user in a league
-            p.add(new Object[]{a.getLeague(),a.getSchedule(),a.getScore()});
+        	l = new ArrayList<Object>();
+        	l.add(a.getLeague());
+        	l.add(a.getSchedule());
+        	l.add(a.getScore());
+            p.add(l);
         }
         map.put("cantPred",pred);
         map.put("cantFix",fix);
-        map.put("predUser", GeneralController.filtroFuerte(p));
+        map.put("predUser", u.arregloFiltrouno(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
     };
 
