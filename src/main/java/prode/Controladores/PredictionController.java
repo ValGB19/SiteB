@@ -71,14 +71,20 @@ public class PredictionController{
     public static TemplateViewRoute verResults=(req, res) -> {
     	List<User> listUsers = new UsersFixtures().getAllPlayers();
     	System.out.println(listUsers.size());
-    	ArrayList<List<Object[]>> allUs = new ArrayList<List<Object[]>>();
+    	ArrayList<List<List>> allUs = new ArrayList<List<List>>();
     	for(User u : listUsers) {
     		List<MatchPrediction> mpu = u.getMatchPrediction();
-    		ArrayList<Object[]> p = new ArrayList<Object[]>(); 
-        	for (MatchPrediction a: mpu) {
-       			p.add(new Object[]{a.getLeague(),a.getSchedule(),a.getScore()});
-        	}
-        	allUs.add(GeneralController.filtroFuerte2(p,u.getString("nick")));
+    		ArrayList<List<Object>> p = new ArrayList<List<Object>>(); 
+            List<Object> l;
+            for (MatchPrediction a: mpu) { //change this. Make a function in fixture wich returns the total poinst of the user in a league
+            	l = new ArrayList<Object>();
+            	l.add(u.getString("nick"));
+            	l.add(a.getLeague());
+            	l.add(a.getSchedule());
+            	l.add(a.getScore());
+                p.add(l);
+            }
+        	allUs.add(u.arregloFiltrouno(p));
     	}
     	map.put("players", allUs);
     	map.put("fixs", Fixture.getAllFixtures());
