@@ -81,7 +81,6 @@ public class UserController{
             log = true;
             String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
             String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
-            
             map.put("nic", usernameL);
             map.put("name", name);
             map.put("surname", surname);
@@ -100,8 +99,8 @@ public class UserController{
     };
     
     public static TemplateViewRoute contain2Perfil=(req, res) -> {
-        String m = req.session().attribute("username");
-        User u = (User.findFirst("nick = ?",m));
+        String n = req.session().attribute("username");
+        User u = (User.findFirst("nick = ?",n));
         int fix = new UsersFixtures().cantFixUser(u.getInteger("id"));
         int pred = (u.getTotalMatchPrediction()).size();
         List<MatchPrediction> mpu = u.getMatchPrediction();
@@ -116,6 +115,7 @@ public class UserController{
         }
         map.put("cantPred",pred);
         map.put("cantFix",fix);
+        map.put("nic", n);
         map.put("predUser", u.arregloFiltrouno(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
     };

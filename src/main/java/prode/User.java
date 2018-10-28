@@ -79,32 +79,35 @@ public class User extends Model {
 		return r;
 	}
 
-	// change name. Fill commentary
-	public List<List> arregloFiltrouno(List<List<Object>> a){ //[[1,2,3] [1,2,3]]
-		List l = new ArrayList();
-		if (a.get(0).size() == 1) {
-			List r = new ArrayList();
-			r.add(l);
-			l.add(foldrSuma(a));
-			return r;
-		}
-
+	private HashMap<Object, List<List<Object>>> agruparPorPrimerCampo(List<List<Object>> a) {
 		HashMap<Object, List<List<Object>>> m = new HashMap<Object, List<List<Object>>>();
-		Object aux;
-		// Unific items
+		List l = new ArrayList();
 		for (List b : a) {
-			aux = b.get(0);
+			Object aux = b.get(0);
 			b.remove(0);
-			if (m.containsKey(aux)) {
+			if (m.containsKey(aux))
 				m.get(aux).add(b);
-			} else {
+			else {
 				l = new ArrayList();
 				l.add(b);
 				m.put(aux, l);
 			}
 		}
+		return m;
+	}
 
-		// to normal
+	// change name. Fill commentary
+	public List<List> arregloFiltrouno(List<List<Object>> a) {
+		List l = new ArrayList();
+		if (a == null | a.get(0) == null)
+			return null;
+		if (a.get(0).size() == 1) {
+			List r = new ArrayList();
+			l.add(foldrSuma(a));
+			r.add(l);
+			return r;
+		}
+		HashMap<Object, List<List<Object>>> m = agruparPorPrimerCampo(a); //renombrar
 		ArrayList res = new ArrayList();
 		for (Object k : m.keySet()) {
 			for (List<Object> j : arregloFiltrouno(m.get(k))) {
