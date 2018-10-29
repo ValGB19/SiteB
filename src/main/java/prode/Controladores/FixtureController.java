@@ -20,6 +20,7 @@ public class FixtureController{
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
     };
 
+    
     public static TemplateViewRoute vistaProdeFecha2 = (req,res) ->{
     	List<String> f = Fixture.getAllFixtures();
     	String r = null;

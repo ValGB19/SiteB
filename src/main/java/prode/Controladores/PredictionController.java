@@ -84,7 +84,7 @@ public class PredictionController{
             	l.add(a.getScore());
                 p.add(l);
             }
-        	allUs.add(GeneralController.arregloFiltrouno(p));
+        	allUs.add(GeneralController.getAcum(p));
     	}
     	map.put("players", allUs);
     	map.put("fixs", Fixture.getAllFixtures());

@@ -32,7 +32,7 @@ public class GeneralController{
 		}
     };
     
-    private static Integer foldrSuma(List<List<Object>> l) {
+    private static Integer foldrSum(List<List<Object>> l) {
 		Integer r = 0;
 		for (List<Object> n : l) {
 			r = r + (Integer) n.get(0);
@@ -40,7 +40,7 @@ public class GeneralController{
 		return r;
 	}
 
-	private static HashMap<Object, List<List<Object>>> agruparPorPrimerCampo(List<List<Object>> a) {
+	private static HashMap<Object, List<List<Object>>> groupByFstField(List<List<Object>> a) {
 		HashMap<Object, List<List<Object>>> m = new HashMap<Object, List<List<Object>>>();
 		List<List<Object>> l = new ArrayList<List<Object>>();
 		for (List<Object> b : a) {
@@ -57,11 +57,11 @@ public class GeneralController{
 		return m;
 	}
 	
-	private static List<List<Object>> unzip(HashMap<Object, List<List<Object>>> m) {
+	private static List<List<Object>> ungrup(HashMap<Object, List<List<Object>>> m) {
 		ArrayList<List<Object>> res = new ArrayList<List<Object>>();
 		List<Object> l = new ArrayList<Object>();
 		for (Object k : m.keySet()) {
-			for (List<Object> j : arregloFiltrouno(m.get(k))) {
+			for (List<Object> j : getAcum(m.get(k))) {
 				l = new ArrayList<Object>();
 				l.add(k);
 				l.addAll(j);
@@ -72,15 +72,15 @@ public class GeneralController{
 	}
 
 	// change name. Fill commentary
-	public static List<List<Object>> arregloFiltrouno(List<List<Object>> a) {
+	public static List<List<Object>> getAcum(List<List<Object>> a) {
 		if (a == null || a.size() == 0) return null;
 		if (a.get(0).size() == 1) {
 			List<Object> l = new ArrayList<Object>();
 			List<List<Object>> r = new ArrayList<List<Object>>();
-			l.add(foldrSuma(a));
+			l.add(foldrSum(a));
 			r.add(l);
 			return r;
 		}
-		return unzip(agruparPorPrimerCampo(a));
+		return ungrup(groupByFstField(a));
 	}
 }

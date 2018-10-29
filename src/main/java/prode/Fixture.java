@@ -13,9 +13,9 @@ public class Fixture extends Model {
   	}
 
   	public static List<String> getAllFixtures() {
-		return findAll().collect("league");
-	}
-  	
+		  return findAll().collect("league");
+	  }
+
   	public Fixture getFix(String n) {
   		return findFirst("league = ?",n);
   	}
