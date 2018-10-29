@@ -2,6 +2,7 @@ package prode.Controladores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.javalite.activejdbc.Base;
 import spark.*;
@@ -30,4 +31,56 @@ public class GeneralController{
     		Base.close();
 		}
     };
+    
+    private static Integer foldrSuma(List<List<Object>> l) {
+		Integer r = 0;
+		for (List<Object> n : l) {
+			r = r + (Integer) n.get(0);
+		}
+		return r;
+	}
+
+	private static HashMap<Object, List<List<Object>>> agruparPorPrimerCampo(List<List<Object>> a) {
+		HashMap<Object, List<List<Object>>> m = new HashMap<Object, List<List<Object>>>();
+		List<List<Object>> l = new ArrayList<List<Object>>();
+		for (List<Object> b : a) {
+			Object aux = b.get(0);
+			b.remove(0);
+			if (m.containsKey(aux))
+				m.get(aux).add(b);
+			else {
+				l = new ArrayList<List<Object>>();
+				l.add(b);
+				m.put(aux, l);
+			}
+		}
+		return m;
+	}
+	
+	private static List<List<Object>> unzip(HashMap<Object, List<List<Object>>> m) {
+		ArrayList<List<Object>> res = new ArrayList<List<Object>>();
+		List<Object> l = new ArrayList<Object>();
+		for (Object k : m.keySet()) {
+			for (List<Object> j : arregloFiltrouno(m.get(k))) {
+				l = new ArrayList<Object>();
+				l.add(k);
+				l.addAll(j);
+				res.add(l);
+			}
+		}
+		return res;
+	}
+
+	// change name. Fill commentary
+	public static List<List<Object>> arregloFiltrouno(List<List<Object>> a) {
+		if (a == null || a.size() == 0) return null;
+		if (a.get(0).size() == 1) {
+			List<Object> l = new ArrayList<Object>();
+			List<List<Object>> r = new ArrayList<List<Object>>();
+			l.add(foldrSuma(a));
+			r.add(l);
+			return r;
+		}
+		return unzip(agruparPorPrimerCampo(a));
+	}
 }

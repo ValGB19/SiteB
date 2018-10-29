@@ -71,7 +71,7 @@ public class PredictionController{
     public static TemplateViewRoute verResults=(req, res) -> {
     	List<User> listUsers = new UsersFixtures().getAllPlayers();
     	System.out.println(listUsers.size());
-    	ArrayList<List<List>> allUs = new ArrayList<List<List>>();
+    	ArrayList<List<List<Object>>> allUs = new ArrayList<List<List<Object>>>();
     	for(User u : listUsers) {
     		List<MatchPrediction> mpu = u.getMatchPrediction();
     		ArrayList<List<Object>> p = new ArrayList<List<Object>>(); 
@@ -84,7 +84,7 @@ public class PredictionController{
             	l.add(a.getScore());
                 p.add(l);
             }
-        	allUs.add(u.arregloFiltrouno(p));
+        	allUs.add(GeneralController.arregloFiltrouno(p));
     	}
     	map.put("players", allUs);
     	map.put("fixs", Fixture.getAllFixtures());

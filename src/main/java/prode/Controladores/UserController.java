@@ -116,7 +116,7 @@ public class UserController{
         map.put("cantPred",pred);
         map.put("cantFix",fix);
         map.put("nic", n);
-        map.put("predUser", u.arregloFiltrouno(p));
+        map.put("predUser", GeneralController.arregloFiltrouno(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
     };
 
