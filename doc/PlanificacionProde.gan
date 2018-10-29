@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Prode 2018" company="D&amp;G" webLink="http://" view-date="2018-10-29" view-index="0" gantt-divider-location="300" resource-divider-location="300" version="2.8.9" locale="es_AR">
+    <description/>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Nombre" width="167" order="0"/>
+        <field id="tpd4" name="Fecha de inicio" width="65" order="1"/>
+        <field id="tpd5" name="Fecha de fin" width="64" order="2"/>
+        <option id="color.recent"><![CDATA[#ff33ff #0099ff #ff9933 #99ff99 #33ffff #ff0033 #009900 #ff3333]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nombre" width="210" order="0"/>
+        <field id="1" name="Función" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="56" name="Planificacion de Historias de Usuario" color="#8cb6ce" meeting="false" start="2018-10-29" duration="1" complete="0" thirdDate="2018-10-29" thirdDate-constraint="0" expand="true">
+            <depend id="0" type="2" difference="0" hardness="Strong"/>
+            <depend id="25" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="0" name="Optimizacion de GeneralController.filtroFuerte()" color="#ff33ff" meeting="false" start="2018-10-30" duration="1" complete="0" thirdDate="2018-10-29" thirdDate-constraint="0" expand="true">
+            <depend id="31" type="2" difference="0" hardness="Strong"/>
+            <depend id="48" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="25" name="Optimizacion de UserController.register()" color="#ff9933" meeting="false" start="2018-10-30" duration="2" complete="0" thirdDate="2018-10-29" thirdDate-constraint="0" expand="true">
+            <depend id="31" type="2" difference="0" hardness="Strong"/>
+            <depend id="48" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="31" name="Reducir Cantidad de Rutas y Cambiar Nombres" color="#0099ff" meeting="false" start="2018-11-01" duration="2" complete="0" thirdDate="2018-10-29" thirdDate-constraint="0" expand="true">
+            <depend id="2" type="2" difference="0" hardness="Strong"/>
+            <depend id="5" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="48" name="Eliminar Código Duplicado" color="#8cb6ce" meeting="false" start="2018-11-01" duration="1" complete="0" thirdDate="2018-10-29" thirdDate-constraint="0" expand="true">
+            <depend id="2" type="2" difference="0" hardness="Strong"/>
+            <depend id="5" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="5" name="Renombrar Metodos y Variables" color="#ff0033" meeting="false" start="2018-11-05" duration="2" complete="0" thirdDate="2018-10-29" thirdDate-constraint="0" expand="true">
+            <depend id="14" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="2" name="Eliminar Warnings" color="#33ffff" meeting="false" start="2018-11-05" duration="1" complete="0" thirdDate="2018-10-29" thirdDate-constraint="0" expand="true"/>
+        <task id="14" name="Añadir JavaDoc" color="#009900" meeting="false" start="2018-11-07" duration="2" complete="0" thirdDate="2018-10-29" thirdDate-constraint="0" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="D'alessandro, Nicolás" function="Default:1" contacts="" phone=""/>
+        <resource id="1" name="García, Valeria" function="Default:1" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="0" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="56" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="25" resource-id="1" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="56" resource-id="1" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="1" function="Default:1" responsible="true" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
