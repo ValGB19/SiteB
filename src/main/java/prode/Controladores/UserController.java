@@ -1,21 +1,17 @@
 package prode.Controladores;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
-import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.Model;
 import spark.*;
 import prode.*;
 
 public class UserController{
 
-    static Map map = new HashMap();
+    static Map<String, Object> map = new HashMap<String, Object>();
 
-	public static HashMap register (Request req, Response res) {
+	public static HashMap<String, Object> register (Request req, Response res) {
         map.remove("errorLogin");
         map.remove("errorRegister");
     	String nick = req.queryParams("rUsername");
@@ -42,9 +38,9 @@ public class UserController{
  				e = temp.save();
  			}	
 		}
-		HashMap mape = new HashMap();
+		HashMap<String, Object> mape = new HashMap<String, Object>();
     	if (!e) {
-    		ArrayList tmp = new ArrayList();
+    		ArrayList<String> tmp = new ArrayList<String>();
     		tmp.add("Datos incorrectos");
     		if (!pwd.equals(pwd2)) {
     			tmp.add("*Las contrase?s no coinciden");
@@ -85,7 +81,6 @@ public class UserController{
             log = true;
             String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
             String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
-            
             map.put("nic", usernameL);
             map.put("name", name);
             map.put("surname", surname);
@@ -104,18 +99,24 @@ public class UserController{
     };
     
     public static TemplateViewRoute contain2Perfil=(req, res) -> {
-        String m = req.session().attribute("username");
-        User u = (User.findFirst("nick = ?",m));
+        String n = req.session().attribute("username");
+        User u = (User.findFirst("nick = ?",n));
         int fix = new UsersFixtures().cantFixUser(u.getInteger("id"));
         int pred = (u.getTotalMatchPrediction()).size();
         List<MatchPrediction> mpu = u.getMatchPrediction();
-        ArrayList<Object[]> p = new ArrayList<Object[]>(); 
-        for (MatchPrediction a: mpu) {
-            p.add(a.getPartePerfil());
+        ArrayList<List<Object>> p = new ArrayList<List<Object>>(); 
+        List<Object> l;
+        for (MatchPrediction a: mpu) { //change this. Make a function in fixture wich returns the total poinst of the user in a league
+        	l = new ArrayList<Object>();
+        	l.add(a.getLeague());
+        	l.add(a.getSchedule());
+        	l.add(a.getScore());
+            p.add(l);
         }
         map.put("cantPred",pred);
         map.put("cantFix",fix);
-        map.put("predUser", GeneralController.filtroFuerte(p));
+        map.put("nic", n);
+        map.put("predUser", GeneralController.getAcum(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
     };
 

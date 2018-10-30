@@ -33,8 +33,8 @@ public class Match extends Model {
 		return getInteger("visit_team_id");
 	}
 	
-	public HashMap paraPredic() {
-		HashMap res = new HashMap();
+	public HashMap<String,Object> paraPredic() {
+		HashMap<String,Object> res = new HashMap<String,Object>();
 		res.put("local",Team.findFirst("id = ?",getInteger("local_team_id")).getString("name"));
 		res.put("id",getInteger("id"));
 		res.put("visit",Team.findFirst("id = ?",getInteger("visit_team_id")).getString("name"));

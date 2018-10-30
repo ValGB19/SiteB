@@ -8,7 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class MatchTest {
   @Before
@@ -35,14 +36,14 @@ public class MatchTest {
   @Test
   public void validatePrecenseOfSchedule(){
     Match matchTest = new Match();
-    matchTest.set("day", new Date(2010,4,12));
+    matchTest.set("day", LocalDate.of(2010,4,12));
     assertEquals(matchTest.isValid(), false);
   }
 
   @Test
   public void validateEnum(){
     Match matchTest = new Match();
-    matchTest.set("day", new Date(2010,4,12), "result", "No Gano Riber");
+    matchTest.set("day", LocalDate.of(2010,4,12), "result", "No Gano Riber");
     assertEquals(matchTest.isValid(), false);
   }
 

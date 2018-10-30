@@ -9,6 +9,7 @@ public class App{
     public static void main( String[] args ){
 
 	   	staticFiles.location("/public");
+	   	
 		notFound((req, res) -> {
 			if (req.session().attribute("logueado") == null) {
 	    		res.redirect("/");
@@ -22,6 +23,8 @@ public class App{
         before("*", GeneralController.getCountrys);
         
         after("*", GeneralController.conecBase);
+
+        after("/exit", UserController.closeSesion);
         
         get("/", UserController.redicPerfil, new MustacheTemplateEngine());
         
@@ -44,8 +47,6 @@ public class App{
 	    get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
 
 	    get("/loged/admin", FixtureController.mainFixtu, new MustacheTemplateEngine());
-	    
-	    after("/exit", UserController.closeSesion);
     }    
     
 }

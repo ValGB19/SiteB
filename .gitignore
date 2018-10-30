@@ -2,3 +2,5 @@
 *.gif
 *.class
 /bin
+.project
+
