@@ -66,4 +66,20 @@ public class User extends Model {
 	public static boolean log(String user, String psw) {
 		return User.findFirst("nick = ? and password = ?", user, psw) != null;
 	}
+
+	public boolean setUserTemp(String name, String surname, String nick, String email, String password, Integer  dni, String country, Boolean isAdmin, String key){
+		boolean e = false;
+		this.set("name", name);
+		this.set("surname", surname);
+		this.set("nick", nick);
+		this.set("email", email);
+		this.set("password", password);
+		this.set("dni", dni);
+		this.set("country_id", Country.findFirst("name = ?", country).get("id"));
+		this.set("admin", isAdmin);
+		if (isAdmin || (key == null) || (key.isEmpty())) {
+			e = this.save();
+		}
+		return e;
+	}
 }
