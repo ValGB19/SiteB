@@ -11,16 +11,18 @@ public class FixtureController{
 	static Map<String, Object> map = new HashMap<String, Object>();
 
 	 public static TemplateViewRoute mainFixtu=(req, res) -> {
+		map.put("nic",req.session().attribute("username"));
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/admin.mustache");
     };
 
     public static TemplateViewRoute mainFixtures=(req, res) -> {
+    	map.put("nic",req.session().attribute("username"));
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
     };
 
-    private static String getFstFixture(Request req){
+  private static String getFstFixture(Request req){
     	List<String> f = Fixture.getAllFixtures();
     	int i = 0;
     	String r = null;
@@ -35,7 +37,8 @@ public class FixtureController{
     }
     
     public static TemplateViewRoute vistaProdeFecha2 = (req,res) ->{
-    	List<String> f = Fixture.getAllFixtures();
+      map.put("nic",req.session().attribute("username"));
+      List<String> f = Fixture.getAllFixtures();
     	String r = getFstFixture(req);
     	if (r == null) {
     		res.redirect("/loged/prode");
@@ -51,6 +54,7 @@ public class FixtureController{
     };
 
     public static TemplateViewRoute vistaProdeFecha = (req,res) ->{
+    	map.put("nic",req.session().attribute("username"));
     	List<String> f = Fixture.getAllFixtures();
     	String r = getFstFixture(req);
         if (r == null) {
