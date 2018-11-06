@@ -12,7 +12,8 @@
 			<br>
 			<br>
 			<ul>
-			<form method="post" action="/x" id="form-list-apuestas" name="form-list-apuestas">
+			<form method="post" action="/loged/prode" id="form-list-apuestas" name="form-list-apuestas">
+				<input id="action" notab="" type="hidden" name="action" value="fixtures">
 				{{#fixs}}<div> <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
 			</form>
 			</ul>
@@ -23,7 +24,8 @@
 					<h1 align="center"><i><u>{{lastFixture}}</u></i></h1>
 					<h1 align="center"><i><u>Fecha N°{{fechaVig}}</u></i></h1>
 				</font>
-				<form method="post" action="/j" id="form-registro" name="form-registro">
+				<form method="post" action="/loged/prode" id="form-registro" name="form-registro">
+				<input id="action" notab="" type="hidden" name="action" value="matches">
 				<table id="customers">
 				  <tr>
 					<th>Local</th>

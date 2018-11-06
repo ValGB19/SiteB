@@ -28,17 +28,11 @@ public class App{
         
         get("/", UserController.redicPerfil, new MustacheTemplateEngine());
         
-        post("/", UserController.login, new MustacheTemplateEngine());
+        post("/", UserController.home, new MustacheTemplateEngine());
 
-        post("/r", UserController.redicInicSesion,new MustacheTemplateEngine());
+        post("/loged/prode", GeneralController.redicProde,new MustacheTemplateEngine());
         
-        post("/x", FixtureController.vistaProdeFecha,new MustacheTemplateEngine());
-
-        post("/y", FixtureController.vistaProdeFecha2,new MustacheTemplateEngine());
-
-        post("/j", PredictionController.cargarPrediction,new MustacheTemplateEngine());
-	    
-	    post("/a", PredictionController.cargaResulMatch,new MustacheTemplateEngine());
+        post("/loged/admin", GeneralController.redicAdmin,new MustacheTemplateEngine());
 
 	    get("/loged/perfil", UserController.contain2Perfil, new MustacheTemplateEngine());
 
