@@ -11,27 +11,6 @@ public class UserController{
 
     static Map<String, Object> map = new HashMap<String, Object>();
 
-    public static ArrayList<String> errorsRegister (Map<String, String> data){
-		ArrayList<String> tmp = new ArrayList<String>();
-    	tmp.add("Datos incorrectos");
-		if (!data.get("pwd").equals(data.get("pwd2"))) {
-			tmp.add("*Las contrase?s no coinciden");
-		}
-		if (User.findFirst("nick = ?", data.get("nick")) != null) {
-			tmp.add("*El nickname ya esta en uso");
-		}
-		if (User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null) {
-			tmp.add("*Ese dni ya esta registrado");
-		}
-		if (User.findFirst("email = ?", data.get("email")) != null) {
-			tmp.add("*Ese email ya esta registrado");
-		}
-		if (!"traemelapromocionmessi".equals(data.get("key")) && (data.get("key"))!=null) {
-			tmp.add("*Palabla magica incorrecta");
-		}
-		return tmp;
-    }
-	
 	public static HashMap<String, Object> register (Request req, Response res) {
         map.remove("errorLogin");
         map.remove("errorRegister");
@@ -58,6 +37,22 @@ public class UserController{
     	return mape;
     };
 
+    private static ArrayList<String> errorsRegister (Map<String, String> data){
+		ArrayList<String> tmp = new ArrayList<String>();
+    	tmp.add("Datos incorrectos");
+    	addError((!data.get("pwd").equals(data.get("pwd2"))),"*Las contrase?s no coinciden", tmp);
+    	addError((User.findFirst("nick = ?", data.get("nick")) != null),"*El nickname ya esta en uso", tmp);
+    	addError((User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null),"*Ese dni ya esta registrado", tmp);
+    	addError((User.findFirst("email = ?", data.get("email")) != null),"*Ese email ya esta registrado", tmp);
+    	addError((!"traemelapromocionmessi".equals(data.get("key")) && (data.get("key"))!=null),"*Palabla magica incorrecta", tmp);
+		return tmp;
+    }
+    
+    private static void addError(Boolean condition, String message, ArrayList<String> list) {
+    	if(condition)
+    		list.add(message);
+    }
+    
     public static TemplateViewRoute login=(req, res) -> {
         map.remove("errorLogin");
         map.remove("errorRegister");
