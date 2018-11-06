@@ -1,6 +1,7 @@
 package prode;
 
 import java.util.HashMap;
+import java.util.function.Predicate;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
@@ -10,6 +11,7 @@ import org.javalite.activejdbc.annotations.BelongsToParents;
 	@BelongsTo(foreignKeyName="visit_team_id",parent=Team.class)
 })
 public class Match extends Model {
+	
 	static{
 		validatePresenceOf("day").message("Please, provide date");
     	validatePresenceOf("schedule").message("Please, provide schedule");
@@ -43,5 +45,9 @@ public class Match extends Model {
 
 	public int idParaPred() {
 		return getInteger("id");
+	}
+	
+	public static Predicate<Match> filterById(int idU){
+		return (Match x) -> (x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
 	}
 }
