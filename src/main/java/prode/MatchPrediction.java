@@ -25,8 +25,8 @@ public class MatchPrediction extends Model{
 		return User.findFirst("id = ?",getInteger("user_id"));
 	}
 	
-	public boolean comprobaJuego(Integer idU, Integer idM) {
-		return null != MatchPrediction.findFirst("user_id = ? && match_id = ?", idU, idM); 
+	public boolean checkGame(Integer idUser, Integer idMatch) {
+		return MatchPrediction.findFirst("user_id = ? && match_id = ?", idUser, idMatch) != null; 
 	}
 	
 	//@pre schedulescore asociado

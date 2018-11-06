@@ -35,19 +35,19 @@ public class Match extends Model {
 		return getInteger("visit_team_id");
 	}
 	
-	public HashMap<String,Object> paraPredic() {
+	public HashMap<String,Object> forPrediction() {
 		HashMap<String,Object> res = new HashMap<String,Object>();
 		res.put("local",Team.findFirst("id = ?",getInteger("local_team_id")).getString("name"));
-		res.put("id",getInteger("id"));
+		res.put("id",getID());
 		res.put("visit",Team.findFirst("id = ?",getInteger("visit_team_id")).getString("name"));
 		return res;
 	}
 
-	public int idParaPred() {
+	public int getID() {
 		return getInteger("id");
 	}
 	
-	public static Predicate<Match> filterById(int idU){
-		return (Match x) -> (x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
+	public static Predicate<Match> filterById(int idUser){
+		return (Match x) -> (x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().checkGame(idUser, x.getInteger("id")));
 	}
 }

@@ -19,7 +19,7 @@
 			<div class="form-group">
 				<font color="Olive" face="Comic Sans MS,arial">
 					<h1 align="center"><i><u>{{lastFixture}}</u></i></h1>
-					<h1 align="center"><i><u>Fecha N°{{fechaVig}}</u></i></h1>
+					<h1 align="center"><i><u>Fecha N°{{scheduleCurrent}}</u></i></h1>
 				</font>
 				<form method="post" action="/a" id="form-registro" name="form-registro">
 				<input id="action" notab="" type="hidden" name="action" value="matches">
@@ -29,7 +29,7 @@
 					<th>Tu jugada</th>
 					<th>Visitante</th>
 				  </tr>
-				  	{{#jugarFix}} 
+				  	{{#fixtureCurrent}} 
 				  	<tr>
 				  		{{#.}}
 					<td>{{visit}}</td>
@@ -43,7 +43,7 @@
 					<td>{{local}}</td>
 						{{/.}}
 				    </tr>
-				    {{/jugarFix}}
+				    {{/fixtureCurrent}}
 				</table>
 				<br>
 				<button class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Confirmar Resultados</button>

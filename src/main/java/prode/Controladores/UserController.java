@@ -72,16 +72,15 @@ public class UserController{
             log = true;
             String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
             String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
-            map.put("nic", usernameL);
+            map.put("nick", usernameL);
             map.put("name", name);
             map.put("surname", surname);
-            
             System.out.println("Loged "+ usernameL);
         }else{
             mes="Los datos ingresados son incorrectos";
         }
         if(log){
-            res.redirect("/loged/perfil");
+            res.redirect("/loged/profile");
             return null;
         }
         res.redirect("/");
@@ -92,7 +91,7 @@ public class UserController{
     public static TemplateViewRoute contain2Perfil=(req, res) -> {
         String n = req.session().attribute("username");
         User u = (User.findFirst("nick = ?",n));
-        int fix = new UsersFixtures().cantFixUser(u.getInteger("id"));
+        int fix = new UsersFixtures().totalFixturesUser(u.getInteger("id"));
         int pred = (u.getTotalMatchPrediction()).size();
         List<MatchPrediction> mpu = u.getMatchPrediction();
         ArrayList<List<Object>> p = new ArrayList<List<Object>>(); 
@@ -104,24 +103,24 @@ public class UserController{
         	l.add(a.getScore());
             p.add(l);
         }
-        map.put("cantPred",pred);
-        map.put("cantFix",fix);
-        map.put("nic", n);
+        map.put("totalPredictions",pred);
+        map.put("totalFixtures",fix);
+        map.put("nick", n);
         map.put("predUser", GeneralController.getAcum(p));
         return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
     };
 
-    public static TemplateViewRoute redicPerfil=(req, res) -> {
+    public static TemplateViewRoute redicProfile=(req, res) -> {
         if (req.session().attribute("logueado") != null) {
-            res.redirect("/loged/perfil");
+            res.redirect("/loged/profile");
             return null;
         }else{
-            map.put("paisl", Country.getAllCountrys());           
+            map.put("countries", Country.getAllCountrys());           
         }
         return new ModelAndView(map, "./src/main/resources/inicio.mustache");
     };
 
-    public static Filter closeSesion = (req, res) -> {
+    public static Filter closeSession = (req, res) -> {
         if (req.session().attribute("logueado") != null) {
             req.session().removeAttribute("logueado");
             if(req.session().attribute("admin") != null) {

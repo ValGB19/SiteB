@@ -15,7 +15,7 @@ public class PredictionController{
 	 public static TemplateViewRoute cargarPrediction = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
         String user = req.session().attribute("username");
-        map.put("nic",user);
+        map.put("nick",user);
         int idU = new User().getUser(user).getInteger("id");
         List<Match> l = new Fixture().getFix(fix).getMatch();
         l.removeIf(Match.filterById(idU));
@@ -43,7 +43,7 @@ public class PredictionController{
         String fix = req.session().attribute("lastFixture");
         req.session().removeAttribute("lastFixture");
         req.session().removeAttribute("schedule");
-        map.put("nic",req.session().attribute("username"));
+        map.put("nick",req.session().attribute("username"));
         res.redirect("/loged/perfil");
         
         List<Match> l = new Fixture().getFix(fix).getMatch();
@@ -73,7 +73,7 @@ public class PredictionController{
 
     public static TemplateViewRoute verResults=(req, res) -> {
     	List<User> listUsers = new UsersFixtures().getAllPlayers();
-    	map.put("nic",req.session().attribute("username"));
+    	map.put("nick",req.session().attribute("username"));
     	ArrayList<List<List<Object>>> allUs = new ArrayList<List<List<Object>>>();
     	for(User u : listUsers) {
     		List<MatchPrediction> mpu = u.getMatchPrediction();
@@ -86,11 +86,11 @@ public class PredictionController{
             	l.add(a.getSchedule());
             	l.add(a.getScore());
                 p.add(l);
+                System.out.println(l);
             }
         	allUs.add(GeneralController.getAcum(p));
     	}
     	map.put("players", allUs);
-    	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/results.mustache");
     }; 
 }
