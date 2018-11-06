@@ -11,17 +11,20 @@ public class FixtureController{
 	static Map<String, Object> map = new HashMap<String, Object>();
 
 	 public static TemplateViewRoute mainFixtu=(req, res) -> {
+		map.put("nic",req.session().attribute("username"));
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/admin.mustache");
     };
 
     public static TemplateViewRoute mainFixtures=(req, res) -> {
+    	map.put("nic",req.session().attribute("username"));
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
     };
 
     
     public static TemplateViewRoute vistaProdeFecha2 = (req,res) ->{
+    	map.put("nic",req.session().attribute("username"));
     	List<String> f = Fixture.getAllFixtures();
     	String r = null;
     	int i=0;
@@ -54,6 +57,7 @@ public class FixtureController{
     };
 
     public static TemplateViewRoute vistaProdeFecha = (req,res) ->{
+    	map.put("nic",req.session().attribute("username"));
     	List<String> f = Fixture.getAllFixtures();
     	String r = null;
     	int i=0;

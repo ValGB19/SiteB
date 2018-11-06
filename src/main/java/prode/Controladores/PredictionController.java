@@ -14,6 +14,7 @@ public class PredictionController{
 	 public static TemplateViewRoute cargarPrediction = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
         String user = req.session().attribute("username");
+        map.put("nic",user);
         int idU = new User().getUser(user).getInteger("id");
         List<Match> l = new Fixture().getFix(fix).getMatch();
         l.removeIf((x)->  x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
@@ -41,6 +42,7 @@ public class PredictionController{
         String fix = req.session().attribute("lastFixture");
         req.session().removeAttribute("lastFixture");
         req.session().removeAttribute("schedule");
+        map.put("nic",req.session().attribute("username"));
         res.redirect("/loged/perfil");
         
         List<Match> l = new Fixture().getFix(fix).getMatch();
@@ -70,7 +72,7 @@ public class PredictionController{
 
     public static TemplateViewRoute verResults=(req, res) -> {
     	List<User> listUsers = new UsersFixtures().getAllPlayers();
-    	System.out.println(listUsers.size());
+    	map.put("nic",req.session().attribute("username"));
     	ArrayList<List<List<Object>>> allUs = new ArrayList<List<List<Object>>>();
     	for(User u : listUsers) {
     		List<MatchPrediction> mpu = u.getMatchPrediction();
