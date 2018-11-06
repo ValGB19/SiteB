@@ -14,54 +14,45 @@ public class UserController{
 	public static HashMap<String, Object> register (Request req, Response res) {
         map.remove("errorLogin");
         map.remove("errorRegister");
-    	String nick = req.queryParams("rUsername");
-		String pwd = req.queryParams("pswRegister");
-		String pwd2 = req.queryParams("pswValida"); 	
-		String nombre = req.queryParams("nombre");
-		String apellido = req.queryParams("apellido");
-		String mail = req.queryParams("mail");
-		String pais = req.queryParams("rpais");
-		String dni = req.queryParams("rdni");
-		String pm = req.queryParams("clave");
-		boolean e = false;
-    	if (pwd.equals(pwd2) && dni.length() <= 8) {
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("nick", req.queryParams("rUsername")); 
+		data.put("pwd", req.queryParams("pswRegister"));
+		data.put("pwd2", req.queryParams("pswValida")); 	
+		data.put("name", req.queryParams("nombre"));
+		data.put("surname", req.queryParams("apellido"));
+		data.put("email", req.queryParams("mail"));
+		data.put("country", req.queryParams("rpais"));
+		data.put("dni", req.queryParams("rdni"));
+		data.put("key", req.queryParams("clave"));
+		boolean isSaved = false;
+    	if ((data.get("pwd")).equals(data.get("pwd2")) && data.get("dni").length() <= 8) {
     		User temp = new User();
-    		temp.set("name", nombre);
-    		temp.set("surname", apellido);
-    		temp.set("nick", nick);
-    		temp.set("email", mail);
-    		temp.set("password", pwd);
-    		temp.set("dni", Integer.parseInt(dni));
-    		temp.set("country_id", Country.findFirst("name = ?", pais).get("id"));
- 			temp.set("admin", "traemelapromocionmessi".equals(pm));
- 			if ("traemelapromocionmessi".equals(pm) || pm == null || pm.isEmpty()) {
- 				e = temp.save();
- 			}	
+    		isSaved = temp.setUserTemp(data);
 		}
 		HashMap<String, Object> mape = new HashMap<String, Object>();
-    	if (!e) {
-    		ArrayList<String> tmp = new ArrayList<String>();
-    		tmp.add("Datos incorrectos");
-    		if (!pwd.equals(pwd2)) {
-    			tmp.add("*Las contrase?s no coinciden");
-			}
-    		if (User.findFirst("nick = ?",nick) != null) {
-    			tmp.add("*El nickname ya esta en uso");
-			}
-    		if (User.findFirst("dni = ?",Integer.parseInt(dni)) != null) {
-    			tmp.add("*Ese dni ya esta registrado");
-			}
-    		if (User.findFirst("email = ?", mail) != null) {
-    			tmp.add("*Ese email ya esta registrado");
-			}
-			if (!"traemelapromocionmessi".equals(pm) && pm!=null) {
-    			tmp.add("*Palabla magica incorrecta");
-			}
+    	if (!isSaved) {
+    		ArrayList<String> tmp = errorsRegister(data);
 			mape.put("errorRegister", tmp);
 		}
     	return mape;
     };
 
+    private static ArrayList<String> errorsRegister (Map<String, String> data){
+		ArrayList<String> tmp = new ArrayList<String>();
+    	tmp.add("Datos incorrectos");
+    	addError((!data.get("pwd").equals(data.get("pwd2"))),"*Las contrase?s no coinciden", tmp);
+    	addError((User.findFirst("nick = ?", data.get("nick")) != null),"*El nickname ya esta en uso", tmp);
+    	addError((User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null),"*Ese dni ya esta registrado", tmp);
+    	addError((User.findFirst("email = ?", data.get("email")) != null),"*Ese email ya esta registrado", tmp);
+    	addError((!"traemelapromocionmessi".equals(data.get("key")) && (data.get("key"))!=null),"*Palabla magica incorrecta", tmp);
+		return tmp;
+    }
+    
+    private static void addError(Boolean condition, String message, ArrayList<String> list) {
+    	if(condition)
+    		list.add(message);
+    }
+    
     public static TemplateViewRoute login=(req, res) -> {
         map.remove("errorLogin");
         map.remove("errorRegister");

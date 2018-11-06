@@ -4,6 +4,7 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.UniquenessValidator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class User extends Model {
 
@@ -48,7 +49,7 @@ public class User extends Model {
 		return this.getAll(Fixture.class);
 	}
 
-	// lista predictions de user que tienen un puntaje
+	//lista predictions de user que tienen un puntaje
 	public List<MatchPrediction> getMatchPrediction() {
 		List<MatchPrediction> l = new ArrayList<MatchPrediction>();
 		l.addAll(this.getAll(MatchPrediction.class));
@@ -56,7 +57,7 @@ public class User extends Model {
 		return l;
 	}
 
-//lista de todas las predicciones
+	//lista de todas las predicciones
 	public List<MatchPrediction> getTotalMatchPrediction() {
 		List<MatchPrediction> l = new ArrayList<MatchPrediction>();
 		l.addAll(this.getAll(MatchPrediction.class));
@@ -65,5 +66,23 @@ public class User extends Model {
 
 	public static boolean log(String user, String psw) {
 		return User.findFirst("nick = ? and password = ?", user, psw) != null;
+	}
+
+	public boolean setUserTemp(Map<String, String> data){
+		boolean e = false;
+		this.set("name", data.get("name"));
+		this.set("surname", data.get("surname"));
+		this.set("nick", data.get("nick"));
+		this.set("email", data.get("email"));
+		this.set("password", data.get("psw"));
+		this.set("dni", Integer.parseInt(data.get("dni")));
+		this.set("country_id", Country.findFirst("name = ?", data.get("country")).get("id"));
+		boolean isAdmin = "traemelapromocionmessi".equals(data.get("key"));
+		this.set("admin", isAdmin);
+		String k = (String) data.get("key");
+		if (isAdmin || k == null || k.isEmpty()) {
+			e = this.save();
+		}
+		return e;
 	}
 }
