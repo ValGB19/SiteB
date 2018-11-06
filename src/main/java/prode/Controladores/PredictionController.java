@@ -9,14 +9,15 @@ import spark.*;
 import prode.*;
 
 public class PredictionController{
+	
 	static Map<String,Object> map = new HashMap<String,Object>();
-
+	
 	 public static TemplateViewRoute cargarPrediction = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
         String user = req.session().attribute("username");
         int idU = new User().getUser(user).getInteger("id");
         List<Match> l = new Fixture().getFix(fix).getMatch();
-        l.removeIf((x)->  x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().comprobaJuego(idU, x.getInteger("id")));
+        l.removeIf(Match.filterById(idU));
         int fecha = l.get(0).getInteger("schedule");
         l.removeIf((x)->x.getInteger("schedule") != fecha);
         for (Match a: l) {
