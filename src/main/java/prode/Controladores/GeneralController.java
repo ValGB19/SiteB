@@ -32,6 +32,18 @@ public class GeneralController{
 		}
     };
     
+    public static TemplateViewRoute redicProde=(req, res) -> {
+    	if(req.queryParams("action").equals("fixtures"))
+    		return FixtureController.vistaProdeFecha.handle(req, res);
+    	return PredictionController.cargarPrediction.handle(req, res);
+    };
+    
+    public static TemplateViewRoute redicAdmin=(req, res) -> {
+    	if(req.queryParams("action").equals("fixtures"))
+    		return FixtureController.vistaProdeFecha2.handle(req, res);
+    	return PredictionController.cargaResulMatch.handle(req, res);
+    };
+    
     private static Integer foldrSum(List<List<Object>> l) {
 		Integer r = 0;
 		for (List<Object> n : l) {

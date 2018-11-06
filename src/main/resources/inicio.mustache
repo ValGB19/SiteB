@@ -11,6 +11,7 @@
 						<br>
 						{{errorLogin}}
 						<form method="post" id="FormEntrar">
+							<input id="action" notab="" type="hidden" name="action" value="signin">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label for="usernamelogin" class="input-group-text">Usuario</label>
@@ -36,7 +37,8 @@
 						<br>
 						<h3> Creá tu cuenta</h3>
 						<br>
-						<form method="post" action="/r" id="form-registro" name="form-registro">
+						<form method="post" action="/" id="form-registro" name="form-registro">
+							<input id="action" notab="" type="hidden" name="action" value="signup">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label for="nombre" class="input-group-text" id="">Nombre y apellido</label>
@@ -102,7 +104,7 @@
 							<button class="btn btn-lg btn-primary btn-block btn-signin" id="btnRegister" type="submit">Registrarme</button>
 						</form>
 					</div>  
-						{{#errorRegister}} <h4> {{.}} </h4> {{/errorRegister}}
+					{{#errorRegister}} <h4> {{.}} </h4> {{/errorRegister}}
 				</div>
 			</div>
 		</div>

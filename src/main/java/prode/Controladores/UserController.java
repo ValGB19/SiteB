@@ -136,9 +136,12 @@ public class UserController{
         res.redirect("/");
     };
     
-    public static TemplateViewRoute redicInicSesion=(req, res) -> {
+    public static TemplateViewRoute home=(req, res) -> {
+    	if(req.queryParams("action").equals("signin"))
+    		return login.handle(req, res);
         map.putAll(register(req,res));
         res.redirect("/");
         return null;
     };
+    
 }
