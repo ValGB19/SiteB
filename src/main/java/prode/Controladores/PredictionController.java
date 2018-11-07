@@ -92,7 +92,6 @@ public class PredictionController{
         if(allUs.get(0) != null){
            map.put("players", allUs);
         }
-        System.out.println(allUs);
         return new ModelAndView(map, "./src/main/resources/loged/results.mustache");
     }; 
 }
