@@ -9,9 +9,9 @@ import java.util.Map;
 public class User extends Model {
 
 	public int totalScore() {
-		List<MatchPrediction> puntajes = MatchPrediction.where("user_id = ? and score <>", this.getId(), null);
+		List<MatchPrediction> scores = MatchPrediction.where("user_id = ? and score <>", this.getId(), null);
 		int res = 0;
-		for (MatchPrediction x : puntajes)
+		for (MatchPrediction x : scores)
 			res += x.getInteger("score");
 		return res;
 	}
@@ -28,13 +28,13 @@ public class User extends Model {
 		validateWith(new UniquenessValidator("email")).message("This email is already registered.");
 	}
 
-	public User getUser(String us) {
-		return User.findFirst("nick = ?", us);
+	public User getUser(String username) {
+		return User.findFirst("nick = ?", username);
 
 	}
 
-	public User getUser(int us) {
-		return User.findFirst("id = ?", us);
+	public User getUser(int id) {
+		return User.findFirst("id = ?", id);
 	}
 
 	public String getNameUser() {
@@ -51,10 +51,10 @@ public class User extends Model {
 
 	//lista predictions de user que tienen un puntaje
 	public List<MatchPrediction> getMatchPrediction() {
-		List<MatchPrediction> l = new ArrayList<MatchPrediction>();
-		l.addAll(this.getAll(MatchPrediction.class));
-		l.removeIf((MatchPrediction p) -> p.getInteger("score") == null);
-		return l;
+		List<MatchPrediction> listPred = new ArrayList<MatchPrediction>();
+		listPred.addAll(this.getAll(MatchPrediction.class));
+		listPred.removeIf((MatchPrediction p) -> p.getInteger("score") == null);
+		return listPred;
 	}
 
 	//lista de todas las predicciones
@@ -74,7 +74,7 @@ public class User extends Model {
 		this.set("surname", data.get("surname"));
 		this.set("nick", data.get("nick"));
 		this.set("email", data.get("email"));
-		this.set("password", data.get("psw"));
+		this.set("password", data.get("pwd"));
 		this.set("dni", Integer.parseInt(data.get("dni")));
 		this.set("country_id", Country.findFirst("name = ?", data.get("country")).get("id"));
 		boolean isAdmin = "traemelapromocionmessi".equals(data.get("key"));

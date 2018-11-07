@@ -14,7 +14,7 @@ public class App{
 			if (req.session().attribute("logueado") == null) {
 	    		res.redirect("/");
 	    	}
-       		res.redirect("/loged/perfil");
+       		res.redirect("/loged/profile");
     		return null;
 		});
 
@@ -22,11 +22,11 @@ public class App{
 	   	
         before("*", GeneralController.getCountrys);
         
-        after("*", GeneralController.conecBase);
+        after("*", GeneralController.conecDataBase);
 
-        after("/exit", UserController.closeSesion);
+        after("/exit", UserController.closeSession);
         
-        get("/", UserController.redicPerfil, new MustacheTemplateEngine());
+        get("/", UserController.redicProfile, new MustacheTemplateEngine());
         
         post("/", UserController.home, new MustacheTemplateEngine());
 
@@ -34,13 +34,13 @@ public class App{
         
         post("/loged/admin", GeneralController.redicAdmin,new MustacheTemplateEngine());
 
-	    get("/loged/perfil", UserController.contain2Perfil, new MustacheTemplateEngine());
+	    get("/loged/profile", UserController.contain2Perfil, new MustacheTemplateEngine());
 
-	    get("/loged/prode", FixtureController.mainFixtures, new MustacheTemplateEngine());
+	    get("/loged/prode", FixtureController.mainFixturesPlayer, new MustacheTemplateEngine());
 	    
 	    get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
 
-	    get("/loged/admin", FixtureController.mainFixtu, new MustacheTemplateEngine());
+	    get("/loged/admin", FixtureController.mainFixturesAdmin, new MustacheTemplateEngine());
     }    
     
 }

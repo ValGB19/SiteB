@@ -25,20 +25,20 @@ public class UsersFixtures extends Model {
 		hs.addAll(listID);
 		listID.clear();
 		listID.addAll(hs);
-		for(Integer n:listID) {
+		for(Integer n : listID) {
 			listUser.add(new User().getUser(n));
 		}
 		return listUser;
 	}
 	
-	public int cantFixUser(int id) { //ver sig code return this.find("user_id = ?", id).size()
-		List<Integer> idU = findAll().collect("user_id"); 
-		int i=0;
-		for(Integer n:idU) {
-			if(n==id)
-				i++;
+	public int totalFixturesUser(int idUser) { //ver sig code return this.find("user_id = ?", id).size()
+		List<Integer> listIdUser = findAll().collect("user_id"); 
+		int fixtures = 0;
+		for(Integer n : listIdUser) {
+			if(n == idUser)
+				fixtures++;
 		}
-		return i;
+		return fixtures;
 	}
 
 }

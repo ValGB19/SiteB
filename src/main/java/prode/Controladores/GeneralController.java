@@ -26,21 +26,21 @@ public class GeneralController{
 		}
    	};
    	
-   	public static Filter conecBase=(req,res) -> {
+   	public static Filter conecDataBase=(req,res) -> {
     	if (Base.hasConnection()) {
     		Base.close();
 		}
     };
     
-    public static TemplateViewRoute redicProde=(req, res) -> {
+    public static TemplateViewRoute redicProde = (req, res) -> {
     	if(req.queryParams("action").equals("fixtures"))
-    		return FixtureController.vistaProdeFecha.handle(req, res);
+    		return FixtureController.viewProdeSchedulePlayer.handle(req, res);
     	return PredictionController.cargarPrediction.handle(req, res);
     };
     
-    public static TemplateViewRoute redicAdmin=(req, res) -> {
+    public static TemplateViewRoute redicAdmin = (req, res) -> {
     	if(req.queryParams("action").equals("fixtures"))
-    		return FixtureController.vistaProdeFecha2.handle(req, res);
+    		return FixtureController.viewProdeScheduleAdmin.handle(req, res);
     	return PredictionController.cargaResulMatch.handle(req, res);
     };
     
@@ -69,7 +69,7 @@ public class GeneralController{
 		return m;
 	}
 	
-	private static List<List<Object>> ungrup(HashMap<Object, List<List<Object>>> m) {
+	private static List<List<Object>> unGroup(HashMap<Object, List<List<Object>>> m) {
 		ArrayList<List<Object>> res = new ArrayList<List<Object>>();
 		List<Object> l = new ArrayList<Object>();
 		for (Object k : m.keySet()) {
@@ -88,11 +88,11 @@ public class GeneralController{
 		if (a == null || a.size() == 0) return null;
 		if (a.get(0).size() == 1) {
 			List<Object> l = new ArrayList<Object>();
-			List<List<Object>> r = new ArrayList<List<Object>>();
+			List<List<Object>> arr = new ArrayList<List<Object>>();
 			l.add(foldrSum(a));
-			r.add(l);
-			return r;
+			arr.add(l);
+			return arr;
 		}
-		return ungrup(groupByFstField(a));
+		return unGroup(groupByFstField(a));
 	}
 }
