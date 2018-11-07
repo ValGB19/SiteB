@@ -73,7 +73,6 @@ public class PredictionController{
 
     public static TemplateViewRoute verResults=(req, res) -> {
     	List<User> listUsers = new UsersFixtures().getAllPlayers();
-    	map.put("nick",req.session().attribute("username"));
     	ArrayList<List<List<Object>>> allUs = new ArrayList<List<List<Object>>>();
     	for(User u : listUsers) {
     		List<MatchPrediction> mpu = u.getMatchPrediction();
@@ -90,7 +89,10 @@ public class PredictionController{
             }
         	allUs.add(GeneralController.getAcum(p));
     	}
-    	map.put("players", allUs);
+        if(allUs.get(0) != null){
+           map.put("players", allUs);
+        }
+        System.out.println(allUs);
         return new ModelAndView(map, "./src/main/resources/loged/results.mustache");
     }; 
 }
