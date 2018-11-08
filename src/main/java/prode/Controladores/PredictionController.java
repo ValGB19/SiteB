@@ -12,10 +12,13 @@ public class PredictionController{
 	
 	static Map<String,Object> map = new HashMap<String,Object>();
 	
-	 public static TemplateViewRoute cargarPrediction = (req,res) ->{
+     public static TemplateViewRoute cargarPrediction = (req,res) ->{
         String fix = req.session().attribute("lastFixture");
         String user = req.session().attribute("username");
         map.put("nick",user);
+        res.redirect("/loged/perfil");
+        if (fix == null) 
+            return null;
         int idU = new User().getUser(user).getInteger("id");
         List<Match> l = new Fixture().getFix(fix).getMatch();
         l.removeIf(Match.filterById(idU));
@@ -31,11 +34,10 @@ public class PredictionController{
         }
         UsersFixtures uf = new UsersFixtures();
         if(UsersFixtures.findFirst("user_id = ? and fixture_id = ?",idU, new Fixture().getFix(fix).getInteger("id")) == null) {
-        	 uf.set("user_id", idU);
+             uf.set("user_id", idU);
              uf.set("fixture_id",new Fixture().getFix(fix).getInteger("id"));
              uf.save();
         }
-        res.redirect("/loged/perfil");
         return null;
     };
 
@@ -50,9 +52,8 @@ public class PredictionController{
         l.removeIf((x)-> x.getString("result") != null || "null".equals(x.getString("result")));
         if (l.size() == 0)
             return null;
-
         int fecha = l.get(0).getInteger("schedule");
-	    l.removeIf((x)-> x.getInteger("schedule") != fecha);
+	    l.removeIf((x) -> x.getInteger("schedule") != fecha);
 	    for (Match a: l) {
             Integer idM=a.getInteger("id");
             String s = req.queryParams(idM.toString());

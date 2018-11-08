@@ -55,16 +55,14 @@ public class FixtureController{
     public static TemplateViewRoute viewProdeSchedulePlayer = (req,res) -> {
     	map.put("nick",req.session().attribute("username"));
     	String fix = getFstFixture(req);
-        if (fix == null) {
-            res.redirect("/loged/prode");
+        res.redirect("/loged/prode");
+        if (fix == null)
             return null;    
-        }
         req.session().attribute("lastFixture",fix);
         int idUser = new User().getUser(req.session().attribute("username")).getInteger("id");
     	List<Match> listMatches = new Fixture().getFix(fix).getMatch();
     	listMatches.removeIf(Match.filterById(idUser));
     	getFromMatchToShow(listMatches, map, fix);
-    	res.redirect("/loged/prode");
     	return null;
     };
     
