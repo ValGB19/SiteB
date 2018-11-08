@@ -46,7 +46,7 @@
 				    {{/fixtureCurrent}}
 				</table>
 				<br>
-				<button class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Confirmar Resultados</button>
+				<button {{^fixtureCurrent}} hidden="true" {{/fixtureCurrent}} class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Confirmar Resultados</button>
 				  </form>
 			</div>
 		</div>
