@@ -18,11 +18,11 @@ public class App{
     		return null;
 		});
 
-	   	before("/loged/*", GeneralController.redicInic);
+	   	before("/loged/*", GeneralController.checkIfLoged);
 	   	
-        before("*", GeneralController.getCountrys);
+        before("*", GeneralController.openConectionToDataBase);
         
-        after("*", GeneralController.conecDataBase);
+        after("*", GeneralController.disconectDataBase);
 
         after("/exit", UserController.closeSession);
         

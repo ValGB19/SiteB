@@ -17,7 +17,7 @@ public class Fixture extends Model {
 	 * @pre atributte league =! null
 	 * @return list of the names of the fixtures
 	 */
-  	public static List<?> getAllFixtures() {
+  	public static List<String> getAllFixtures() {
 		  return findAll().collect("league");
 	}
 
