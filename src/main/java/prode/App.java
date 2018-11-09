@@ -4,43 +4,43 @@ import static spark.Spark.*;
 import spark.template.mustache.MustacheTemplateEngine;
 import prode.Controladores.*;
 
-public class App{
-    
-    public static void main( String[] args ){
+public class App {
 
-	   	staticFiles.location("/public");
-	   	
+	public static void main(String[] args) {
+
+		staticFiles.location("/public");
+
 		notFound((req, res) -> {
 			if (req.session().attribute("logueado") == null) {
-	    		res.redirect("/");
-	    	}
-       		res.redirect("/loged/profile");
-    		return null;
+				res.redirect("/");
+			}
+			res.redirect("/loged/profile");
+			return null;
 		});
 
-	   	before("/loged/*", GeneralController.checkIfLoged);
-	   	
-        before("*", GeneralController.openConectionToDataBase);
-        
-        after("*", GeneralController.disconectDataBase);
+		before("/loged/*", GeneralController.checkIfLoged);
 
-        after("/exit", UserController.closeSession);
-        
-        get("/", UserController.redicProfile, new MustacheTemplateEngine());
-        
-        post("/", UserController.home, new MustacheTemplateEngine());
+		before("*", GeneralController.openConectionToDataBase);
 
-        post("/loged/prode", GeneralController.redicProde,new MustacheTemplateEngine());
-        
-        post("/loged/admin", GeneralController.redicAdmin,new MustacheTemplateEngine());
+		after("*", GeneralController.disconectDataBase);
 
-	    get("/loged/profile", UserController.contain2Perfil, new MustacheTemplateEngine());
+		after("/exit", UserController.closeSession);
 
-	    get("/loged/prode", FixtureController.mainFixturesPlayer, new MustacheTemplateEngine());
-	    
-	    get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
+		get("/", UserController.redicProfile, new MustacheTemplateEngine());
 
-	    get("/loged/admin", FixtureController.mainFixturesAdmin, new MustacheTemplateEngine());
-    }    
-    
+		post("/", UserController.home, new MustacheTemplateEngine());
+
+		post("/loged/prode", GeneralController.redicProde, new MustacheTemplateEngine());
+
+		post("/loged/admin", GeneralController.redicAdmin, new MustacheTemplateEngine());
+
+		get("/loged/profile", UserController.contain2Perfil, new MustacheTemplateEngine());
+
+		get("/loged/prode", FixtureController.mainFixturesPlayer, new MustacheTemplateEngine());
+
+		get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
+
+		get("/loged/admin", FixtureController.mainFixturesAdmin, new MustacheTemplateEngine());
+	}
+
 }

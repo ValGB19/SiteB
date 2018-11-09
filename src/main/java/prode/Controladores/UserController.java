@@ -7,17 +7,25 @@ import java.util.Map;
 import spark.*;
 import prode.*;
 
-public class UserController{
+public class UserController {
 
-    static Map<String, Object> map = new HashMap<String, Object>();
+	static Map<String, Object> map = new HashMap<String, Object>();
 
-	public static HashMap<String, Object> register (Request req, Response res) {
-        map.remove("errorLogin");
-        map.remove("errorRegister");
-        Map<String, String> data = new HashMap<String, String>();
-        data.put("nick", req.queryParams("rUsername")); 
+	/**
+	 * Register the user or place the reasons why they did not register it in the
+	 * hashmap
+	 * 
+	 * @param req The request
+	 * @param res The response
+	 * @return a <code>HashMap</code> with the info of the errors
+	 */
+	public static HashMap<String, Object> register(Request req, Response res) {
+		map.remove("errorLogin");
+		map.remove("errorRegister");
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("nick", req.queryParams("rUsername"));
 		data.put("pwd", req.queryParams("pswRegister"));
-		data.put("pwd2", req.queryParams("pswValida")); 	
+		data.put("pwd2", req.queryParams("pswValida"));
 		data.put("name", req.queryParams("nombre"));
 		data.put("surname", req.queryParams("apellido"));
 		data.put("email", req.queryParams("mail"));
@@ -25,122 +33,148 @@ public class UserController{
 		data.put("dni", req.queryParams("rdni"));
 		data.put("key", req.queryParams("clave"));
 		boolean isSaved = false;
-    	if ((data.get("pwd")).equals(data.get("pwd2")) && data.get("dni").length() <= 8) {
-    		User temp = new User();
-    		isSaved = temp.setUserTemp(data);
+		if ((data.get("pwd")).equals(data.get("pwd2")) && data.get("dni").length() <= 8) {
+			User temp = new User();
+			isSaved = temp.setUserTemp(data);
 		}
 		HashMap<String, Object> mape = new HashMap<String, Object>();
-    	if (!isSaved) {
-    		ArrayList<String> tmp = errorsRegister(data);
+		if (!isSaved) {
+			ArrayList<String> tmp = errorsRegister(data);
 			mape.put("errorRegister", tmp);
 		}
-    	return mape;
-    };
+		return mape;
+	};
 
-    private static ArrayList<String> errorsRegister (Map<String, String> data){
+	/**
+	 * It take a map with data and analyze them.
+	 * 
+	 * @param data the map with the info to be analyzed
+	 * @return a list of <code>String</code> with info of the errors
+	 */
+	private static ArrayList<String> errorsRegister(Map<String, String> data) {
 		ArrayList<String> tmp = new ArrayList<String>();
-    	tmp.add("Datos incorrectos");
-    	addError((!data.get("pwd").equals(data.get("pwd2"))),"*Las contrase?s no coinciden", tmp);
-    	addError((User.findFirst("nick = ?", data.get("nick")) != null),"*El nickname ya esta en uso", tmp);
-    	addError((User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null),"*Ese dni ya esta registrado", tmp);
-    	addError((User.findFirst("email = ?", data.get("email")) != null),"*Ese email ya esta registrado", tmp);
-    	addError((!"traemelapromocionmessi".equals(data.get("key")) && (data.get("key"))!=null),"*Palabla magica incorrecta", tmp);
+		tmp.add("Datos incorrectos");
+		addError((!data.get("pwd").equals(data.get("pwd2"))), "*Las contrase?s no coinciden", tmp);
+		addError((User.findFirst("nick = ?", data.get("nick")) != null), "*El nickname ya esta en uso", tmp);
+		addError((User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null), "*Ese dni ya esta registrado",
+				tmp);
+		addError((User.findFirst("email = ?", data.get("email")) != null), "*Ese email ya esta registrado", tmp);
+		addError((!"traemelapromocionmessi".equals(data.get("key")) && (data.get("key")) != null),
+				"*Palabla magica incorrecta", tmp);
 		return tmp;
-    }
-    
-    private static void addError(Boolean condition, String message, ArrayList<String> list) {
-    	if(condition)
-    		list.add(message);
-    }
-    
-    public static TemplateViewRoute login=(req, res) -> {
-        map.remove("errorLogin");
-        map.remove("errorRegister");
-        String usernameL = req.queryParams("usernamelogin");
-        String pswL = req.queryParams("pswLogin");
-        System.out.println(usernameL + " " + pswL);
-        boolean log = false;
-        String mes="";
-        if(User.log(usernameL,pswL)){
-            req.session(true);
-            req.session().attribute("username", usernameL);
-            req.session().attribute("logueado", true);
-            if(User.findFirst("nick = ?", usernameL).getBoolean("admin")) {
-                req.session().attribute("admin", true);
-                map.put("admin", true);
-            }
-            log = true;
-            String name = ((User) User.findFirst("nick = ?",usernameL)).getNameUser();
-            String surname = ((User) User.findFirst("nick = ?",usernameL)).getSurnameUser();
-            map.put("nick", usernameL);
-            map.put("name", name);
-            map.put("surname", surname);
-            System.out.println("Loged "+ usernameL);
-        }else{
-            mes="Los datos ingresados son incorrectos";
-        }
-        if(log){
-            res.redirect("/loged/profile");
-            return null;
-        }
-        res.redirect("/");
-        map.put("errorLogin", mes);
-        return null;
-    };
-    
-    public static TemplateViewRoute contain2Perfil=(req, res) -> {
-        String n = req.session().attribute("username");
-        User u = (User.findFirst("nick = ?",n));
-        int fix = new UsersFixtures().totalFixturesUser(u.getInteger("id"));
-        int pred = (u.getTotalMatchPrediction()).size();
-        List<MatchPrediction> mpu = u.getMatchPrediction();
-        ArrayList<List<Object>> p = new ArrayList<List<Object>>(); 
-        List<Object> l;
-        for (MatchPrediction a: mpu) { //change this. Make a function in fixture wich returns the total poinst of the user in a league
-        	l = new ArrayList<Object>();
-        	l.add(a.getLeague());
-        	l.add(a.getSchedule());
-        	l.add(a.getScore());
-            p.add(l);
-        }
-        map.put("totalPredictions",pred);
-        map.put("totalFixtures",fix);
-        map.put("nick", n);
-        map.put("predUser", GeneralController.getAcum(p));
-        return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
-    };
+	}
 
-    public static TemplateViewRoute redicProfile=(req, res) -> {
-        if (req.session().attribute("logueado") != null) {
-            res.redirect("/loged/profile");
-            return null;
-        }else{
-            map.put("countries", Country.getAllCountrys());           
-        }
-        return new ModelAndView(map, "./src/main/resources/inicio.mustache");
-    };
+	/**
+	 * If condition is true add to the list the message
+	 * 
+	 * @param condition a boolean to check
+	 * @param message   the message to be place in the list
+	 * @param list      the list to be load
+	 */
+	private static void addError(Boolean condition, String message, ArrayList<String> list) {
+		if (condition)
+			list.add(message);
+	}
 
-    public static Filter closeSession = (req, res) -> {
-        if (req.session().attribute("logueado") != null) {
-            req.session().removeAttribute("logueado");
-            if(req.session().attribute("admin") != null) {
-                req.session().removeAttribute("admin");
-                map.remove("admin");
-            }
-        }
-        map.remove("lastFixture");
-        map.remove("schedule");
-        map.remove("errorLogin");
-        map.remove("errorRegister");
-        res.redirect("/");
-    };
-    
-    public static TemplateViewRoute home=(req, res) -> {
-    	if(req.queryParams("action").equals("signin"))
-    		return login.handle(req, res);
-        map.putAll(register(req,res));
-        res.redirect("/");
-        return null;
-    };
-    
+	/**
+	 * Try to log the user in the system
+	 */
+	public static TemplateViewRoute login = (req, res) -> {
+		map.remove("errorLogin");
+		map.remove("errorRegister");
+		String username = req.queryParams("usernamelogin");
+		String psw = req.queryParams("pswLogin");
+		boolean log = false;
+		String errorMessage = "";
+		if (User.log(username, psw)) {
+			req.session(true);
+			req.session().attribute("username", username);
+			req.session().attribute("logueado", true);
+			if (User.findFirst("nick = ?", username).getBoolean("admin")) {
+				req.session().attribute("admin", true);
+				map.put("admin", true);
+			}
+			log = true;
+			String name = ((User) User.findFirst("nick = ?", username)).getNameUser();
+			String surname = ((User) User.findFirst("nick = ?", username)).getSurnameUser();
+			map.put("nick", username);
+			map.put("name", name);
+			map.put("surname", surname);
+			System.out.println("Loged " + username);
+		} else {
+			errorMessage = "Los datos ingresados son incorrectos";
+		}
+		if (log) {
+			res.redirect("/loged/profile");
+			return null;
+		}
+		res.redirect("/");
+		map.put("errorLogin", errorMessage);
+		return null;
+	};
+
+	/**
+	 * Load in the map the predictions of the user logged
+	 */
+	public static TemplateViewRoute contain2Perfil = (req, res) -> {
+		String username = req.session().attribute("username");
+		User user = (User.findFirst("nick = ?", username));
+		ArrayList<List<Object>> predUser = new ArrayList<List<Object>>();
+		List<Object> list;
+		for (MatchPrediction matchPrediction : user.getMatchPrediction()) {
+			list = new ArrayList<Object>();
+			list.add(matchPrediction.getLeague());
+			list.add(matchPrediction.getSchedule());
+			list.add(matchPrediction.getScore());
+			predUser.add(list);
+		}
+		map.put("totalPredictions", user.getTotalMatchPrediction().size());
+		map.put("totalFixtures", new UsersFixtures().totalFixturesUser(user.getInteger("id")));
+		map.put("nick", username);
+		map.put("predUser", GeneralController.getAcum(predUser));
+		return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
+	};
+
+	/**
+	 * Check if the user is logged. Otherwise redirect him to "/loged/profile"
+	 */
+	public static TemplateViewRoute redicProfile = (req, res) -> {
+		if (req.session().attribute("logueado") != null) {
+			res.redirect("/loged/profile");
+			return null;
+		} else {
+			map.put("countries", Country.getAllCountrys());
+		}
+		return new ModelAndView(map, "./src/main/resources/inicio.mustache");
+	};
+
+	/**
+	 * If the user was logged, it close his session and clear the map.
+	 */
+	public static Filter closeSession = (req, res) -> {
+		if (req.session().attribute("logueado") != null) {
+			req.session().removeAttribute("logueado");
+			if (req.session().attribute("admin") != null) {
+				req.session().removeAttribute("admin");
+				map.remove("admin");
+			}
+		}
+		map.remove("lastFixture");
+		map.remove("schedule");
+		map.remove("errorLogin");
+		map.remove("errorRegister");
+		res.redirect("/");
+	};
+
+	/**
+	 * Check if the user wants sign in o sign out
+	 */
+	public static TemplateViewRoute home = (req, res) -> {
+		if (req.queryParams("action").equals("signin"))
+			return login.handle(req, res);
+		map.putAll(register(req, res));
+		res.redirect("/");
+		return null;
+	};
+
 }
