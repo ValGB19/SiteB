@@ -18,22 +18,38 @@ public class Match extends Model {
     	validateWith(new EnumeMatchValidator());
 	}
 	
+	
+	/**
+	 * @return fixture to which the match belongs
+	 */
 	public Fixture getFixture() {
 		return Fixture.findFirst("id = ?", get("fixture_id"));
 	}
 	
+	/** 
+	 * @return schedule the match belongs to
+	 */
 	public int getSchedule() {
 		return this.getInteger("schedule");
 	}
 	
+	/**
+	 * @return the local team of the match
+	 */
 	public int getLocal() {
 		return getInteger("local_team_id");
 	}
 	
+	/**
+	 * @return the visiting team of the match
+	 */
 	public int getVisit() {
 		return getInteger("visit_team_id");
 	}
 
+	/**
+	 * @return id of the match
+	 */
 	public int getID() {
 		return getInteger("id");
 	}
@@ -52,9 +68,8 @@ public class Match extends Model {
 	}
 
 	/**
-	 * 
 	 * @param idUser
-	 * @return 
+	 * @return Predicate for the Match class on whether the user predicted the match or if the match was played
 	 */
 	public static Predicate<Match> filterById(int idUser){
 		return (Match x) -> ("null".equals(x.getString("result")) || new MatchPrediction().checkGame(idUser, x.getInteger("id")));
