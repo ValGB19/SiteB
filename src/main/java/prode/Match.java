@@ -18,9 +18,8 @@ public class Match extends Model {
     	validateWith(new EnumeMatchValidator());
 	}
 	
-	//@pre schedulescore asociado
 	public Fixture getFixture() {
-		return Fixture.findFirst("id = ?",get("fixture_id"));
+		return Fixture.findFirst("id = ?", get("fixture_id"));
 	}
 	
 	public int getSchedule() {
@@ -34,7 +33,16 @@ public class Match extends Model {
 	public int getVisit() {
 		return getInteger("visit_team_id");
 	}
+
+	public int getID() {
+		return getInteger("id");
+	}
 	
+	/**
+	 * Get and return the data of a match
+	 * @pre Match id =! null, local_team_id =! and visit_team_id
+	 * @return the data of a match in a HashMap
+	 */
 	public HashMap<String,Object> forPrediction() {
 		HashMap<String,Object> res = new HashMap<String,Object>();
 		res.put("local",Team.findFirst("id = ?",getInteger("local_team_id")).getString("name"));
@@ -43,11 +51,12 @@ public class Match extends Model {
 		return res;
 	}
 
-	public int getID() {
-		return getInteger("id");
-	}
-	
+	/**
+	 * 
+	 * @param idUser
+	 * @return 
+	 */
 	public static Predicate<Match> filterById(int idUser){
-		return (Match x) -> (x.getString("result") != null || "null".equals(x.getString("result")) || new MatchPrediction().checkGame(idUser, x.getInteger("id")));
+		return (Match x) -> ("null".equals(x.getString("result")) || new MatchPrediction().checkGame(idUser, x.getInteger("id")));
 	}
 }

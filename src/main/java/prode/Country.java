@@ -7,8 +7,11 @@ import org.javalite.activejdbc.validation.UniquenessValidator;
 
 public class Country extends Model{
 
-	@SuppressWarnings("rawtypes")
-	public static List getAllCountrys() {
+	/**
+	 * Returns a name list of the countries
+	 * @return country name list
+	 */
+	public static List<?> getAllCountrys() {
 		return findAll().collect("name");
 		
 	}
