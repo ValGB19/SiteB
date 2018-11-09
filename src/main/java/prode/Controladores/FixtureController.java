@@ -8,20 +8,41 @@ import spark.*;
 import prode.*;
 
 public class FixtureController{
+
 	static Map<String, Object> map = new HashMap<String, Object>();
 
+    /**
+     * Returns a view for the administrator to upload results.
+     *
+     * @param  req  the request which contains the username.
+     * @param  res  the response.
+     * @return      an ModelAndView to show.
+    */
 	 public static TemplateViewRoute mainFixturesAdmin=(req, res) -> {
 		map.put("nick",req.session().attribute("username"));
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/admin.mustache");
     };
 
+    /**
+     * Returns a view for the user to bet in the prode.
+     *
+     * @param  req  the request which contains the usename.
+     * @param  res  the response.
+     * @return      an ModelAndView to show.
+    */
     public static TemplateViewRoute mainFixturesPlayer=(req, res) -> {
     	map.put("nick",req.session().attribute("username"));
     	map.put("fixs", Fixture.getAllFixtures());
         return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
     };
 
+    /**
+     * Returns the first Fixture name.
+     *
+     * @param  req  the request which contains the id from the fixture.
+     * @return      an ModelAndView to show.
+    */
     private static String getFstFixture(Request req) {
     	List<String> listFixtures = Fixture.getAllFixtures();
     	int index = 0;
@@ -36,22 +57,35 @@ public class FixtureController{
     	return listFixtures.get(index - 1);
     }
     
+    /**
+     * Set in the session the attribute <code>"lastFixture"</code>
+     * , load the map with the match and redirect to "/loged/admin".
+     *
+     * @param  req  the request which contains the id from the fixture.
+     * @param  res  the response.
+     * @return      nothing.
+    */
     public static TemplateViewRoute viewProdeScheduleAdmin = (req,res) -> {
 	    map.put("nick",req.session().attribute("username"));
 		String fix = getFstFixture(req);
-		if (fix == null) {
-			res.redirect("/loged/prode");
+		res.redirect("/loged/admin");
+        if (fix == null)
 			return null;    
-		}
 		req.session().attribute("lastFixture",fix);
-		
 		List<Match> listMatches = new Fixture().getFix(fix).getMatch();
 		listMatches.removeIf((x)-> x.getString("result") != null);
 		getFromMatchToShow(listMatches, map, fix);
-		res.redirect("/loged/admin");
 		return null;
     };
 
+    /**
+     * Set in the session the attribute <code>"lastFixture"</code>
+     * , load the map with the match and redirect to "/loged/prode".
+     *
+     * @param  req  the request which contains the id from the fixture.
+     * @param  res  the response.
+     * @return      nothing.
+    */
     public static TemplateViewRoute viewProdeSchedulePlayer = (req,res) -> {
     	map.put("nick",req.session().attribute("username"));
     	String fix = getFstFixture(req);
