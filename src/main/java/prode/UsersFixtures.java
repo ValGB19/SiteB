@@ -17,6 +17,10 @@ public class UsersFixtures extends Model {
 		return User.findFirst("id = ?", getInteger("user_id"));
 	}
 	
+	/**
+	 * Get the list of users who participated in a fixture
+	 * @return list of users who participated in a fixture
+	 */
 	public List<User> getAllPlayers() {
 		List<Integer> listID = findAll().collect("user_id");
 		List<User> listUser = new ArrayList<User>();
@@ -30,6 +34,11 @@ public class UsersFixtures extends Model {
 		return listUser;
 	}
 	
+	/**
+	 * Obtain the number of Fixtures that the user identified with 'idUser' made a prediction
+	 * @param idUser: user id
+	 * @return Number of fixtures played by a user
+	 */
 	public int totalFixturesUser(int idUser) { //ver sig code return this.find("user_id = ?", id).size()
 		List<Integer> listIdUser = findAll().collect("user_id"); 
 		int fixtures = 0;
