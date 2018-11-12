@@ -8,14 +8,6 @@ import java.util.Map;
 
 public class User extends Model {
 
-	public int totalScore() {
-		List<MatchPrediction> scores = MatchPrediction.where("user_id = ? and score <>", this.getId(), null);
-		int res = 0;
-		for (MatchPrediction x : scores)
-			res += x.getInteger("score");
-		return res;
-	}
-
 	static {
 		validatePresenceOf("nick").message("Please, provide your username");
 		validateWith(new UniquenessValidator("nick")).message("This nickname is already taken.");
@@ -28,28 +20,58 @@ public class User extends Model {
 		validateWith(new UniquenessValidator("email")).message("This email is already registered.");
 	}
 
+	/**
+	 * @return
+	 */
+	public int totalScore() {
+		List<MatchPrediction> scores = MatchPrediction.where("user_id = ? and score <>", this.getId(), null);
+		int res = 0;
+		for (MatchPrediction x : scores)
+			res += x.getInteger("score");
+		return res;
+	}
+
+	/**
+	 * @param username: user name
+	 * @return user with the username 'username'
+	 */
 	public User getUser(String username) {
 		return User.findFirst("nick = ?", username);
 
 	}
 
+	/**
+	 * @param id: user id	
+	 * @return User with the id equal to 'id'
+	 */
 	public User getUser(int id) {
 		return User.findFirst("id = ?", id);
 	}
 
+	/**
+	 * @return Name of the User
+	 */
 	public String getNameUser() {
 		return this.getString("name");
 	}
 
+	/**
+	 * @return Surname of the User
+	 */
 	public String getSurnameUser() {
 		return this.getString("surname");
 	}
 
+	/**
+	 * @return List of fixtures in which a user participates
+	 */
 	public List<Fixture> getFixtures() {
 		return this.getAll(Fixture.class);
 	}
 
-	//lista predictions de user que tienen un puntaje
+	/**
+	 * @return List of user predictions in which you scored
+	 */
 	public List<MatchPrediction> getMatchPrediction() {
 		List<MatchPrediction> listPred = new ArrayList<MatchPrediction>();
 		listPred.addAll(this.getAll(MatchPrediction.class));
@@ -57,17 +79,29 @@ public class User extends Model {
 		return listPred;
 	}
 
-	//lista de todas las predicciones
+	/**
+	 * @return List of user predictions
+	 */
 	public List<MatchPrediction> getTotalMatchPrediction() {
 		List<MatchPrediction> l = new ArrayList<MatchPrediction>();
 		l.addAll(this.getAll(MatchPrediction.class));
 		return l;
 	}
 
+	/**
+	 * Check that the username and password for the login correspond to a registered user
+	 * @param user: username
+	 * @param psw: user password
+	 * @return true if the user and password correspond to a registered user
+	 */
 	public static boolean log(String user, String psw) {
 		return User.findFirst("nick = ? and password = ?", user, psw) != null;
 	}
 
+	/**
+	 * @param data
+	 * @return
+	 */
 	public boolean setUserTemp(Map<String, String> data){
 		boolean e = false;
 		this.set("name", data.get("name"));
