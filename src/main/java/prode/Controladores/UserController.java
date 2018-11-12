@@ -93,6 +93,8 @@ public class UserController {
 			if (User.findFirst("nick = ?", username).getBoolean("admin")) {
 				req.session().attribute("admin", true);
 				map.put("admin", true);
+			}else{
+				req.session().attribute("admin", false);
 			}
 			log = true;
 			String name = ((User) User.findFirst("nick = ?", username)).getNameUser();

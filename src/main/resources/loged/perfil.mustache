@@ -18,8 +18,8 @@
 				<div  align="center">
 					<div  class="form-group">			
 						<div class="btn-group float-right mt-2" align="justify">
-							<button {{#admin}} type="button" {{/admin}} {{^admin}} hidden="true" {{/admin}} class="btn btn-danger" onclick="location.href = '/loged/admin'">Carga</button>
-				 			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/prode'">APOSTAR</button>
+							<button type="button" {{^admin}} hidden {{/admin}} class="btn btn-danger" onclick="location.href = '/loged/admin'">Carga</button>
+				 			<button type="button" {{#admin}} hidden {{/admin}} class="btn btn-danger" onclick="location.href ='/loged/prode'">APOSTAR</button>
 				  			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/results'">Ver resultados</button>
 						</div>
 					</div>
