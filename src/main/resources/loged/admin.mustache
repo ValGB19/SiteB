@@ -8,12 +8,10 @@
 				<h1 align="center"><i><u>Fixtures disponibles</u></i></h1>
 			</font>
 			<br>
-			<ul>
 			<form method="post" action="/loged/admin" id="form-list-apuestas" name="form-list-apuestas">
-				<input id="action" notab="" type="hidden" name="action" value="fixtures">
-				{{#fixs}}<div> <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
+				<input id="action" notab="" hidden name="action" value="fixtures">
+				{{#fixs}}<div> <button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit" whi>{{.}}</button></div><br> {{/fixs}}
 			</form>
-			</ul>
 		</div>
 		{{#lastFixture}}
 		<div id="ContenedorPred" align="center">

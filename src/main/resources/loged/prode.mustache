@@ -11,12 +11,10 @@
 			<img src="/fixture.png" width="150" height="150" align="justify" />
 			<br>
 			<br>
-			<ul>
 			<form method="post" action="/loged/prode" id="form-list-apuestas" name="form-list-apuestas">
 				<input id="action" notab="" type="hidden" name="action" value="fixtures">
-				{{#fixs}}<div> <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
+				{{#fixs}}<div> <button style="width: 70%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
 			</form>
-			</ul>
 		</div>
 		<div id="ContenedorPred" align="center">
 			<div class="form-group">
