@@ -8,27 +8,13 @@
 				<h1 align="center"><i><u>Fixtures disponibles</u></i></h1>
 			</font>
 			<br>
-			<div> 
-				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadCountry" name="bloadCountry" onclick="hideElem('loadCountry')">Cargar paises</button>
-			</div>
-			<br>
-			<div> 
-				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadResult" name="bloadResult" onclick="hideElem('ContenedorPred')">Cargar resultados</button>
-			</div>
-			<br>  
+			<form method="post" action="/loged/admin" id="form-list-apuestas" name="form-list-apuestas">
+				<input id="action" notab="" hidden name="action" value="fixtures">
+				{{#fixs}}<div> <button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit" whi>{{.}}</button></div><br> {{/fixs}}
+			</form>
 		</div>
-
-		<div id="loadCountry" style="display:none;" align="center">
-			<div class="form-group">
-				<form method="post" action="/loged/admin" id="form-registro" name="form-registro">
-				<input id="action" hidden name="action" value="loadCountry">
-				<input type="text" class="form-control" placeholder="Country" id="sendContrys" name="sendContrys" required>
-				<br>
-			</div>
-		</div>
-
 		{{#lastFixture}}
-		<div id="ContenedorPred" style="display:none;" align="center">
+		<div id="ContenedorPred" align="center">
 			<div class="form-group">
 				<font color="Olive" face="Comic Sans MS,arial">
 					<h1 align="center"><i><u>{{lastFixture}}</u></i></h1>
@@ -67,12 +53,4 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-	function hideElem(n) {
-		var x = document.getElementById(n);
-		//document.getElementById("ContenedorPred").style.display = "none";
-		document.getElementById("loadCountry").style.display = "none";
-        x.style.display = "block";
-	}
-</script>
 {{>footer}}
