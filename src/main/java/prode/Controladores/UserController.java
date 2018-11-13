@@ -89,19 +89,16 @@ public class UserController {
 			req.session(true);
 			req.session().attribute(Consts.ATTRIBUTEUSERNAME, username);
 			req.session().attribute(Consts.ATTRIBUTELOGED, true);
-			if (User.findFirst("nick = ?", username).getBoolean("admin")) {
-				req.session().attribute(Consts.ATTRIBUTEADMIN, true);
+			boolean adm = User.findFirst("nick = ?", username).getBoolean("admin");
+			req.session().attribute(Consts.ATTRIBUTEADMIN, adm);
+			if(adm)
 				GeneralController.map.put("admin", true);
-			}else{
-				req.session().attribute(Consts.ATTRIBUTEADMIN, false);
-			}
 			log = true;
 			String name = ((User) User.findFirst("nick = ?", username)).getNameUser();
 			String surname = ((User) User.findFirst("nick = ?", username)).getSurnameUser();
 			GeneralController.map.put("nick", username);
 			GeneralController.map.put("name", name);
 			GeneralController.map.put("surname", surname);
-			System.out.println("Loged " + username);
 		} else {
 			errorMessage = "Los datos ingresados son incorrectos";
 		}

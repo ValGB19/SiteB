@@ -16,23 +16,12 @@ public class FixtureController {
 	 * @param res the response.
 	 * @return an ModelAndView to show.
 	 */
-	public static TemplateViewRoute mainFixturesAdmin = (req, res) -> {
-		GeneralController.map.put("nick", req.session().attribute(Consts.ATTRIBUTEUSERNAME));
+	public static TemplateViewRoute mainFixtures = (req, res) -> {
 		GeneralController.map.put("fixs", Fixture.getAllFixtures());
-		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/admin.mustache");
-	};
-
-	/**
-	 * Returns a view for the user to bet in the prode.
-	 *
-	 * @param req the request which contains the usename.
-	 * @param res the response.
-	 * @return an ModelAndView to show.
-	 */
-	public static TemplateViewRoute mainFixturesPlayer = (req, res) -> {
-		GeneralController.map.put("nick", req.session().attribute(Consts.ATTRIBUTEUSERNAME));
-		GeneralController.map.put("fixs", Fixture.getAllFixtures());
+		if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
+			return new ModelAndView(GeneralController.map, "./src/main/resources/loged/admin.mustache");
 		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/prode.mustache");
+			
 	};
 
 	/**

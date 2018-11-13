@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.javalite.activejdbc.Base;
+
+import prode.Utils.Consts;
 import spark.*;
 
 public class GeneralController {
@@ -43,20 +45,17 @@ public class GeneralController {
 	/**
 	 * Checks if the user wants bet or view the fixture
 	 */
-	public static TemplateViewRoute redicProde = (req, res) -> {
-		if (req.queryParams("action").equals("fixtures"))
+	public static TemplateViewRoute adminOrBet = (req, res) -> {
+		if (req.queryParams("action").equals("fixtures")){
+			if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
+				return FixtureController.viewProdeScheduleAdmin.handle(req, res);
 			return FixtureController.viewProdeSchedulePlayer.handle(req, res);
+		}
+		if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
+			return PredictionController.cargaResulMatch.handle(req, res);
 		return PredictionController.cargarPrediction.handle(req, res);
 	};
 
-	/**
-	 * Check if the administrator wants load or view the fixture
-	 */
-	public static TemplateViewRoute redicAdmin = (req, res) -> {
-		if (req.queryParams("action").equals("fixtures"))
-			return FixtureController.viewProdeScheduleAdmin.handle(req, res);
-		return PredictionController.cargaResulMatch.handle(req, res);
-	};
 
 	/**
 	 * Sum all the items in the List of List and return the accumulated

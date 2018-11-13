@@ -30,17 +30,17 @@ public class App {
 
 		post("/", UserController.home, new MustacheTemplateEngine());
 
-		post("/loged/prode", GeneralController.redicProde, new MustacheTemplateEngine());
+		post("/loged/prode", GeneralController.adminOrBet, new MustacheTemplateEngine());
 
-		post("/loged/admin", GeneralController.redicAdmin, new MustacheTemplateEngine());
+		post("/loged/admin", GeneralController.adminOrBet, new MustacheTemplateEngine());
 
 		get("/loged/profile", UserController.contain2Perfil, new MustacheTemplateEngine());
 
-		get("/loged/prode", FixtureController.mainFixturesPlayer, new MustacheTemplateEngine());
+		get("/loged/prode", FixtureController.mainFixtures, new MustacheTemplateEngine());
 
 		get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
 
-		get("/loged/admin", FixtureController.mainFixturesAdmin, new MustacheTemplateEngine());
+		get("/loged/admin", FixtureController.mainFixtures, new MustacheTemplateEngine());
 	}
 
 }

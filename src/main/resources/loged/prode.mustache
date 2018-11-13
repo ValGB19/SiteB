@@ -16,6 +16,7 @@
 				{{#fixs}}<div> <button style="width: 70%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
 			</form>
 		</div>
+		{{#lastFixture}}
 		<div id="ContenedorPred" align="center">
 			<div class="form-group">
 				<font color="Olive" face="Comic Sans MS,arial">
@@ -48,9 +49,10 @@
 				</table>
 				<br>
 				<button {{^fixtureCurrent}} hidden {{/fixtureCurrent}} class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Apostar</button>
-				  </form>
+				</form>
 			</div>
 		</div>
+		{{/lastFixture}}
 	</div>
 </div>
 
