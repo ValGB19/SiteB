@@ -9,8 +9,6 @@ import prode.*;
 
 public class UserController {
 
-	static Map<String, Object> map = new HashMap<String, Object>();
-
 	/**
 	 * Register the user or place the reasons why they did not register it in the
 	 * hashmap
@@ -20,8 +18,8 @@ public class UserController {
 	 * @return a <code>HashMap</code> with the info of the errors
 	 */
 	public static HashMap<String, Object> register(Request req, Response res) {
-		map.remove("errorLogin");
-		map.remove("errorRegister");
+		GeneralController.map.remove("errorLogin");
+		GeneralController.map.remove("errorRegister");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("nick", req.queryParams("rUsername"));
 		data.put("pwd", req.queryParams("pswRegister"));
@@ -80,8 +78,8 @@ public class UserController {
 	 * Try to log the user in the system
 	 */
 	public static TemplateViewRoute login = (req, res) -> {
-		map.remove("errorLogin");
-		map.remove("errorRegister");
+		GeneralController.map.remove("errorLogin");
+		GeneralController.map.remove("errorRegister");
 		String username = req.queryParams("usernamelogin");
 		String psw = req.queryParams("pswLogin");
 		boolean log = false;
@@ -92,16 +90,16 @@ public class UserController {
 			req.session().attribute("logueado", true);
 			if (User.findFirst("nick = ?", username).getBoolean("admin")) {
 				req.session().attribute("admin", true);
-				map.put("admin", true);
+				GeneralController.map.put("admin", true);
 			}else{
 				req.session().attribute("admin", false);
 			}
 			log = true;
 			String name = ((User) User.findFirst("nick = ?", username)).getNameUser();
 			String surname = ((User) User.findFirst("nick = ?", username)).getSurnameUser();
-			map.put("nick", username);
-			map.put("name", name);
-			map.put("surname", surname);
+			GeneralController.map.put("nick", username);
+			GeneralController.map.put("name", name);
+			GeneralController.map.put("surname", surname);
 			System.out.println("Loged " + username);
 		} else {
 			errorMessage = "Los datos ingresados son incorrectos";
@@ -111,7 +109,7 @@ public class UserController {
 			return null;
 		}
 		res.redirect("/");
-		map.put("errorLogin", errorMessage);
+		GeneralController.map.put("errorLogin", errorMessage);
 		return null;
 	};
 
@@ -130,11 +128,14 @@ public class UserController {
 			list.add(matchPrediction.getScore());
 			predUser.add(list);
 		}
-		map.put("totalPredictions", user.getTotalMatchPrediction().size());
-		map.put("totalFixtures", new UsersFixtures().totalFixturesUser(user.getInteger("id")));
-		map.put("nick", username);
-		map.put("predUser", GeneralController.getAcum(predUser));
-		return new ModelAndView(map, "./src/main/resources/loged/perfil.mustache");
+		GeneralController.map.remove("lastFixture");
+		GeneralController.map.remove("fixtureCurrent");
+		GeneralController.map.remove("scheduleCurrent");
+		GeneralController.map.put("nick", username);
+		GeneralController.map.put("totalPredictions", user.getTotalMatchPrediction().size());
+		GeneralController.map.put("totalFixtures", new UsersFixtures().totalFixturesUser(user.getInteger("id")));
+		GeneralController.map.put("predUser", GeneralController.getAcum(predUser));
+		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/perfil.mustache");
 	};
 
 	/**
@@ -145,9 +146,9 @@ public class UserController {
 			res.redirect("/loged/profile");
 			return null;
 		} else {
-			map.put("countries", Country.getAllCountrys());
+			GeneralController.map.put("countries", Country.getAllCountrys());
 		}
-		return new ModelAndView(map, "./src/main/resources/inicio.mustache");
+		return new ModelAndView(GeneralController.map, "./src/main/resources/inicio.mustache");
 	};
 
 	/**
@@ -158,13 +159,13 @@ public class UserController {
 			req.session().removeAttribute("logueado");
 			if (req.session().attribute("admin") != null) {
 				req.session().removeAttribute("admin");
-				map.remove("admin");
+				GeneralController.map.remove("admin");
 			}
 		}
-		map.remove("lastFixture");
-		map.remove("schedule");
-		map.remove("errorLogin");
-		map.remove("errorRegister");
+		GeneralController.map.remove("lastFixture");
+		GeneralController.map.remove("schedule");
+		GeneralController.map.remove("errorLogin");
+		GeneralController.map.remove("errorRegister");
 		res.redirect("/");
 	};
 
@@ -174,7 +175,7 @@ public class UserController {
 	public static TemplateViewRoute home = (req, res) -> {
 		if (req.queryParams("action").equals("signin"))
 			return login.handle(req, res);
-		map.putAll(register(req, res));
+		GeneralController.map.putAll(register(req, res));
 		res.redirect("/");
 		return null;
 	};

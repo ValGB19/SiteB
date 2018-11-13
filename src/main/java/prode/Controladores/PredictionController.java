@@ -1,16 +1,13 @@
 package prode.Controladores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.javalite.activejdbc.Model;
 import spark.*;
 import prode.*;
 
 public class PredictionController {
 
-	static Map<String, Object> map = new HashMap<String, Object>();
 
 	/**
 	 * Save in the data base the user prediction
@@ -18,7 +15,7 @@ public class PredictionController {
 	public static TemplateViewRoute cargarPrediction = (req, res) -> {
 		String fix = req.session().attribute("lastFixture");
 		String user = req.session().attribute("username");
-		map.put("nick", user);
+		GeneralController.map.put("nick", user);
 		res.redirect("/loged/perfil");
 		if (fix == null)
 			return null;
@@ -52,7 +49,7 @@ public class PredictionController {
 		String fix = req.session().attribute("lastFixture");
 		req.session().removeAttribute("lastFixture");
 		req.session().removeAttribute("schedule");
-		map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("nick", req.session().attribute("username"));
 		res.redirect("/loged/perfil");
 
 		List<Match> l = new Fixture().getFix(fix).getMatch();
@@ -100,8 +97,8 @@ public class PredictionController {
 			allUs.add(GeneralController.getAcum(p));
 		}
 		if (allUs.get(0) != null) {
-			map.put("players", allUs);
+			GeneralController.map.put("players", allUs);
 		}
-		return new ModelAndView(map, "./src/main/resources/loged/results.mustache");
+		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/results.mustache");
 	};
 }

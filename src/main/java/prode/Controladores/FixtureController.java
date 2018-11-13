@@ -1,15 +1,12 @@
 package prode.Controladores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import spark.*;
 import prode.*;
 
 public class FixtureController {
-
-	static Map<String, Object> map = new HashMap<String, Object>();
 
 	/**
 	 * Returns a view for the administrator to upload results.
@@ -19,9 +16,9 @@ public class FixtureController {
 	 * @return an ModelAndView to show.
 	 */
 	public static TemplateViewRoute mainFixturesAdmin = (req, res) -> {
-		map.put("nick", req.session().attribute("username"));
-		map.put("fixs", Fixture.getAllFixtures());
-		return new ModelAndView(map, "./src/main/resources/loged/admin.mustache");
+		GeneralController.map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("fixs", Fixture.getAllFixtures());
+		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/admin.mustache");
 	};
 
 	/**
@@ -32,9 +29,9 @@ public class FixtureController {
 	 * @return an ModelAndView to show.
 	 */
 	public static TemplateViewRoute mainFixturesPlayer = (req, res) -> {
-		map.put("nick", req.session().attribute("username"));
-		map.put("fixs", Fixture.getAllFixtures());
-		return new ModelAndView(map, "./src/main/resources/loged/prode.mustache");
+		GeneralController.map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("fixs", Fixture.getAllFixtures());
+		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/prode.mustache");
 	};
 
 	/**
@@ -66,15 +63,15 @@ public class FixtureController {
 	 * @return nothing.
 	 */
 	public static TemplateViewRoute viewProdeScheduleAdmin = (req, res) -> {
-		map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("nick", req.session().attribute("username"));
 		String fix = getFstFixture(req);
-		res.redirect("/loged/admin");
 		if (fix == null)
 			return null;
 		req.session().attribute("lastFixture", fix);
 		List<Match> listMatches = new Fixture().getFix(fix).getMatch();
 		listMatches.removeIf((x) -> x.getString("result") != null);
-		getFromMatchToShow(listMatches, map, fix);
+		getFromMatchToShow(listMatches, GeneralController.map, fix);
+		res.redirect("/loged/admin");
 		return null;
 	};
 
@@ -87,7 +84,7 @@ public class FixtureController {
 	 * @return nothing.
 	 */
 	public static TemplateViewRoute viewProdeSchedulePlayer = (req, res) -> {
-		map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("nick", req.session().attribute("username"));
 		String fix = getFstFixture(req);
 		res.redirect("/loged/prode");
 		if (fix == null)
@@ -96,7 +93,7 @@ public class FixtureController {
 		int idUser = new User().getUser(req.session().attribute("username")).getInteger("id");
 		List<Match> listMatches = new Fixture().getFix(fix).getMatch();
 		listMatches.removeIf(Match.filterById(idUser));
-		getFromMatchToShow(listMatches, map, fix);
+		getFromMatchToShow(listMatches, GeneralController.map, fix);
 		return null;
 	};
 
