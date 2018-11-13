@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import spark.*;
 import prode.*;
+import prode.Utils.Consts;
 
 public class FixtureController {
 
@@ -16,7 +17,7 @@ public class FixtureController {
 	 * @return an ModelAndView to show.
 	 */
 	public static TemplateViewRoute mainFixturesAdmin = (req, res) -> {
-		GeneralController.map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("nick", req.session().attribute(Consts.ATTRIBUTEUSERNAME));
 		GeneralController.map.put("fixs", Fixture.getAllFixtures());
 		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/admin.mustache");
 	};
@@ -29,7 +30,7 @@ public class FixtureController {
 	 * @return an ModelAndView to show.
 	 */
 	public static TemplateViewRoute mainFixturesPlayer = (req, res) -> {
-		GeneralController.map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("nick", req.session().attribute(Consts.ATTRIBUTEUSERNAME));
 		GeneralController.map.put("fixs", Fixture.getAllFixtures());
 		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/prode.mustache");
 	};
@@ -63,11 +64,11 @@ public class FixtureController {
 	 * @return nothing.
 	 */
 	public static TemplateViewRoute viewProdeScheduleAdmin = (req, res) -> {
-		GeneralController.map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("nick", req.session().attribute(Consts.ATTRIBUTEUSERNAME));
 		String fix = getFstFixture(req);
 		if (fix == null)
 			return null;
-		req.session().attribute("lastFixture", fix);
+		req.session().attribute(Consts.ATTRIBUTELASTFIXTURE, fix);
 		List<Match> listMatches = new Fixture().getFix(fix).getMatch();
 		listMatches.removeIf((x) -> x.getString("result") != null);
 		getFromMatchToShow(listMatches, GeneralController.map, fix);
@@ -84,13 +85,13 @@ public class FixtureController {
 	 * @return nothing.
 	 */
 	public static TemplateViewRoute viewProdeSchedulePlayer = (req, res) -> {
-		GeneralController.map.put("nick", req.session().attribute("username"));
+		GeneralController.map.put("nick", req.session().attribute(Consts.ATTRIBUTEUSERNAME));
 		String fix = getFstFixture(req);
 		res.redirect("/loged/prode");
 		if (fix == null)
 			return null;
-		req.session().attribute("lastFixture", fix);
-		int idUser = new User().getUser(req.session().attribute("username")).getInteger("id");
+		req.session().attribute(Consts.ATTRIBUTELASTFIXTURE, fix);
+		int idUser = new User().getUser(req.session().attribute(Consts.ATTRIBUTEUSERNAME)).getInteger("id");
 		List<Match> listMatches = new Fixture().getFix(fix).getMatch();
 		listMatches.removeIf(Match.filterById(idUser));
 		getFromMatchToShow(listMatches, GeneralController.map, fix);

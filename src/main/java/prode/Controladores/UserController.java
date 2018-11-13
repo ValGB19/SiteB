@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import spark.*;
 import prode.*;
+import prode.Utils.Consts;
 
 public class UserController {
 
@@ -86,13 +87,13 @@ public class UserController {
 		String errorMessage = "";
 		if (User.log(username, psw)) {
 			req.session(true);
-			req.session().attribute("username", username);
-			req.session().attribute("logueado", true);
+			req.session().attribute(Consts.ATTRIBUTEUSERNAME, username);
+			req.session().attribute(Consts.ATTRIBUTELOGED, true);
 			if (User.findFirst("nick = ?", username).getBoolean("admin")) {
-				req.session().attribute("admin", true);
+				req.session().attribute(Consts.ATTRIBUTEADMIN, true);
 				GeneralController.map.put("admin", true);
 			}else{
-				req.session().attribute("admin", false);
+				req.session().attribute(Consts.ATTRIBUTEADMIN, false);
 			}
 			log = true;
 			String name = ((User) User.findFirst("nick = ?", username)).getNameUser();
@@ -117,7 +118,7 @@ public class UserController {
 	 * Load in the map the predictions of the user logged
 	 */
 	public static TemplateViewRoute contain2Perfil = (req, res) -> {
-		String username = req.session().attribute("username");
+		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
 		User user = (User.findFirst("nick = ?", username));
 		ArrayList<List<Object>> predUser = new ArrayList<List<Object>>();
 		List<Object> list;
@@ -142,7 +143,7 @@ public class UserController {
 	 * Check if the user is logged. Otherwise redirect him to "/loged/profile"
 	 */
 	public static TemplateViewRoute redicProfile = (req, res) -> {
-		if (req.session().attribute("logueado") != null) {
+		if (req.session().attribute(Consts.ATTRIBUTELOGED) != null) {
 			res.redirect("/loged/profile");
 			return null;
 		} else {
@@ -155,9 +156,9 @@ public class UserController {
 	 * If the user was logged, it close his session and clear the map.
 	 */
 	public static Filter closeSession = (req, res) -> {
-		if (req.session().attribute("logueado") != null) {
+		if (req.session().attribute(Consts.ATTRIBUTELOGED) != null) {
 			req.session().removeAttribute("logueado");
-			if (req.session().attribute("admin") != null) {
+			if (req.session().attribute(Consts.ATTRIBUTEADMIN) != null) {
 				req.session().removeAttribute("admin");
 				GeneralController.map.remove("admin");
 			}
