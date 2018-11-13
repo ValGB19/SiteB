@@ -1,10 +1,11 @@
 ﻿.wrapper { /*Credits: https://codepen.io/nohoid/pen/kIfto*/
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
+  min-width: 100vw;
   left:0;
   right: 0;
   top: 0;
   bottom: 0;
+  overflow: scroll;
   position: absolute;
 background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
 background-size: 1800% 1800%;
@@ -29,7 +30,7 @@ background-size: 1800% 1800%;
     50%{background-position:100% 19%}
     100%{background-position:0% 82%}
 }
-@keyframes rainbow { 
+@keyframes rainbow {
     0%{background-position:0% 82%}
     50%{background-position:100% 19%}
     100%{background-position:0% 82%}
@@ -79,7 +80,7 @@ background-size: 1800% 1800%;
 
 #botjugar {
   margin-top: 50px auto;
-  
+
 }
 
 #Contenedor{
@@ -94,7 +95,7 @@ background-size: 1800% 1800%;
 
 #Contenedor0{
   width: 400px;
-  margin: 50px auto; 
+  margin: 50px auto;
   margin-top: 0px;
   height: 470px;
 }
@@ -168,7 +169,7 @@ background-size: 1800% 1800%;
  */
 .Icon{
      margin-top: 10px;
-     margin-bottom:10px; 
+     margin-bottom:10px;
      color: #FFF;
      font-size: 50px;
      text-align: center;
@@ -185,7 +186,7 @@ background-size: 1800% 1800%;
 
 .pie {
     font-size: 13px;
-    margin-top: -3em; 
+    margin-top: -3em;
 }
 
 /*tabla prode prediccion*/
