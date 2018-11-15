@@ -1,14 +1,14 @@
 package prode.Controladores;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import spark.*;
 import java.util.Map;
-
+import java.util.List;
+import java.util.HashMap;
+import java.util.ArrayList;
+import prode.Utils.Consts;
 import org.javalite.activejdbc.Base;
 
-import prode.Utils.Consts;
-import spark.*;
+
 
 public class GeneralController {
 
@@ -37,8 +37,17 @@ public class GeneralController {
 	 * If the user is not login, redirect him to "/"
 	 */
 	public static Filter checkIfLoged = (req, res) -> {
-		if (req.session().attribute("logueado") == null) {
+		if (req.session().attribute(Consts.ATTRIBUTELOGED) == null) {
 			res.redirect("/");
+		}
+	};
+	
+	/**
+	 * If the user is not login, redirect him to "/loged/perfil"
+	 */
+	public static Filter checkIfAdmin = (req, res) -> {
+		if (req.session().attribute(Consts.ATTRIBUTEADMIN) == null || !(boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)) {
+			res.redirect("/loged/perfil");
 		}
 	};
 

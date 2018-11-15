@@ -19,7 +19,7 @@ public class FixtureController {
 	public static TemplateViewRoute mainFixtures = (req, res) -> {
 		GeneralController.map.put("fixs", Fixture.getAllFixtures());
 		if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
-			return new ModelAndView(GeneralController.map, "./src/main/resources/loged/admin.mustache");
+			return new ModelAndView(GeneralController.map, "./src/main/resources/admin/admin.mustache");
 		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/prode.mustache");
 			
 	};

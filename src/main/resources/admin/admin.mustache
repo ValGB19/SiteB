@@ -22,31 +22,31 @@
 			<br>
 		</div>
 
-		<div id="loadResult" align="center" style="{{^lastFixture}}display:none;{{/lastFixture}}	{{#lastFixture}}display:block;{{/lastFixture}}background-color: #F3EDED;border: 1px solid #ECE8E8;margin: 50px auto;height: 100%;width: 300px;border-radius:8px;">
-			<font color="Olive" face="Comic Sans MS,arial">
-				<h1 align="center" style="margin-top: 15px"><i><u>Fixtures disponibles</u></i></h1>
-			</font>
-			<br>
-			<form method="post" action="/loged/admin" id="form-list-apuestas" name="form-list-apuestas">
-				<input id="action" notab="" type="hidden" name="action" value="fixtures">
-					{{#fixs}}<div> <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
-			</form>
-		</div>
-
 		<div id="loadCountry" style="display:none;background-color: #F3EDED;border: 1px solid #ECE8E8;margin: 50px auto;height: 100%;width: 300px;border-radius:8px;" align="center">
 			<font color="Olive" face="Comic Sans MS,arial">
 				<h1 align="center" style="margin-top: 15px"><i><u>Carge el pais</u></i></h1>
 			 	</font>
 			<br>
 			<div class="form-group">
-				<form method="post" action="/loged/admin" id="form-registro" name="form-registro">
-					<input id="lContry" hidden name="lContry" value="loadCountry">
+				<form method="post" action="/loged/admin/" id="form-registro" name="form-registro">
+					<input id="action" hidden name="action" value="loadCountry">
 					<input style="width: 80%" type="text" class="form-control" placeholder="Country" id="sendContrys" name="sendContrys" required>
 					<br>
 					<button type="submit" id="sendContry" name="sendContry" class="btn btn-primary" data-toggle="button" aria-pressed="false">Enviar</button>
 				</form>
 				<br>
 			</div>
+		</div>
+
+		<div id="loadResult" align="center" style="{{^lastFixture}}display:none;{{/lastFixture}}	{{#lastFixture}}display:block;{{/lastFixture}}background-color: #F3EDED;border: 1px solid #ECE8E8;margin: 50px auto;height: 100%;width: 300px;border-radius:8px;">
+			<font color="Olive" face="Comic Sans MS,arial">
+				<h1 align="center" style="margin-top: 15px"><i><u>Fixtures disponibles</u></i></h1>
+			</font>
+			<br>
+			<form method="post" action="/loged/admin/" id="form-list-apuestas" name="form-list-apuestas">
+				<input id="action" notab="" type="hidden" name="action" value="fixtures">
+					{{#fixs}}<div> <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
+			</form>
 		</div>
 
 		{{#lastFixture}}
@@ -56,7 +56,7 @@
 					<h1 align="center"><i><u>{{lastFixture}}</u></i></h1>
 					<h1 align="center"><i><u>Fecha N°{{scheduleCurrent}}</u></i></h1>
 				</font>
-				<form method="post" action="/loged/admin" id="form-registro" name="form-registro">
+				<form method="post" action="/loged/admin/" id="form-registro" name="form-registro">
 				<input id="action" notab="" type="hidden" name="action" value="matches">
 				<table id="customers">
 				  <tr>

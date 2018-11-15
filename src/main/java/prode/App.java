@@ -20,6 +20,8 @@ public class App {
 
 		before("/loged/*", GeneralController.checkIfLoged);
 
+		before("/loged/admin/*", GeneralController.checkIfAdmin);
+
 		before("*", GeneralController.openConectionToDataBase);
 
 		after("*", GeneralController.disconectDataBase);
@@ -32,7 +34,7 @@ public class App {
 
 		post("/loged/prode", GeneralController.adminOrBet, new MustacheTemplateEngine());
 
-		post("/loged/admin", GeneralController.adminOrBet, new MustacheTemplateEngine());
+		post("/loged/admin/", GeneralController.adminOrBet, new MustacheTemplateEngine());
 
 		get("/loged/profile", UserController.contain2Perfil, new MustacheTemplateEngine());
 
@@ -40,7 +42,7 @@ public class App {
 
 		get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
 
-		get("/loged/admin", FixtureController.mainFixtures, new MustacheTemplateEngine());
+		get("/loged/admin/", FixtureController.mainFixtures, new MustacheTemplateEngine());
 	}
 
 }
