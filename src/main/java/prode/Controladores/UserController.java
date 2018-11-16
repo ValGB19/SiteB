@@ -79,6 +79,7 @@ public class UserController {
 	 * Try to log the user in the system
 	 */
 	public static TemplateViewRoute login = (req, res) -> {
+		System.out.println("+++++++login");
 		GeneralController.map.remove("errorLogin");
 		GeneralController.map.remove("errorRegister");
 		String username = req.queryParams("usernamelogin");
@@ -99,12 +100,10 @@ public class UserController {
 			GeneralController.map.put("nick", username);
 			GeneralController.map.put("name", name);
 			GeneralController.map.put("surname", surname);
+			res.redirect("/loged/perfil");
+			return null;
 		} else {
 			errorMessage = "Los datos ingresados son incorrectos";
-		}
-		if (log) {
-			res.redirect("/loged/profile");
-			return null;
 		}
 		res.redirect("/");
 		GeneralController.map.put("errorLogin", errorMessage);
@@ -137,45 +136,34 @@ public class UserController {
 	};
 
 	/**
-	 * Check if the user is logged. Otherwise redirect him to "/loged/profile"
+	 * //Check if the user is logged. Otherwise redirect him to "/loged/profile"
 	 */
-	public static TemplateViewRoute redicProfile = (req, res) -> {
-		if (req.session().attribute(Consts.ATTRIBUTELOGED) != null) {
-			res.redirect("/loged/profile");
-			return null;
-		} else {
-			GeneralController.map.put("countries", Country.getAllCountrys());
-		}
+	public static TemplateViewRoute gHome = (req, res) -> {
+		System.out.println("+++++++gHome");
+		GeneralController.map.put("countries", Country.getAllCountrys());
 		return new ModelAndView(GeneralController.map, "./src/main/resources/inicio.mustache");
+	};
+
+	/**
+	 * Check if the user wants sign in o sign out
+	 */
+	public static TemplateViewRoute pHome = (req, res) -> {
+		System.out.println("+++++++pHome");
+		if (req.queryParams("action").equals("signin"))
+			return login.handle(req, res);
+		if(req.queryParams("action").equals("signup"))
+			GeneralController.map.putAll(register(req, res));
+		//res.redirect("/");
+		return null;
 	};
 
 	/**
 	 * If the user was logged, it close his session and clear the map.
 	 */
 	public static Filter closeSession = (req, res) -> {
-		if (req.session().attribute(Consts.ATTRIBUTELOGED) != null) {
-			req.session().removeAttribute("logueado");
-			if (req.session().attribute(Consts.ATTRIBUTEADMIN) != null) {
-				req.session().removeAttribute("admin");
-				GeneralController.map.remove("admin");
-			}
-		}
-		GeneralController.map.remove("lastFixture");
-		GeneralController.map.remove("schedule");
-		GeneralController.map.remove("errorLogin");
-		GeneralController.map.remove("errorRegister");
+		for (String attribute: req.session().attributes())
+			req.session().removeAttribute(attribute);		
+		GeneralController.map.clear();
 		res.redirect("/");
 	};
-
-	/**
-	 * Check if the user wants sign in o sign out
-	 */
-	public static TemplateViewRoute home = (req, res) -> {
-		if (req.queryParams("action").equals("signin"))
-			return login.handle(req, res);
-		GeneralController.map.putAll(register(req, res));
-		res.redirect("/");
-		return null;
-	};
-
 }

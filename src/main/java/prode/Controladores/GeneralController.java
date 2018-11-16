@@ -18,16 +18,17 @@ public class GeneralController {
 	 * Open the connection to the data base
 	 */
 	public static Filter openConectionToDataBase = (req, res) -> {
-		if (!Base.hasConnection()) {
+		System.out.println("+++++++openConectionToDataBase");
+		if (!Base.hasConnection())
 			Base.open("com.mysql.jdbc.Driver",
 					"jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
-		}
 	};
 
 	/**
 	 * Close the connection to the data base
 	 */
 	public static Filter disconectDataBase = (req, res) -> {
+		System.out.println("+++++++disconectDataBase");
 		if (Base.hasConnection()) {
 			Base.close();
 		}
@@ -37,18 +38,18 @@ public class GeneralController {
 	 * If the user is not login, redirect him to "/"
 	 */
 	public static Filter checkIfLoged = (req, res) -> {
-		if (req.session().attribute(Consts.ATTRIBUTELOGED) == null) {
+		System.out.println("+++++++checkIfLoged");
+		if (req.session().attribute(Consts.ATTRIBUTELOGED) == null)
 			res.redirect("/");
-		}
 	};
 	
 	/**
-	 * If the user is not login, redirect him to "/loged/perfil"
+	 * If the user is not login, redirect him to "/loged/admin"
 	 */
 	public static Filter checkIfAdmin = (req, res) -> {
-		if (req.session().attribute(Consts.ATTRIBUTEADMIN) == null || !(boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)) {
+		System.out.println("+++++++checkIfAdmin");
+		if (req.session().attribute(Consts.ATTRIBUTEADMIN) == null || !(boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)) 
 			res.redirect("/loged/perfil");
-		}
 	};
 
 	/**

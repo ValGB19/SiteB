@@ -28,17 +28,18 @@ public class App {
 
 		after("/exit", UserController.closeSession);
 
-		get("/", UserController.redicProfile, new MustacheTemplateEngine());
+		get("/", UserController.gHome, new MustacheTemplateEngine());
 
-		post("/", UserController.home, new MustacheTemplateEngine());
+		post("/", UserController.pHome, new MustacheTemplateEngine());
+
+		get("/loged/prode", FixtureController.mainFixtures, new MustacheTemplateEngine());
+		//
 
 		post("/loged/prode", GeneralController.adminOrBet, new MustacheTemplateEngine());
 
 		post("/loged/admin/", GeneralController.adminOrBet, new MustacheTemplateEngine());
 
-		get("/loged/profile", UserController.contain2Perfil, new MustacheTemplateEngine());
-
-		get("/loged/prode", FixtureController.mainFixtures, new MustacheTemplateEngine());
+		get("/loged/perfil", UserController.contain2Perfil, new MustacheTemplateEngine());
 
 		get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
 
