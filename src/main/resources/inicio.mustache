@@ -1,7 +1,7 @@
 {{>public/header}}
 		<title>Login | PRODE</title>
 		<div class="container-fluid">
-			<div class="row"> 
+			<div class="row">
 				<div id="Contenedor" align="center">
 					<br>
 					<h3> Inicia sesión</h3>
@@ -55,13 +55,13 @@
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary" type="button" id="checkUsername">Check disponibilidad</button>
 								</div>
-							</div> 
+							</div>
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<label for="rdni" class="input-group-text" id="basic-addon1">DNI:</label>
 								</div>
 								<input id="rdni" name="rdni" type="number" class="form-control" placeholder="12345678" aria-label="12345678" maxlength="8" minlength="8" size="8" aria-describedby="basic-addon1" required>
-							</div> 
+							</div>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label for="pswRegister" class="input-group-text" id="usernamelogin">Contraseña</label>
@@ -74,9 +74,9 @@
 									<label for="pswValida" class="input-group-text" id="usernamelogin">Contraseña otra vez</label>
 								</div>
 								<input id="pswValida" name="pswValida" type="password" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
-							</div>  
+							</div>
 							<span class="error" aria-live="polite"></span>
-							<br>    
+							<br>
 							<div class="input-group">
 								<div class="input-group-prepend">
 								<label for="mail" class="input-group-text" id="email">Email</label>
@@ -92,8 +92,8 @@
 										<option selected disabled value="Argentina">Seleccione su pais...</option>
 										{{#countries}} <option value={{.}}>{{.}}</option> {{/countries}}
 									</select>
-								</div>  
-							
+								</div>
+
 							<div class="input-group">
 								<div class="input-group-prepend">
 								<label for="clave" class="input-group-text" id="clavl">Palabra Clave</label>
@@ -103,7 +103,7 @@
 							<br>
 							<button class="btn btn-lg btn-primary btn-block btn-signin" id="btnRegister" type="submit">Registrarme</button>
 						</form>
-					</div>  
+					</div>
 					{{#errorRegister}} <h4> {{.}} </h4> {{/errorRegister}}
 				</div>
 			</div>
