@@ -24,7 +24,8 @@ public class User extends Model {
 	}
 
 	/**
-	 * @return
+	 * Return the total score of the user
+	 * @return a int that is the total score of the user
 	 */
 	public int totalScore() {
 		List<MatchPrediction> scores = MatchPrediction.where("user_id = ? and score <>", this.getId(), null);
@@ -102,8 +103,8 @@ public class User extends Model {
 	}
 
 	/**
-	 * @param data
-	 * @return
+	 * @param data a map which contains the data of the user to set
+	 * @return if the user could be saved in the persistence system
 	 */
 	public boolean setUserTemp(Map<String, String> data){
 		boolean e = false;

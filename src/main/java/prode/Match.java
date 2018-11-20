@@ -18,7 +18,6 @@ public class Match extends Model {
     	validateWith(new EnumeMatchValidator());
 	}
 	
-	
 	/**
 	 * @return fixture to which the match belongs
 	 */

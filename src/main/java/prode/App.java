@@ -32,11 +32,11 @@ public class App {
 
 		post("/", UserController.pHome, new MustacheTemplateEngine());
 
-		get("/loged/perfil", UserController.contain2Perfil, new MustacheTemplateEngine());
+		get("/loged/perfil", UserController.viewPerfil, new MustacheTemplateEngine());
 		
 		get("/loged/prode", FixtureController.betView, new MustacheTemplateEngine());
 
-		post("/loged/prode", GeneralController.adminOrBet, new MustacheTemplateEngine());
+		post("/loged/prode", GeneralController.bet, new MustacheTemplateEngine());
 
 		get("/results", PredictionController.verResults, new MustacheTemplateEngine());
 

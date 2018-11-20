@@ -19,7 +19,6 @@ public class UserController {
 	 * @return a <code>HashMap</code> with the info of the errors
 	 */
 	public static HashMap<String, Object> register(Request req, Response res) {
-		System.out.println("+++++++register");
 		GeneralController.map.remove("errorLogin");
 		GeneralController.map.remove("errorRegister");
 		Map<String, String> data = new HashMap<String, String>();
@@ -81,7 +80,6 @@ public class UserController {
 	 * Try to log the user in the system
 	 */
 	public static TemplateViewRoute login = (req, res) -> {
-		System.out.println("+++++++login");
 		GeneralController.map.remove("errorLogin");
 		GeneralController.map.remove("errorRegister");
 		String username = req.queryParams("usernamelogin");
@@ -114,7 +112,7 @@ public class UserController {
 	/**
 	 * Load in the map the predictions of the user logged
 	 */
-	public static TemplateViewRoute contain2Perfil = (req, res) -> {
+	public static TemplateViewRoute viewPerfil = (req, res) -> {
 		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
 		User user = (User.findFirst("nick = ?", username));
 		ArrayList<List<Object>> predUser = new ArrayList<List<Object>>();
@@ -139,7 +137,6 @@ public class UserController {
 	 * //Check if the user is logged. Otherwise redirect him to "/loged/profile"
 	 */
 	public static TemplateViewRoute gHome = (req, res) -> {
-		System.out.println("+++++++gHome");
 		GeneralController.map.put("countries", Country.getAllCountrys());
 		return new ModelAndView(GeneralController.map, "./src/main/resources/inicio.mustache");
 	};
@@ -148,7 +145,6 @@ public class UserController {
 	 * Check if the user wants sign in o sign out
 	 */
 	public static TemplateViewRoute pHome = (req, res) -> {
-		System.out.println("+++++++pHome");
 		if (req.queryParams("action").equals("signin"))
 			return login.handle(req, res);
 		if(req.queryParams("action").equals("signup"))

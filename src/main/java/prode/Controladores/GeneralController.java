@@ -20,7 +20,6 @@ public class GeneralController {
 	 * Open the connection to the data base
 	 */
 	public static Filter openConectionToDataBase = (req, res) -> {
-		System.out.println("+++++++openConectionToDataBase");
 		if (!Base.hasConnection())
 			Base.open("com.mysql.jdbc.Driver",
 					"jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
@@ -30,7 +29,6 @@ public class GeneralController {
 	 * Close the connection to the data base
 	 */
 	public static Filter disconectDataBase = (req, res) -> {
-		System.out.println("+++++++disconectDataBase");
 		if (Base.hasConnection()) {
 			Base.close();
 		}
@@ -40,7 +38,6 @@ public class GeneralController {
 	 * If the user is not login, redirect him to "/"
 	 */
 	public static Filter checkIfLoged = (req, res) -> {
-		System.out.println("+++++++checkIfLoged");
 		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
 			res.redirect("/");
 		else if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
@@ -51,7 +48,6 @@ public class GeneralController {
 	 * If the user is not login, redirect him to "/loged/admin"
 	 */
 	public static Filter checkIfAdmin = (req, res) -> {
-		System.out.println("+++++++checkIfAdmin");
 		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
 			res.redirect("/");
 		if (!((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)))
@@ -61,10 +57,13 @@ public class GeneralController {
 	/**
 	 * Checks if the user wants bet or view the fixture
 	 */
-	public static TemplateViewRoute adminOrBet = (req, res) -> {
-		if (req.queryParams("action").equals("fixtures"))
-			return FixtureController.viewProdeSchedulePlayer.handle(req, res);
-		return PredictionController.cargarPrediction.handle(req, res);
+	public static TemplateViewRoute bet = (req, res) -> {
+		switch(req.queryParams("action")){
+			case "fixtures":
+				return FixtureController.viewProdeSchedulePlayer.handle(req, res);
+			default:
+				return PredictionController.cargarPrediction.handle(req, res);
+		}
 	};
 	
 	/**

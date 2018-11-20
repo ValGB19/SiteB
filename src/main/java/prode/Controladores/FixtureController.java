@@ -21,7 +21,6 @@ public class FixtureController {
 	 * @return an ModelAndView to show.
 	 */
 	public static TemplateViewRoute mainFixtures = (req, res) -> {
-		System.out.println("+++++++mainFixtures "+req.session().attribute(Consts.ATTRIBUTEADMIN));
 		return new ModelAndView(GeneralController.map, "./src/main/resources/admin/main.mustache");
 	};
 
@@ -102,6 +101,7 @@ public class FixtureController {
 		return null;
 	};
 
+	
 	public static TemplateViewRoute loadCountry = (req,res) ->{
 		String countryName = req.queryParams("sendContrys");
 		if(countryName != null) {

@@ -14,14 +14,12 @@ public class PredictionController {
 	 * Save in the data base the user prediction
 	 */
 	public static TemplateViewRoute cargarPrediction = (req, res) -> {
-		System.out.println("+++++++cargarPrediccion");
 		String fix = req.session().attribute(Consts.ATTRIBUTELASTFIXTURE);
 		String user = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
 		GeneralController.map.put("nick", user);
 		res.redirect("/loged/perfil");
 		if (fix == null)
 			return null;
-		System.out.println("+++++++cargarPrediccion "+fix );
 		int idU = new User().getUser(user).getInteger("id");
 		List<Match> list = new Fixture().getFix(fix).getMatch();
 		list.removeIf(Match.filterById(idU));
@@ -33,7 +31,7 @@ public class PredictionController {
 			pred.setInteger("match_id", idMatch);
 			pred.setString("user_id", idU);
 			pred.setString("prediction", req.queryParams(idMatch.toString()));
-			System.out.println(pred.save());
+			pred.save();
 		}
 		UsersFixtures uf = new UsersFixtures();
 		if (UsersFixtures.findFirst("user_id = ? and fixture_id = ?", idU,
