@@ -1,10 +1,11 @@
 package prode.Controladores;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.javalite.activejdbc.Model;
-import spark.*;
 import prode.*;
+import spark.*;
+import java.util.List;
+import java.util.ArrayList;
+import prode.Utils.Consts;
+import org.javalite.activejdbc.Model;
 
 public class PredictionController {
 
@@ -13,8 +14,8 @@ public class PredictionController {
 	 * Save in the data base the user prediction
 	 */
 	public static TemplateViewRoute cargarPrediction = (req, res) -> {
-		String fix = req.session().attribute("lastFixture");
-		String user = req.session().attribute("username");
+		String fix = req.session().attribute(Consts.ATTRIBUTELASTFIXTURE);
+		String user = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
 		GeneralController.map.put("nick", user);
 		res.redirect("/loged/perfil");
 		if (fix == null)
@@ -46,11 +47,14 @@ public class PredictionController {
 	 * Save the matches results
 	 */
 	public static TemplateViewRoute cargaResulMatch = (req, res) -> {
-		String fix = req.session().attribute("lastFixture");
-		req.session().removeAttribute("lastFixture");
-		req.session().removeAttribute("schedule");
-		GeneralController.map.put("nick", req.session().attribute("username"));
-		res.redirect("/loged/perfil");
+		String fix = req.session().attribute(Consts.ATTRIBUTELASTFIXTURE);
+		req.session().removeAttribute(Consts.ATTRIBUTELASTFIXTURE);
+		req.session().removeAttribute(Consts.ATTRIBUTESCHEDULE);
+		GeneralController.map.remove(Consts.ATTRIBUTELASTFIXTURE);
+		GeneralController.map.remove(Consts.ATTRIBUTESCHEDULE);
+		GeneralController.map.remove("fixs");
+		
+		res.redirect("/admin/main");
 
 		List<Match> l = new Fixture().getFix(fix).getMatch();
 		l.removeIf((x) -> x.getString("result") != null || "null".equals(x.getString("result")));
@@ -96,9 +100,9 @@ public class PredictionController {
 			}
 			allUs.add(GeneralController.getAcum(p));
 		}
-		if (allUs.get(0) != null) {
+		if (!allUs.isEmpty()) {
 			GeneralController.map.put("players", allUs);
 		}
-		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/results.mustache");
+		return new ModelAndView(GeneralController.map, "./src/main/resources/public/results.mustache");
 	};
 }

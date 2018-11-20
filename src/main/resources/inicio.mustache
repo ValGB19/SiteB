@@ -1,8 +1,8 @@
 {{>public/header}}
 		<title>Login | PRODE</title>
 		<div class="container-fluid">
-			<div class="row"> 
-				<div id="Contenedor" align="center">
+			<div class="row">
+				<div class="Contenedor" style="width: 400px;" align="center">
 					<br>
 					<h3> Inicia sesión</h3>
 					<br>
@@ -11,7 +11,7 @@
 						<br>
 						{{errorLogin}}
 						<form method="post" id="FormEntrar">
-							<input id="action" notab="" type="hidden" name="action" value="signin">
+							<input id="action" hidden name="action" value="signin">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label for="usernamelogin" class="input-group-text">Usuario</label>
@@ -26,19 +26,20 @@
 								<input id="pswLogin" name="pswLogin" type="password" name="contra" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
 							</div>
 							<br>
-							<button class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit" href="127.0.0.1:4567/perfil">Entrar</button>
+							<button class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
 							<div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>
 						</form>
 					</div>
+
 				</div>
 
-				<div id="Contenedor1" align="center">
+				<div class="Contenedor" style="width: 700px;" align="center">
 					<div class="form-group">
 						<br>
 						<h3> Creá tu cuenta</h3>
 						<br>
 						<form method="post" action="/" id="form-registro" name="form-registro">
-							<input id="action" notab="" type="hidden" name="action" value="signup">
+							<input id="action" hidden name="action" value="signup">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label for="nombre" class="input-group-text" id="">Nombre y apellido</label>
@@ -55,13 +56,13 @@
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary" type="button" id="checkUsername">Check disponibilidad</button>
 								</div>
-							</div> 
+							</div>
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<label for="rdni" class="input-group-text" id="basic-addon1">DNI:</label>
 								</div>
 								<input id="rdni" name="rdni" type="number" class="form-control" placeholder="12345678" aria-label="12345678" maxlength="8" minlength="8" size="8" aria-describedby="basic-addon1" required>
-							</div> 
+							</div>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label for="pswRegister" class="input-group-text" id="usernamelogin">Contraseña</label>
@@ -74,9 +75,9 @@
 									<label for="pswValida" class="input-group-text" id="usernamelogin">Contraseña otra vez</label>
 								</div>
 								<input id="pswValida" name="pswValida" type="password" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
-							</div>  
+							</div>
 							<span class="error" aria-live="polite"></span>
-							<br>    
+							<br>
 							<div class="input-group">
 								<div class="input-group-prepend">
 								<label for="mail" class="input-group-text" id="email">Email</label>
@@ -92,18 +93,18 @@
 										<option selected disabled value="Argentina">Seleccione su pais...</option>
 										{{#countries}} <option value={{.}}>{{.}}</option> {{/countries}}
 									</select>
-								</div>  
-							
+								</div>
+
 							<div class="input-group">
 								<div class="input-group-prepend">
 								<label for="clave" class="input-group-text" id="clavl">Palabra Clave</label>
 								</div>
-								<input id="clave" name="clave" type="password" class="form-control" placeholder="Complete correctamente para ser admin" >
+								<input id="clave" name="clave" type="password" class="form-control" placeholder="Complete correctamente para ser admin">
 							</div>
 							<br>
 							<button class="btn btn-lg btn-primary btn-block btn-signin" id="btnRegister" type="submit">Registrarme</button>
 						</form>
-					</div>  
+					</div>
 					{{#errorRegister}} <h4> {{.}} </h4> {{/errorRegister}}
 				</div>
 			</div>

@@ -18,7 +18,6 @@ public class Match extends Model {
     	validateWith(new EnumeMatchValidator());
 	}
 	
-	
 	/**
 	 * @return fixture to which the match belongs
 	 */
@@ -72,6 +71,14 @@ public class Match extends Model {
 	 * @return Predicate for the Match class on whether the user predicted the match or if the match was played
 	 */
 	public static Predicate<Match> filterById(int idUser){
-		return (Match x) -> ("null".equals(x.getString("result")) || new MatchPrediction().checkGame(idUser, x.getInteger("id")));
+		return (Match x) -> (null != x.getString("result")) || new MatchPrediction().checkGame(idUser, x.getInteger("id"));
+	}
+	
+	/**
+	 * @param idUser
+	 * @return Predicate for the Match class on whether the user predicted the match or if the match was played
+	 */
+	public static Predicate<Match> notPlayed(){ 
+		return (Match x) ->	null != x.getString("result");
 	}
 }

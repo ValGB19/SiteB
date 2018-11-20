@@ -1,12 +1,16 @@
 package prode.Controladores;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.javalite.activejdbc.Base;
 import spark.*;
+import java.util.Map;
+import java.util.List;
+import java.util.HashMap;
+import java.util.ArrayList;
+
+import prode.Fixture;
+import prode.Utils.Consts;
+import org.javalite.activejdbc.Base;
+
+
 
 public class GeneralController {
 
@@ -16,10 +20,9 @@ public class GeneralController {
 	 * Open the connection to the data base
 	 */
 	public static Filter openConectionToDataBase = (req, res) -> {
-		if (!Base.hasConnection()) {
+		if (!Base.hasConnection())
 			Base.open("com.mysql.jdbc.Driver",
 					"jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true&useSSL=false", "root", "root");
-		}
 	};
 
 	/**
@@ -35,28 +38,55 @@ public class GeneralController {
 	 * If the user is not login, redirect him to "/"
 	 */
 	public static Filter checkIfLoged = (req, res) -> {
-		if (req.session().attribute("logueado") == null) {
+		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
 			res.redirect("/");
-		}
+		else if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
+			res.redirect("/admin/main");
+	};
+	
+	/**
+	 * If the user is not login, redirect him to "/loged/admin"
+	 */
+	public static Filter checkIfAdmin = (req, res) -> {
+		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
+			res.redirect("/");
+		if (!((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)))
+			res.redirect("/loged/perfil");
 	};
 
 	/**
 	 * Checks if the user wants bet or view the fixture
 	 */
-	public static TemplateViewRoute redicProde = (req, res) -> {
-		if (req.queryParams("action").equals("fixtures"))
-			return FixtureController.viewProdeSchedulePlayer.handle(req, res);
-		return PredictionController.cargarPrediction.handle(req, res);
+	public static TemplateViewRoute bet = (req, res) -> {
+		switch(req.queryParams("action")){
+			case "fixtures":
+				return FixtureController.viewProdeSchedulePlayer.handle(req, res);
+			default:
+				return PredictionController.cargarPrediction.handle(req, res);
+		}
+	};
+	
+	/**
+	 * Checks if the user wants bet or view the fixture
+	 */
+	public static TemplateViewRoute actionAdmin = (req, res) -> {
+		switch (req.queryParams("action")) {
+			case "fixtures":
+				return FixtureController.viewProdeScheduleAdmin.handle(req, res);
+			case "fixAvailable":
+				GeneralController.map.put("fixs", Fixture.getAllFixturesAvailables().collect("league"));
+				res.redirect("/admin/main");
+				return null;
+			case "loadCountry":
+				return FixtureController.loadCountry.handle(req, res);
+			case "matches":
+				return PredictionController.cargaResulMatch.handle(req, res);
+			default:
+				res.redirect("/admin/main");
+		}
+		return null;
 	};
 
-	/**
-	 * Check if the administrator wants load or view the fixture
-	 */
-	public static TemplateViewRoute redicAdmin = (req, res) -> {
-		if (req.queryParams("action").equals("fixtures"))
-			return FixtureController.viewProdeScheduleAdmin.handle(req, res);
-		return PredictionController.cargaResulMatch.handle(req, res);
-	};
 
 	/**
 	 * Sum all the items in the List of List and return the accumulated

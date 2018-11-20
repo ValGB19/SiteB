@@ -3,6 +3,7 @@ package prode;
 import org.javalite.activejdbc.Model;
 
 public class MatchPrediction extends Model{
+
 	static{
     	validatePresenceOf("prediction").message("Please, provide a prediction");
     	validateWith(new EnumeMatchPredictionValidator());
@@ -43,6 +44,7 @@ public class MatchPrediction extends Model{
 	 * @return true if the user predicted the match
 	 */
 	public boolean checkGame(Integer idUser, Integer idMatch) {
+		System.out.println(MatchPrediction.findFirst("user_id = ? && match_id = ?", idUser, idMatch));
 		return MatchPrediction.findFirst("user_id = ? && match_id = ?", idUser, idMatch) != null; 
 	}
 	
@@ -51,6 +53,5 @@ public class MatchPrediction extends Model{
 	 */
 	public Match getMatch() {
 		return Match.findFirst("id = ?",getInteger("match_id"));
-	}
-	
+	}	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import spark.*;
 import prode.*;
+import prode.Utils.Consts;
 
 public class UserController {
 
@@ -40,6 +41,7 @@ public class UserController {
 			ArrayList<String> tmp = errorsRegister(data);
 			mape.put("errorRegister", tmp);
 		}
+		res.redirect("/");
 		return mape;
 	};
 
@@ -57,7 +59,7 @@ public class UserController {
 		addError((User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null), "*Ese dni ya esta registrado",
 				tmp);
 		addError((User.findFirst("email = ?", data.get("email")) != null), "*Ese email ya esta registrado", tmp);
-		addError((!"traemelapromocionmessi".equals(data.get("key")) && (data.get("key")) != null),
+		addError((!Consts.SECRETWORD.equals(data.get("key")) && (data.get("key")) != null),
 				"*Palabla magica incorrecta", tmp);
 		return tmp;
 	}
@@ -82,33 +84,27 @@ public class UserController {
 		GeneralController.map.remove("errorRegister");
 		String username = req.queryParams("usernamelogin");
 		String psw = req.queryParams("pswLogin");
-		boolean log = false;
 		String errorMessage = "";
 		if (User.log(username, psw)) {
 			req.session(true);
-			req.session().attribute("username", username);
-			req.session().attribute("logueado", true);
-			if (User.findFirst("nick = ?", username).getBoolean("admin")) {
-				req.session().attribute("admin", true);
-				GeneralController.map.put("admin", true);
-			}else{
-				req.session().attribute("admin", false);
-			}
-			log = true;
+			req.session().attribute(Consts.ATTRIBUTEUSERNAME, username);
+			req.session().attribute(Consts.ATTRIBUTELOGED, true);
+			boolean adm = User.findFirst("nick = ?", username).getBoolean("admin");
+			req.session().attribute(Consts.ATTRIBUTEADMIN, adm);
 			String name = ((User) User.findFirst("nick = ?", username)).getNameUser();
 			String surname = ((User) User.findFirst("nick = ?", username)).getSurnameUser();
 			GeneralController.map.put("nick", username);
 			GeneralController.map.put("name", name);
 			GeneralController.map.put("surname", surname);
-			System.out.println("Loged " + username);
+			if(adm)
+				res.redirect("/admin/main");
+			else
+				res.redirect("/loged/perfil");
+			return null;
 		} else {
 			errorMessage = "Los datos ingresados son incorrectos";
+			res.redirect("/");
 		}
-		if (log) {
-			res.redirect("/loged/profile");
-			return null;
-		}
-		res.redirect("/");
 		GeneralController.map.put("errorLogin", errorMessage);
 		return null;
 	};
@@ -116,8 +112,8 @@ public class UserController {
 	/**
 	 * Load in the map the predictions of the user logged
 	 */
-	public static TemplateViewRoute contain2Perfil = (req, res) -> {
-		String username = req.session().attribute("username");
+	public static TemplateViewRoute viewPerfil = (req, res) -> {
+		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
 		User user = (User.findFirst("nick = ?", username));
 		ArrayList<List<Object>> predUser = new ArrayList<List<Object>>();
 		List<Object> list;
@@ -131,7 +127,6 @@ public class UserController {
 		GeneralController.map.remove("lastFixture");
 		GeneralController.map.remove("fixtureCurrent");
 		GeneralController.map.remove("scheduleCurrent");
-		GeneralController.map.put("nick", username);
 		GeneralController.map.put("totalPredictions", user.getTotalMatchPrediction().size());
 		GeneralController.map.put("totalFixtures", new UsersFixtures().totalFixturesUser(user.getInteger("id")));
 		GeneralController.map.put("predUser", GeneralController.getAcum(predUser));
@@ -139,45 +134,31 @@ public class UserController {
 	};
 
 	/**
-	 * Check if the user is logged. Otherwise redirect him to "/loged/profile"
+	 * //Check if the user is logged. Otherwise redirect him to "/loged/profile"
 	 */
-	public static TemplateViewRoute redicProfile = (req, res) -> {
-		if (req.session().attribute("logueado") != null) {
-			res.redirect("/loged/profile");
-			return null;
-		} else {
-			GeneralController.map.put("countries", Country.getAllCountrys());
-		}
+	public static TemplateViewRoute gHome = (req, res) -> {
+		GeneralController.map.put("countries", Country.getAllCountrys());
 		return new ModelAndView(GeneralController.map, "./src/main/resources/inicio.mustache");
+	};
+
+	/**
+	 * Check if the user wants sign in o sign out
+	 */
+	public static TemplateViewRoute pHome = (req, res) -> {
+		if (req.queryParams("action").equals("signin"))
+			return login.handle(req, res);
+		if(req.queryParams("action").equals("signup"))
+			GeneralController.map.putAll(register(req, res));
+		return null;
 	};
 
 	/**
 	 * If the user was logged, it close his session and clear the map.
 	 */
 	public static Filter closeSession = (req, res) -> {
-		if (req.session().attribute("logueado") != null) {
-			req.session().removeAttribute("logueado");
-			if (req.session().attribute("admin") != null) {
-				req.session().removeAttribute("admin");
-				GeneralController.map.remove("admin");
-			}
-		}
-		GeneralController.map.remove("lastFixture");
-		GeneralController.map.remove("schedule");
-		GeneralController.map.remove("errorLogin");
-		GeneralController.map.remove("errorRegister");
+		for (String attribute: req.session().attributes())
+			req.session().removeAttribute(attribute);		
+		GeneralController.map.clear();
 		res.redirect("/");
 	};
-
-	/**
-	 * Check if the user wants sign in o sign out
-	 */
-	public static TemplateViewRoute home = (req, res) -> {
-		if (req.queryParams("action").equals("signin"))
-			return login.handle(req, res);
-		GeneralController.map.putAll(register(req, res));
-		res.redirect("/");
-		return null;
-	};
-
 }
