@@ -70,13 +70,15 @@ public class FixtureController {
 	public static TemplateViewRoute viewProdeScheduleAdmin = (req, res) -> {
 		GeneralController.map.put("nick", req.session().attribute(Consts.ATTRIBUTEUSERNAME));
 		String fix = getFstFixture(req);
-		res.redirect("/admin/main");
-		if (fix == null)
+		if (fix == null){
+			res.redirect("/admin/main");
 			return null;
+		}
 		req.session().attribute(Consts.ATTRIBUTELASTFIXTURE, fix);
 		List<Match> listMatches = new Fixture().getFix(fix).getMatch();
 		listMatches.removeIf((x) -> x.getString("result") != null);
 		getFromMatchToShow(listMatches, GeneralController.map, fix);
+		res.redirect("/admin/main");
 		return null;
 	};
 
