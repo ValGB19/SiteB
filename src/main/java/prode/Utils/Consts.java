@@ -7,6 +7,7 @@ public final class Consts{
 	public static final String ATTRIBUTEUSERNAME = "username";
 	public static final String ATTRIBUTESCHEDULE = "schedule";
 	public static final String ATTRIBUTELASTFIXTURE = "lastFixture";
+	public static final String SECRETWORD = "traemelapromocionmessi";
 	
 
   /**

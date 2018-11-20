@@ -14,12 +14,14 @@ public class PredictionController {
 	 * Save in the data base the user prediction
 	 */
 	public static TemplateViewRoute cargarPrediction = (req, res) -> {
+		System.out.println("+++++++cargarPrediccion");
 		String fix = req.session().attribute(Consts.ATTRIBUTELASTFIXTURE);
 		String user = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
 		GeneralController.map.put("nick", user);
 		res.redirect("/loged/perfil");
 		if (fix == null)
 			return null;
+		System.out.println("+++++++cargarPrediccion "+fix );
 		int idU = new User().getUser(user).getInteger("id");
 		List<Match> list = new Fixture().getFix(fix).getMatch();
 		list.removeIf(Match.filterById(idU));
@@ -31,7 +33,7 @@ public class PredictionController {
 			pred.setInteger("match_id", idMatch);
 			pred.setString("user_id", idU);
 			pred.setString("prediction", req.queryParams(idMatch.toString()));
-			pred.save();
+			System.out.println(pred.save());
 		}
 		UsersFixtures uf = new UsersFixtures();
 		if (UsersFixtures.findFirst("user_id = ? and fixture_id = ?", idU,
@@ -50,8 +52,11 @@ public class PredictionController {
 		String fix = req.session().attribute(Consts.ATTRIBUTELASTFIXTURE);
 		req.session().removeAttribute(Consts.ATTRIBUTELASTFIXTURE);
 		req.session().removeAttribute(Consts.ATTRIBUTESCHEDULE);
-		GeneralController.map.put(Consts.ATTRIBUTEUSERNAME, req.session().attribute(Consts.ATTRIBUTEUSERNAME));
-		res.redirect("/loged/perfil");
+		GeneralController.map.remove(Consts.ATTRIBUTELASTFIXTURE);
+		GeneralController.map.remove(Consts.ATTRIBUTESCHEDULE);
+		GeneralController.map.remove("fixs");
+		
+		res.redirect("/admin/main");
 
 		List<Match> l = new Fixture().getFix(fix).getMatch();
 		l.removeIf((x) -> x.getString("result") != null || "null".equals(x.getString("result")));
@@ -97,9 +102,9 @@ public class PredictionController {
 			}
 			allUs.add(GeneralController.getAcum(p));
 		}
-		if (allUs.get(0) != null) {
+		if (!allUs.isEmpty()) {
 			GeneralController.map.put("players", allUs);
 		}
-		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/results.mustache");
+		return new ModelAndView(GeneralController.map, "./src/main/resources/public/results.mustache");
 	};
 }

@@ -2,6 +2,9 @@ package prode;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.UniquenessValidator;
+
+import prode.Utils.Consts;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +114,7 @@ public class User extends Model {
 		this.set("password", data.get("pwd"));
 		this.set("dni", Integer.parseInt(data.get("dni")));
 		this.set("country_id", Country.findFirst("name = ?", data.get("country")).get("id"));
-		boolean isAdmin = "traemelapromocionmessi".equals(data.get("key"));
+		boolean isAdmin = Consts.SECRETWORD.equals(data.get("key"));
 		this.set("admin", isAdmin);
 		String k = (String) data.get("key");
 		if (isAdmin || k == null || k.isEmpty()) {

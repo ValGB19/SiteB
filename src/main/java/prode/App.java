@@ -11,20 +11,20 @@ public class App {
 		staticFiles.location("/public");
 
 		notFound((req, res) -> {
-			if (req.session().attribute("logueado") == null) {
+			if (req.session().attribute("logueado") == null)
 				res.redirect("/");
-			}
-			res.redirect("/loged/profile");
+			else
+				res.redirect("/loged/profile");
 			return null;
 		});
-
-		before("/loged/*", GeneralController.checkIfLoged);
-
-		before("/loged/admin/*", GeneralController.checkIfAdmin);
 
 		before("*", GeneralController.openConectionToDataBase);
 
 		after("*", GeneralController.disconectDataBase);
+
+		before("/loged/*", GeneralController.checkIfLoged);
+		
+		before("/admin/*", GeneralController.checkIfAdmin);
 
 		after("/exit", UserController.closeSession);
 
@@ -32,18 +32,17 @@ public class App {
 
 		post("/", UserController.pHome, new MustacheTemplateEngine());
 
-		get("/loged/prode", FixtureController.mainFixtures, new MustacheTemplateEngine());
-		//
+		get("/loged/perfil", UserController.contain2Perfil, new MustacheTemplateEngine());
+		
+		get("/loged/prode", FixtureController.betView, new MustacheTemplateEngine());
 
 		post("/loged/prode", GeneralController.adminOrBet, new MustacheTemplateEngine());
 
-		post("/loged/admin/", GeneralController.adminOrBet, new MustacheTemplateEngine());
+		get("/results", PredictionController.verResults, new MustacheTemplateEngine());
 
-		get("/loged/perfil", UserController.contain2Perfil, new MustacheTemplateEngine());
+		get("/admin/main", FixtureController.mainFixtures, new MustacheTemplateEngine());
 
-		get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
-
-		get("/loged/admin/", FixtureController.mainFixtures, new MustacheTemplateEngine());
+		post("/admin/main", GeneralController.actionAdmin, new MustacheTemplateEngine());
 	}
 
 }

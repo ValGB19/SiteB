@@ -2,7 +2,7 @@
 <title>Administrador | PRODE</title>
 <div class="container-fluid">
 	<div class="row">
-		<div id="Contenedor" align="center">
+		<div class="Contenedor" align="center">
 			<br>
 			<font color="Olive" face="Comic Sans MS,arial">
 				<h1 align="center" style="margin-top: 15px"><i><u>Fixtures disponibles</u></i></h1>
@@ -13,22 +13,25 @@
 			</div>
 			<br>
 			<div>
-				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadResult" name="bloadResult" onclick="hideElem('loadResult')">Cargar resultados</button>
+				<form method="post" action="/admin/main" method="post">
+					<input id="action" notab="" hidden name="action" value="fixAvailable">
+					<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadResult" name="bloadResult" onclick="hideElem('loadResult')">Cargar resultados</button>
+				</form>
 			</div>
 			<br>
 			<div>
-				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bRemoveUser" name="bRemoveUser" onclick="hideElem('RemoveUser')">Borrar usuario</button>
+				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="results" name="results" onclick="location.href ='/results'">Ver resultados</button>
 			</div>
 			<br>
 		</div>
 
-		<div id="loadCountry" style="display:none;background-color: #F3EDED;border: 1px solid #ECE8E8;margin: 50px auto;height: 100%;width: 300px;border-radius:8px;" align="center">
+		<div id="loadCountry" class="Contenedor" style="display:none;width: 300px;" align="center">
 			<font color="Olive" face="Comic Sans MS,arial">
 				<h1 align="center" style="margin-top: 15px"><i><u>Carge el pais</u></i></h1>
-			 	</font>
+			</font>
 			<br>
 			<div class="form-group">
-				<form method="post" action="/loged/admin/" id="form-registro" name="form-registro">
+				<form method="post" action="/admin/main" id="form-registro" name="form-registro">
 					<input id="action" hidden name="action" value="loadCountry">
 					<input style="width: 80%" type="text" class="form-control" placeholder="Country" id="sendContrys" name="sendContrys" required>
 					<br>
@@ -38,25 +41,25 @@
 			</div>
 		</div>
 
-		<div id="loadResult" align="center" style="{{^lastFixture}}display:none;{{/lastFixture}}	{{#lastFixture}}display:block;{{/lastFixture}}background-color: #F3EDED;border: 1px solid #ECE8E8;margin: 50px auto;height: 100%;width: 300px;border-radius:8px;">
+		<div id="loadResult" class="Contenedor" align="center" style="{{^fixs}}display:none;{{/fixs}}	{{#fixs}}display:block;{{/fixs}}width: 300px;">
 			<font color="Olive" face="Comic Sans MS,arial">
 				<h1 align="center" style="margin-top: 15px"><i><u>Fixtures disponibles</u></i></h1>
 			</font>
 			<br>
-			<form method="post" action="/loged/admin/" id="form-list-apuestas" name="form-list-apuestas">
+			<form method="post" action="/admin/main" id="form-list-apuestas" name="form-list-apuestas">
 				<input id="action" notab="" type="hidden" name="action" value="fixtures">
 					{{#fixs}}<div> <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
 			</form>
 		</div>
 
 		{{#lastFixture}}
-		<div id="ContenedorPred" style="display:block; height: 100%" align="center">
+		<div class="Contenedor" id="lastFixture" style="display:block; width: 700px;" align="center">
 			<div class="form-group">
 				<font color="Olive" face="Comic Sans MS,arial">
 					<h1 align="center"><i><u>{{lastFixture}}</u></i></h1>
 					<h1 align="center"><i><u>Fecha N°{{scheduleCurrent}}</u></i></h1>
 				</font>
-				<form method="post" action="/loged/admin/" id="form-registro" name="form-registro">
+				<form method="post" action="/admin/main" id="form-registro" name="form-registro">
 				<input id="action" notab="" type="hidden" name="action" value="matches">
 				<table id="customers">
 				  <tr>
@@ -81,7 +84,7 @@
 				    {{/fixtureCurrent}}
 				</table>
 				<br>
-				<button class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Confirmar Resultados</button>
+				<button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="apostar" name="apostar" type="submit">Confirmar Resultados</button>
 				  </form>
 			</div>
 		</div>
@@ -92,8 +95,8 @@
 <script type="text/javascript">
 	function hideElem(n) {
 		var x = document.getElementById(n);
-		if (document.getElementById("ContenedorPred") !== null){
-			document.getElementById("ContenedorPred").style.display = "none";
+		if (document.getElementById("lastFixture") !== null){
+			document.getElementById("lastFixture").style.display = "none";
 		}
 		document.getElementById('loadResult').style.display = "none";
 		document.getElementById("loadCountry").style.display = "none";

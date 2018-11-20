@@ -2,7 +2,7 @@
 <title>A Jugar! | PRODE</title>
 <div class="container-fluid">
 	<div class="row">
-		<div id="Contenedor" align="center">
+		<div class="Contenedor" align="center">
 			<br>
 			<font color="Olive" face="Comic Sans MS,arial">
 				<h1 align="center"><i><u>Fixtures disponibles</u></i></h1>
@@ -15,9 +15,10 @@
 				<input id="action" notab="" type="hidden" name="action" value="fixtures">
 				{{#fixs}}<div> <button style="width: 70%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
 			</form>
+			<br>
 		</div>
 		{{#lastFixture}}
-		<div id="ContenedorPred" align="center">
+		<div class="Contenedor" style="width: 700px;" align="center">
 			<div class="form-group">
 				<font color="Olive" face="Comic Sans MS,arial">
 					<h1 align="center"><i><u>{{lastFixture}}</u></i></h1>

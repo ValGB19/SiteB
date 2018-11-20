@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+
+import prode.Fixture;
 import prode.Utils.Consts;
 import org.javalite.activejdbc.Base;
 
@@ -39,8 +41,10 @@ public class GeneralController {
 	 */
 	public static Filter checkIfLoged = (req, res) -> {
 		System.out.println("+++++++checkIfLoged");
-		if (req.session().attribute(Consts.ATTRIBUTELOGED) == null)
+		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
 			res.redirect("/");
+		else if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
+			res.redirect("/admin/main");
 	};
 	
 	/**
@@ -48,7 +52,9 @@ public class GeneralController {
 	 */
 	public static Filter checkIfAdmin = (req, res) -> {
 		System.out.println("+++++++checkIfAdmin");
-		if (req.session().attribute(Consts.ATTRIBUTEADMIN) == null || !(boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)) 
+		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
+			res.redirect("/");
+		if (!((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)))
 			res.redirect("/loged/perfil");
 	};
 
@@ -56,14 +62,30 @@ public class GeneralController {
 	 * Checks if the user wants bet or view the fixture
 	 */
 	public static TemplateViewRoute adminOrBet = (req, res) -> {
-		if (req.queryParams("action").equals("fixtures")){
-			if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
-				return FixtureController.viewProdeScheduleAdmin.handle(req, res);
+		if (req.queryParams("action").equals("fixtures"))
 			return FixtureController.viewProdeSchedulePlayer.handle(req, res);
-		}
-		if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
-			return PredictionController.cargaResulMatch.handle(req, res);
 		return PredictionController.cargarPrediction.handle(req, res);
+	};
+	
+	/**
+	 * Checks if the user wants bet or view the fixture
+	 */
+	public static TemplateViewRoute actionAdmin = (req, res) -> {
+		switch (req.queryParams("action")) {
+			case "fixtures":
+				return FixtureController.viewProdeScheduleAdmin.handle(req, res);
+			case "fixAvailable":
+				GeneralController.map.put("fixs", Fixture.getAllFixturesAvailables().collect("league"));
+				res.redirect("/admin/main");
+				return null;
+			case "loadCountry":
+				return FixtureController.loadCountry.handle(req, res);
+			case "matches":
+				return PredictionController.cargaResulMatch.handle(req, res);
+			default:
+				res.redirect("/admin/main");
+		}
+		return null;
 	};
 
 

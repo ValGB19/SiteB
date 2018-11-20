@@ -43,6 +43,7 @@ public class MatchPrediction extends Model{
 	 * @return true if the user predicted the match
 	 */
 	public boolean checkGame(Integer idUser, Integer idMatch) {
+		System.out.println(MatchPrediction.findFirst("user_id = ? && match_id = ?", idUser, idMatch));
 		return MatchPrediction.findFirst("user_id = ? && match_id = ?", idUser, idMatch) != null; 
 	}
 	

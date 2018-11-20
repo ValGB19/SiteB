@@ -19,6 +19,7 @@ public class UserController {
 	 * @return a <code>HashMap</code> with the info of the errors
 	 */
 	public static HashMap<String, Object> register(Request req, Response res) {
+		System.out.println("+++++++register");
 		GeneralController.map.remove("errorLogin");
 		GeneralController.map.remove("errorRegister");
 		Map<String, String> data = new HashMap<String, String>();
@@ -41,6 +42,7 @@ public class UserController {
 			ArrayList<String> tmp = errorsRegister(data);
 			mape.put("errorRegister", tmp);
 		}
+		res.redirect("/");
 		return mape;
 	};
 
@@ -58,7 +60,7 @@ public class UserController {
 		addError((User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null), "*Ese dni ya esta registrado",
 				tmp);
 		addError((User.findFirst("email = ?", data.get("email")) != null), "*Ese email ya esta registrado", tmp);
-		addError((!"traemelapromocionmessi".equals(data.get("key")) && (data.get("key")) != null),
+		addError((!Consts.SECRETWORD.equals(data.get("key")) && (data.get("key")) != null),
 				"*Palabla magica incorrecta", tmp);
 		return tmp;
 	}
@@ -84,7 +86,6 @@ public class UserController {
 		GeneralController.map.remove("errorRegister");
 		String username = req.queryParams("usernamelogin");
 		String psw = req.queryParams("pswLogin");
-		boolean log = false;
 		String errorMessage = "";
 		if (User.log(username, psw)) {
 			req.session(true);
@@ -92,20 +93,20 @@ public class UserController {
 			req.session().attribute(Consts.ATTRIBUTELOGED, true);
 			boolean adm = User.findFirst("nick = ?", username).getBoolean("admin");
 			req.session().attribute(Consts.ATTRIBUTEADMIN, adm);
-			if(adm)
-				GeneralController.map.put("admin", true);
-			log = true;
 			String name = ((User) User.findFirst("nick = ?", username)).getNameUser();
 			String surname = ((User) User.findFirst("nick = ?", username)).getSurnameUser();
 			GeneralController.map.put("nick", username);
 			GeneralController.map.put("name", name);
 			GeneralController.map.put("surname", surname);
-			res.redirect("/loged/perfil");
+			if(adm)
+				res.redirect("/admin/main");
+			else
+				res.redirect("/loged/perfil");
 			return null;
 		} else {
 			errorMessage = "Los datos ingresados son incorrectos";
+			res.redirect("/");
 		}
-		res.redirect("/");
 		GeneralController.map.put("errorLogin", errorMessage);
 		return null;
 	};
@@ -128,7 +129,6 @@ public class UserController {
 		GeneralController.map.remove("lastFixture");
 		GeneralController.map.remove("fixtureCurrent");
 		GeneralController.map.remove("scheduleCurrent");
-		GeneralController.map.put("nick", username);
 		GeneralController.map.put("totalPredictions", user.getTotalMatchPrediction().size());
 		GeneralController.map.put("totalFixtures", new UsersFixtures().totalFixturesUser(user.getInteger("id")));
 		GeneralController.map.put("predUser", GeneralController.getAcum(predUser));
@@ -153,7 +153,6 @@ public class UserController {
 			return login.handle(req, res);
 		if(req.queryParams("action").equals("signup"))
 			GeneralController.map.putAll(register(req, res));
-		//res.redirect("/");
 		return null;
 	};
 

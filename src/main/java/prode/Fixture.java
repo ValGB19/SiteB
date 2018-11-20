@@ -2,6 +2,7 @@ package prode;
 
 import java.util.List;
 
+import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.UniquenessValidator;
 
@@ -14,11 +15,24 @@ public class Fixture extends Model {
 
 	/**
 	 * Get all fixtures and return to the list of all names
-	 * @pre atributte league =! null
 	 * @return list of the names of the fixtures
 	 */
   	public static List<String> getAllFixtures() {
 		  return findAll().collect("league");
+	}
+  	
+  	/**
+	 * Get all fixtures availables and return to the list of all names
+	 * @return list of the names of the fixtures
+	 */
+  	public static LazyList<Fixture> getAllFixturesAvailables() {
+  		LazyList<Fixture> aux = findAll();
+  		aux.removeIf((Fixture x) -> { 
+  			List<Match> l = x.getMatch();
+  			l.removeIf(Match.notPlayed());
+  			return l.isEmpty();
+  		});
+		return aux;
 	}
 
   	/**

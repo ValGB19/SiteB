@@ -83,74 +83,17 @@ background-size: 1800% 1800%;
 
 }
 
-#Contenedor{
-	width: 400px;
+.Contenedor{
 	margin: 50px auto;
 	background-color: #F3EDED;
   border: 1px solid #ECE8E8;
-	height: 470px;
+	height: 100%;
 	border-radius:8px;
 	padding: 0px 9px 0px 9px;
-}
-
-#Contenedor0{
-  width: 400px;
-  margin: 50px auto;
-  margin-top: 0px;
-  height: 470px;
-}
-
-#Contenedor1{
-	width: 700px;
-	margin: 50px auto;
-	background-color: #F3EDED;
-  border: 1px solid #ECE8E8;
-	height: 645px;
-	border-radius:8px;
-	padding: 0px 9px 0px 9px;
-}
-
-#ContenedorPred{
-  width: 700px;
-  margin: 50px auto;
-  background-color: #F3EDED;
-  border: 1px solid #ECE8E8;
-  height: 750px;
-  border-radius:8px;
-  padding: 0px 9px 0px 9px;
 }
 
 #perfil{
   margin-right: 50px;
-}
-
-#Contenedor2{
-  width: 400px;
-  margin: 50px auto;
-  background-color: #F3EDED;
-    border: 1px solid #ECE8E8;
-  height: 345px;
-  border-radius:8px;
-  padding: 0px 9px 0px 9px;
-}
-#Contenedor3{
-  width: 400px;
-  margin: 50px auto;
-  background-color: #F3EDED;
-    border: 1px solid #ECE8E8;
-  height: 260px;
-  border-radius:8px;
-  padding: 0px 9px 0px 9px;
-}
-
-#Contenedor4{
-  width: 700px;
-  margin: 50px auto;
-  background-color: #F3EDED;
-  border: 1px solid #ECE8E8;
-  height: 645px;
-  border-radius:8px;
-  padding: 0px 9px 0px 9px;
 }
 
 /**

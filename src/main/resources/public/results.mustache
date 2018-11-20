@@ -1,6 +1,6 @@
-{{>../public/header}}
+{{>header}}
 <title>Resultados! | PRODE</title>
-<div id="Contenedor1" align="center">
+<div class="Contenedor" style="width: 700px;" align="center">
 			<div class="form-group">
 				<br>
 				<h3> Resultados de todos los usuarios</h3>
@@ -10,20 +10,18 @@
 				  	<th>Jugador</th>
 					<th>Fixture</th>
 					<th>Fecha</th>
-					<th>Mi Puntaje</th>
+					<th>Puntaje</th>
 				  </tr>
 				  {{#players}}
-				  <tr>
 				  	{{#.}}
-					  	<td>{{nick}}</td>
-					  	{{{#resul}}}
-							<td>{{.}}</td>
-						{{{#resul}}}
+				  		<tr>
+				  			{{#.}}
+				  			<td>{{.}}</td>
+				  			{{/.}}
+					  	</tr>
 					{{/.}}
-				  </tr>
 				  {{/players}}
 				</table>
 			</div>
 		</div>
-
-{{>../public/footer}}
+{{>footer}}
