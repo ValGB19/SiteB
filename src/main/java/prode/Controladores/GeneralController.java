@@ -79,6 +79,8 @@ public class GeneralController {
 				return null;
 			case "loadCountry":
 				return FixtureController.loadCountry.handle(req, res);
+			case "loadTeam":
+				return FixtureController.loadTeam.handle(req, res);
 			case "matches":
 				return PredictionController.cargaResulMatch.handle(req, res);
 			default:

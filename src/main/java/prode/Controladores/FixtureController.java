@@ -113,7 +113,18 @@ public class FixtureController {
 		}
 		res.redirect("/admin/main");
 		return null;
-	} ;
+	};
+	
+	public static TemplateViewRoute loadTeam = (req,res) ->{
+		String team = req.queryParams("team");
+		if(team != null) {
+			Team t = new Team();
+			t.set("name",team);
+			t.save();
+		}
+		res.redirect("/admin/main");
+		return null;
+	};
 
 	/**
 	 * It puts on the map the current Fixture number, the name of the last fixture
