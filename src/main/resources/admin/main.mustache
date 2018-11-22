@@ -13,6 +13,10 @@
 			</div>
 			<br>
 			<div>
+				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadTeam" name="bloadTeam" onclick="hideElem('loadTeam')">Cargar equipos</button>
+			</div>
+			<br>
+			<div>
 				<form method="post" action="/admin/main" method="post">
 					<input id="action" notab="" hidden name="action" value="fixAvailable">
 					<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadResult" name="bloadResult" onclick="hideElem('loadResult')">Cargar resultados</button>
@@ -41,13 +45,29 @@
 			</div>
 		</div>
 
+		<div id="loadTeam" class="Contenedor" style="display:none;width: 300px;" align="center">
+			<font color="Olive" face="Comic Sans MS,arial">
+				<h1 align="center" style="margin-top: 15px"><i><u>Ingrese el equipo</u></i></h1>
+			</font>
+			<br>
+			<div class="form-group">
+				<form method="post" action="/admin/main" id="form-registro" name="form-registro">
+					<input id="action" hidden name="action" value="loadTeam">
+					<input style="width: 80%" type="text" class="form-control" placeholder="Team" id="team" name="team" required>
+					<br>
+					<button type="submit" id="sendTeam" name="sendTeam" class="btn btn-primary" data-toggle="button" aria-pressed="false">Enviar</button>
+				</form>
+				<br>
+			</div>
+		</div>
+
 		<div id="loadResult" class="Contenedor" align="center" style="{{^fixs}}display:none;{{/fixs}}	{{#fixs}}display:block;{{/fixs}}width: 300px;">
 			<font color="Olive" face="Comic Sans MS,arial">
 				<h1 align="center" style="margin-top: 15px"><i><u>Fixtures disponibles</u></i></h1>
 			</font>
 			<br>
 			<form method="post" action="/admin/main" id="form-list-apuestas" name="form-list-apuestas">
-				<input id="action" notab="" type="hidden" name="action" value="fixtures">
+				<input id="action" notab="" hidden name="action" value="fixtures">
 					{{#fixs}}<div> <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
 			</form>
 		</div>
