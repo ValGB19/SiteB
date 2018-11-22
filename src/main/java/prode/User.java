@@ -36,20 +36,29 @@ public class User extends Model {
 	}
 
 	/**
-	 * @param username: user name
+	 * @param username : user name
 	 * @return user with the username 'username'
 	 */
-	public User getUser(String username) {
+	public static User getUser(String username) {
 		return User.findFirst("nick = ?", username);
 
 	}
 
 	/**
-	 * @param id: user id	
+	 * @param id : ID of the user that you want to find	
 	 * @return User with the id equal to 'id'
 	 */
 	public User getUser(int id) {
 		return User.findFirst("id = ?", id);
+	}
+	
+	
+	/**
+	 * @param mail : email of the user that you want to find
+	 * @return User with the email equal to 'mail'
+	 */
+	public static User getUserforMail(String mail) {
+		return User.findFirst("email = ?", mail);
 	}
 
 	/**
@@ -94,8 +103,8 @@ public class User extends Model {
 
 	/**
 	 * Check that the username and password for the login correspond to a registered user
-	 * @param user: username
-	 * @param psw: user password
+	 * @param user : username
+	 * @param psw : user password
 	 * @return true if the user and password correspond to a registered user
 	 */
 	public static boolean log(String user, String psw) {
@@ -103,6 +112,7 @@ public class User extends Model {
 	}
 
 	/**
+	 * Check that if a user is stored correctly in the database
 	 * @param data a map which contains the data of the user to set
 	 * @return if the user could be saved in the persistence system
 	 */
@@ -113,6 +123,7 @@ public class User extends Model {
 		this.set("nick", data.get("nick"));
 		this.set("email", data.get("email"));
 		this.set("password", data.get("pwd"));
+		this.set("clave", data.get("clave"));
 		this.set("dni", Integer.parseInt(data.get("dni")));
 		this.set("country_id", Country.findFirst("name = ?", data.get("country")).get("id"));
 		boolean isAdmin = Consts.SECRETWORD.equals(data.get("key"));

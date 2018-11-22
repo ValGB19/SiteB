@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
   password VARCHAR(128) not null,
   dni INT not null unique,
   email VARCHAR(128) not null,
+  clave VARCHAR(20) NOT NULL,
   name VARCHAR(128),
   surname VARCHAR(128),
   country_id INT,

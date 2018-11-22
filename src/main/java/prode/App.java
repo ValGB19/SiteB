@@ -31,7 +31,11 @@ public class App {
 		get("/", UserController.gHome, new MustacheTemplateEngine());
 
 		post("/", UserController.pHome, new MustacheTemplateEngine());
+		
+		get("/reset", UserController.gResetPass, new MustacheTemplateEngine());
 
+		post("/reset", UserController.pResetPass, new MustacheTemplateEngine());
+		
 		get("/loged/perfil", UserController.viewPerfil, new MustacheTemplateEngine());
 		
 		get("/loged/prode", FixtureController.betView, new MustacheTemplateEngine());

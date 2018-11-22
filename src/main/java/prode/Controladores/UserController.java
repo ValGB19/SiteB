@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.javalite.activejdbc.Model;
+
 import spark.*;
 import prode.*;
 import prode.Utils.Consts;
@@ -28,11 +31,12 @@ public class UserController {
 		data.put("name", req.queryParams("nombre"));
 		data.put("surname", req.queryParams("apellido"));
 		data.put("email", req.queryParams("mail"));
+		data.put("clave", req.queryParams("seguro"));
 		data.put("country", req.queryParams("rpais"));
 		data.put("dni", req.queryParams("rdni"));
 		data.put("key", req.queryParams("clave"));
 		boolean isSaved = false;
-		if ((data.get("pwd")).equals(data.get("pwd2")) && data.get("dni").length() <= 8) {
+		if (data.get("dni").length() <= 8) {
 			User temp = new User();
 			isSaved = temp.setUserTemp(data);
 		}
@@ -54,10 +58,10 @@ public class UserController {
 	private static ArrayList<String> errorsRegister(Map<String, String> data) {
 		ArrayList<String> tmp = new ArrayList<String>();
 		tmp.add("Datos incorrectos");
-		addError((!data.get("pwd").equals(data.get("pwd2"))), "*Las contrase?s no coinciden", tmp);
 		addError((User.findFirst("nick = ?", data.get("nick")) != null), "*El nickname ya esta en uso", tmp);
 		addError((User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null), "*Ese dni ya esta registrado",
 				tmp);
+		addError(!(data.get("pwd").equals(data.get("pwd2"))),"*Las contraseñas no coinciden",tmp);
 		addError((User.findFirst("email = ?", data.get("email")) != null), "*Ese email ya esta registrado", tmp);
 		addError((!Consts.SECRETWORD.equals(data.get("key")) && (data.get("key")) != null),
 				"*Palabla magica incorrecta", tmp);
@@ -82,6 +86,7 @@ public class UserController {
 	public static TemplateViewRoute login = (req, res) -> {
 		GeneralController.map.remove("errorLogin");
 		GeneralController.map.remove("errorRegister");
+		GeneralController.map.remove("messageReset");
 		String username = req.queryParams("usernamelogin");
 		String psw = req.queryParams("pswLogin");
 		String errorMessage = "";
@@ -134,7 +139,7 @@ public class UserController {
 	};
 
 	/**
-	 * //Check if the user is logged. Otherwise redirect him to "/loged/profile"
+	 * Check if the user is logged. Otherwise redirect him to "/loged/profile"
 	 */
 	public static TemplateViewRoute gHome = (req, res) -> {
 		GeneralController.map.put("countries", Country.getAllCountrys());
@@ -151,6 +156,56 @@ public class UserController {
 			GeneralController.map.putAll(register(req, res));
 		return null;
 	};
+
+	public static TemplateViewRoute gResetPass = (req, res) -> {
+		return new ModelAndView(GeneralController.map, "./src/main/resources/public/reset.mustache");
+	};
+	
+	/**
+	 * Check that the user's password is changed correctly.
+	 */
+	public static TemplateViewRoute pSavePass = (req, res) -> {
+		GeneralController.map.remove("messageReset");
+		String id = req.queryParams("resetID");
+		int i;
+		if (id.contains("@"))
+			i = User.update("password = ?", "email = ?", req.queryParams("psw"), id);
+		else
+			i = User.update("password = ?", "nick = ?", req.queryParams("psw"), id);
+		if (i == 1)
+				GeneralController.map.put("messageReset", "Tu contraseña fue cambiada exitosamente ! ");
+			else
+				GeneralController.map.put("messageReset", "* Error al guardar");
+		res.redirect("/reset");
+		return null;
+	};
+		
+	/**
+	 * Check that when wanting to change the password the user name or email and the security word are valid
+	 */
+	public static TemplateViewRoute pResetPass = (req, res) -> {
+		GeneralController.map.remove("messageReset");
+		GeneralController.map.remove("resetID");
+		String id = req.queryParams("resetID");
+		String seguro = req.queryParams("seguro");
+		User us;
+		if (id.contains("@"))
+			us = User.getUserforMail(id);
+		else
+			us = User.getUser(id);
+		if(us != null) {
+			if(us.getString("clave").equals(seguro))
+				return pSavePass.handle(req, res);
+			else 
+				GeneralController.map.put("messageReset", "* Palabra de seguridad incorrecta");
+		}
+		else
+			GeneralController.map.put("messageReset", "* Usuario inexistente");
+		res.redirect("/reset");
+		
+		return null;
+	};
+	
 
 	/**
 	 * If the user was logged, it close his session and clear the map.
