@@ -21,7 +21,7 @@ public class UserController {
 	 * @param res The response
 	 * @return a <code>HashMap</code> with the info of the errors
 	 */
-	public static HashMap<String, Object> register(Request req, Response res) {
+	public static HashMap<String, Object> register(Request req) {
 		GeneralController.map.remove("errorLogin");
 		GeneralController.map.remove("errorRegister");
 		Map<String, String> data = new HashMap<String, String>();
@@ -45,7 +45,6 @@ public class UserController {
 			ArrayList<String> tmp = errorsRegister(data);
 			mape.put("errorRegister", tmp);
 		}
-		res.redirect("/");
 		return mape;
 	};
 
@@ -90,7 +89,7 @@ public class UserController {
 		String username = req.queryParams("usernamelogin");
 		String psw = req.queryParams("pswLogin");
 		String errorMessage = "";
-		if (User.log(username, psw)) {
+		if (GeneralController.checkQueryParams(req, "usernamelogin", "pswLogin") && User.log(username, psw)) {
 			req.session(true);
 			req.session().attribute(Consts.ATTRIBUTEUSERNAME, username);
 			req.session().attribute(Consts.ATTRIBUTELOGED, true);
@@ -150,10 +149,13 @@ public class UserController {
 	 * Check if the user wants sign in o sign out
 	 */
 	public static TemplateViewRoute pHome = (req, res) -> {
-		if (req.queryParams("action").equals("signin"))
-			return login.handle(req, res);
-		if(req.queryParams("action").equals("signup"))
-			GeneralController.map.putAll(register(req, res));
+		if (GeneralController.checkQueryParams(req, "action")) {
+			if (req.queryParams("action").equals("signin"))
+				return login.handle(req, res);
+			if(req.queryParams("action").equals("signup"))
+				GeneralController.map.putAll(register(req));
+		}
+		res.redirect("/");
 		return null;
 	};
 
@@ -165,7 +167,6 @@ public class UserController {
 	 * Check that the user's password is changed correctly.
 	 */
 	public static TemplateViewRoute pSavePass = (req, res) -> {
-		GeneralController.map.remove("messageReset");
 		String id = req.queryParams("resetID");
 		if (req.queryParams("psw").equals(req.queryParams("pswReset"))) {
 			int i;
@@ -193,6 +194,12 @@ public class UserController {
 		String id = req.queryParams("resetID");
 		String seguro = req.queryParams("seguro");
 		User us;
+		if(!GeneralController.checkQueryParams(req, "resetID", "seguro", "psw", "pswReset")) {
+			GeneralController.map.put("messageReset", "* Faltan datos");
+			res.redirect("/reset");
+			return null;
+		}
+		
 		if (id.contains("@"))
 			us = User.getUserforMail(id);
 		else
@@ -206,7 +213,6 @@ public class UserController {
 		else
 			GeneralController.map.put("messageReset", "* Usuario inexistente");
 		res.redirect("/reset");
-		
 		return null;
 	};
 	

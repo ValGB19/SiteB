@@ -5,8 +5,11 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import prode.Country;
 import prode.Fixture;
+import prode.Team;
 import prode.Utils.Consts;
 import org.javalite.activejdbc.Base;
 
@@ -48,8 +51,10 @@ public class GeneralController {
 	 * If the user is not login, redirect him to "/loged/admin"
 	 */
 	public static Filter checkIfAdmin = (req, res) -> {
-		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
+		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null) {
 			res.redirect("/");
+			return;
+		}
 		if (!((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)))
 			res.redirect("/loged/perfil");
 	};
@@ -61,9 +66,11 @@ public class GeneralController {
 		switch(req.queryParams("action")){
 			case "fixtures":
 				return FixtureController.viewProdeSchedulePlayer.handle(req, res);
-			default:
+			case "matches":
 				return PredictionController.cargarPrediction.handle(req, res);
 		}
+		res.redirect("/loged/prode");
+		return null;
 	};
 	
 	/**
@@ -78,9 +85,9 @@ public class GeneralController {
 				res.redirect("/admin/main");
 				return null;
 			case "loadCountry":
-				return FixtureController.loadCountry.handle(req, res);
+				return FixtureController.saveModel(req, res,"sendContrys",new Country());
 			case "loadTeam":
-				return FixtureController.loadTeam.handle(req, res);
+				return FixtureController.saveModel(req, res, "team", new Team());
 			case "matches":
 				return PredictionController.cargaResulMatch.handle(req, res);
 			default:
@@ -165,5 +172,9 @@ public class GeneralController {
 			return arr;
 		}
 		return unGroup(groupByFstField(listOflist));
+	}
+	
+	public static boolean checkQueryParams(Request req, String... s) {
+		return req.queryParams().containsAll(Arrays.asList(s));
 	}
 }

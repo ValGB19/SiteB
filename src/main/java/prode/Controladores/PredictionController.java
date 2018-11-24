@@ -16,7 +16,6 @@ public class PredictionController {
 	public static TemplateViewRoute cargarPrediction = (req, res) -> {
 		String fix = req.session().attribute(Consts.ATTRIBUTELASTFIXTURE);
 		String user = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
-		GeneralController.map.put("nick", user);
 		res.redirect("/loged/perfil");
 		if (fix == null)
 			return null;

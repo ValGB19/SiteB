@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 
 import spark.*;
 import prode.*;
@@ -49,7 +51,7 @@ public class FixtureController {
 	 * @param req the request which contains the id from the fixture.
 	 * @return an ModelAndView to show.
 	 */
-	private static String getFstFixture(Request req) { //make it hard test
+	private static String getFstFixture(Request req) {
 		String fix = "action";
 		Iterator<String> i = req.queryParams().iterator();
 		while(i.hasNext() && "action".equals(fix))
@@ -57,6 +59,7 @@ public class FixtureController {
 		if ("action".equals(fix))
 			return null;
 		return fix;
+
 	}
 
 	/**
@@ -92,36 +95,28 @@ public class FixtureController {
 	 */
 	public static TemplateViewRoute viewProdeSchedulePlayer = (req, res) -> {
 		String fix = getFstFixture(req);
-		if (fix == null)
+		if (fix == null) {
+			res.redirect("/loged/prode");
 			return null;
-		req.session().attribute(Consts.ATTRIBUTELASTFIXTURE, fix);
-		int idUser = new User().getUser(req.session().attribute(Consts.ATTRIBUTEUSERNAME)).getInteger("id");
+		}
+		int idUser = User.getUser(req.session().attribute(Consts.ATTRIBUTEUSERNAME)).getInteger("id");
 		List<Match> listMatches = new Fixture().getFix(fix).getMatch();
 		listMatches.removeIf(Match.filterById(idUser));
 		getFromMatchToShow(listMatches, GeneralController.map, fix);
+		req.session().attribute(Consts.ATTRIBUTELASTFIXTURE, fix);
 		res.redirect("/loged/prode");
 		return null;
 	};
 
 	
-	public static TemplateViewRoute loadCountry = (req,res) ->{
-		String countryName = req.queryParams("sendContrys");
-		if(countryName != null) {
-			Country c = new Country();
-			c.set("name",countryName);
-			c.save();
+	public static ModelAndView saveModel(Request req, Response res, String s, Model c){
+		if (!GeneralController.checkQueryParams(req, s)) {
+			res.redirect("/admin/main");
+			return null;
 		}
-		res.redirect("/admin/main");
-		return null;
-	};
-	
-	public static TemplateViewRoute loadTeam = (req,res) ->{
-		String team = req.queryParams("team");
-		if(team != null) {
-			Team t = new Team();
-			t.set("name",team);
-			t.save();
-		}
+		String modelName = req.queryParams(s);
+		c.set("name",modelName);
+		c.save();
 		res.redirect("/admin/main");
 		return null;
 	};
