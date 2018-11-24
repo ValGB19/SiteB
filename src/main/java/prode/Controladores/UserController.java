@@ -36,7 +36,7 @@ public class UserController {
 		data.put("dni", req.queryParams("rdni"));
 		data.put("key", req.queryParams("clave"));
 		boolean isSaved = false;
-		if (data.get("dni").length() <= 8) {
+		if (data.get("pwd").equals(data.get("pwd2")) && data.get("dni").length() <= 8) {
 			User temp = new User();
 			isSaved = temp.setUserTemp(data);
 		}
@@ -167,15 +167,19 @@ public class UserController {
 	public static TemplateViewRoute pSavePass = (req, res) -> {
 		GeneralController.map.remove("messageReset");
 		String id = req.queryParams("resetID");
-		int i;
-		if (id.contains("@"))
-			i = User.update("password = ?", "email = ?", req.queryParams("psw"), id);
-		else
-			i = User.update("password = ?", "nick = ?", req.queryParams("psw"), id);
-		if (i == 1)
+		if (req.queryParams("psw").equals(req.queryParams("pswReset"))) {
+			int i;
+			if (id.contains("@"))
+				i = User.update("password = ?", "email = ?", req.queryParams("psw"), id);
+			else
+				i = User.update("password = ?", "nick = ?", req.queryParams("psw"), id);
+			if (i == 1)
 				GeneralController.map.put("messageReset", "Tu contraseña fue cambiada exitosamente ! ");
 			else
 				GeneralController.map.put("messageReset", "* Error al guardar");
+		} else {
+			GeneralController.map.put("messageReset", "* Las contraseñas no coinciden ");
+		}	
 		res.redirect("/reset");
 		return null;
 	};
