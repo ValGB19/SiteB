@@ -23,7 +23,7 @@ public class App {
 		after("*", GeneralController.disconectDataBase);
 
 		before("/loged/*", GeneralController.checkIfLoged);
-		
+
 		before("/admin/*", GeneralController.checkIfAdmin);
 
 		after("/exit", UserController.closeSession);
@@ -31,13 +31,13 @@ public class App {
 		get("/", UserController.gHome, new MustacheTemplateEngine());
 
 		post("/", UserController.pHome, new MustacheTemplateEngine());
-		
+
 		get("/reset", UserController.gResetPass, new MustacheTemplateEngine());
 
 		post("/reset", UserController.pResetPass, new MustacheTemplateEngine());
-		
+
 		get("/loged/perfil", UserController.viewPerfil, new MustacheTemplateEngine());
-		
+
 		get("/loged/prode", FixtureController.betView, new MustacheTemplateEngine());
 
 		post("/loged/prode", GeneralController.bet, new MustacheTemplateEngine());
@@ -48,5 +48,4 @@ public class App {
 
 		post("/admin/main", GeneralController.actionAdmin, new MustacheTemplateEngine());
 	}
-
 }
