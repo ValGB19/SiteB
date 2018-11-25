@@ -3,6 +3,7 @@ package prode;
 import static spark.Spark.*;
 import spark.template.mustache.MustacheTemplateEngine;
 import prode.Controladores.*;
+import prode.Utils.Consts;
 
 public class App {
 
@@ -11,7 +12,7 @@ public class App {
 		staticFiles.location("/public");
 
 		notFound((req, res) -> {
-			if (req.session().attribute("logueado") == null)
+			if (req.session().attribute(Consts.ATTRIBUTELOGED) == null)
 				res.redirect("/");
 			else
 				res.redirect("/loged/profile");
@@ -35,6 +36,10 @@ public class App {
 		get("/reset", UserController.gResetPass, new MustacheTemplateEngine());
 
 		post("/reset", UserController.pResetPass, new MustacheTemplateEngine());
+		
+		get("/resetEmail", UserController.gResetEmail, new MustacheTemplateEngine());
+		
+		post("/resetEmail", UserController.pResetEmail, new MustacheTemplateEngine());
 
 		get("/loged/perfil", UserController.viewPerfil, new MustacheTemplateEngine());
 

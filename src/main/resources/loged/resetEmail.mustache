@@ -1,0 +1,32 @@
+{{>../public/header}}
+<title>Cambiar Email | PRODE</title>
+<div class="container-fluid">
+	<div class="row">
+		<div class="Contenedor" align="center"  style="width: 700px;">
+			<font color="Olive" face="Comic Sans MS,arial">
+				<h1 align="center" style="margin-top: 15px"><i><u>Cambiar Email</u></i></h1>
+			</font>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<label for="mail" class="input-group-text" id="mail">Nuevo Email</label>
+				</div>
+				<input id="mail" name="mail" type="email" class="form-control" placeholder="example@example.com" required>
+			</div>
+			<br>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<label for="pass" class="input-group-text">Contraseña</label>
+				</div>
+				<input id="pass" name="pass" type="password" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
+			</div>
+			<br>
+			<button class="btn btn-lg btn-primary btn-block btn-signin" id="confirmResetEmail" type="submit">Confirmar</button>
+			<br>
+			<button class="btn btn-lg btn-primary btn-block btn-signin" id="return" type="submit" onclick="location.href = '/'">Volver</button>
+			<br>
+			<div>{{messageResetEmail}}</div>
+			<br>			
+		</div>
+	</div>
+</div>
+{{>../public/footer}}

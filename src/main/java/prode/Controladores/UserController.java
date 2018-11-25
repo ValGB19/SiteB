@@ -198,7 +198,6 @@ public class UserController {
 			res.redirect("/reset");
 			return null;
 		}
-
 		if (id.contains("@"))
 			us = User.getUserforMail(id);
 		else
@@ -211,6 +210,40 @@ public class UserController {
 		} else
 			GeneralController.map.put("messageReset", "* Usuario inexistente");
 		res.redirect("/reset");
+		return null;
+	};
+	
+	public static TemplateViewRoute gResetEmail = (req, res) -> {
+		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/resetEmail.mustache");
+	};
+	
+	public static TemplateViewRoute pSaveEmail = (req, res) -> {
+		GeneralController.map.remove("messageResetEmail");
+		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
+		int i =	User.update("email = ?", "nick = ?", req.queryParams("mail"), username);
+		if (i == 1)
+			GeneralController.map.put("messageResetEmail", "El Email fue cambiada exitosamente ! ");
+		else
+			GeneralController.map.put("messageResetEmail", "* Error al guardar");
+		res.redirect("/resetEmail");
+		return null;
+	};
+	
+	public static TemplateViewRoute pResetEmail = (req, res) -> {
+		GeneralController.map.remove("messageResetEmail");
+		if (!GeneralController.checkQueryParams(req, "mail", "pass")) {
+			GeneralController.map.put("messageResetEmail", "* Faltan datos");
+			res.redirect("/resetEmail");
+			return null;
+		}
+		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
+		User us = User.getUser(username);
+		if (us.getString("password").equals(req.queryParams("pass"))) {
+			return pSaveEmail.handle(req, res);
+		}else {
+			GeneralController.map.put("messageResetEmail", "* Contraseña incorrecta");
+			res.redirect("/resetEmail");
+		}
 		return null;
 	};
 
