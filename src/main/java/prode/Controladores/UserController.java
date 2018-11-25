@@ -140,6 +140,14 @@ public class UserController {
 	 * Check if the user is logged. Otherwise redirect him to "/loged/profile"
 	 */
 	public static TemplateViewRoute gHome = (req, res) -> {
+	
+		if(req.session().attribute(Consts.ATTRIBUTELOGED) != null){
+			if ((!(boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)))
+				res.redirect("/loged/perfil");
+			else
+				res.redirect("/admin/main");
+			return null;
+		}
 		GeneralController.map.put("countries", Country.getAllCountrys());
 		return new ModelAndView(GeneralController.map, "./src/main/resources/inicio.mustache");
 	};
