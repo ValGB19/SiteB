@@ -37,9 +37,9 @@ public class App {
 
 		post("/reset", UserController.pResetPass, new MustacheTemplateEngine());
 		
-		get("/resetEmail", UserController.gResetEmail, new MustacheTemplateEngine());
+		get("/loged/resetEmail", UserController.gResetEmail, new MustacheTemplateEngine());
 		
-		post("/resetEmail", UserController.pResetEmail, new MustacheTemplateEngine());
+		post("/loged/resetEmail", UserController.pResetEmail, new MustacheTemplateEngine());
 
 		get("/loged/perfil", UserController.viewPerfil, new MustacheTemplateEngine());
 
