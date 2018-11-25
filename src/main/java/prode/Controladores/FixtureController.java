@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
-
 import spark.*;
 import prode.*;
 import prode.Utils.Consts;
@@ -37,14 +34,15 @@ public class FixtureController {
 		String user = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
 		int idU = new User().getUser(user).getInteger("id");
 		LazyList<Fixture> fixtureList = Fixture.getAllFixturesAvailables();
-		fixtureList.removeIf((Fixture f) ->{
+		fixtureList.removeIf((Fixture f) -> {
 			List<Match> list = new Fixture().getFix((String) f.get("league")).getMatch();
 			list.removeIf(Match.filterById(idU));
-			return list.isEmpty();});
+			return list.isEmpty();
+		});
 		GeneralController.map.put("fixs", fixtureList.collect("league"));
 		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/prode.mustache");
 	};
-	
+
 	/**
 	 * Returns the first Fixture name.
 	 *
@@ -54,8 +52,8 @@ public class FixtureController {
 	private static String getFstFixture(Request req) {
 		String fix = "action";
 		Iterator<String> i = req.queryParams().iterator();
-		while(i.hasNext() && "action".equals(fix))
-			fix = i.next(); 
+		while (i.hasNext() && "action".equals(fix))
+			fix = i.next();
 		if ("action".equals(fix))
 			return null;
 		return fix;
@@ -73,7 +71,7 @@ public class FixtureController {
 	public static TemplateViewRoute viewProdeScheduleAdmin = (req, res) -> {
 		GeneralController.map.put("nick", req.session().attribute(Consts.ATTRIBUTEUSERNAME));
 		String fix = getFstFixture(req);
-		if (fix == null){
+		if (fix == null) {
 			res.redirect("/admin/main");
 			return null;
 		}
@@ -108,14 +106,13 @@ public class FixtureController {
 		return null;
 	};
 
-	
-	public static ModelAndView saveModel(Request req, Response res, String s, Model c){
+	public static ModelAndView saveModel(Request req, Response res, String s, Model c) {
 		if (!GeneralController.checkQueryParams(req, s)) {
 			res.redirect("/admin/main");
 			return null;
 		}
 		String modelName = req.queryParams(s);
-		c.set("name",modelName);
+		c.set("name", modelName);
 		c.save();
 		res.redirect("/admin/main");
 		return null;

@@ -2,9 +2,7 @@ package prode;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.UniquenessValidator;
-
 import prode.Utils.Consts;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +23,7 @@ public class User extends Model {
 
 	/**
 	 * Return the total score of the user
+	 * 
 	 * @return a int that is the total score of the user
 	 */
 	public int totalScore() {
@@ -45,14 +44,13 @@ public class User extends Model {
 	}
 
 	/**
-	 * @param id : ID of the user that you want to find	
+	 * @param id : ID of the user that you want to find
 	 * @return User with the id equal to 'id'
 	 */
 	public User getUser(int id) {
 		return User.findFirst("id = ?", id);
 	}
-	
-	
+
 	/**
 	 * @param mail : email of the user that you want to find
 	 * @return User with the email equal to 'mail'
@@ -102,9 +100,11 @@ public class User extends Model {
 	}
 
 	/**
-	 * Check that the username and password for the login correspond to a registered user
+	 * Check that the username and password for the login correspond to a registered
+	 * user
+	 * 
 	 * @param user : username
-	 * @param psw : user password
+	 * @param psw  : user password
 	 * @return true if the user and password correspond to a registered user
 	 */
 	public static boolean log(String user, String psw) {
@@ -113,10 +113,11 @@ public class User extends Model {
 
 	/**
 	 * Check that if a user is stored correctly in the database
+	 * 
 	 * @param data a map which contains the data of the user to set
 	 * @return if the user could be saved in the persistence system
 	 */
-	public boolean setUserTemp(Map<String, String> data){
+	public boolean setUserTemp(Map<String, String> data) {
 		boolean e = false;
 		this.set("name", data.get("name"));
 		this.set("surname", data.get("surname"));
