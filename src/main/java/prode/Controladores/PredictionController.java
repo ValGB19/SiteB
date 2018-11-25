@@ -18,7 +18,7 @@ public class PredictionController {
 		res.redirect("/loged/perfil");
 		if (fix == null)
 			return null;
-		int idU = new User().getUser(user).getInteger("id");
+		int idU = User.getUser(user).getInteger("id");
 		List<Match> list = new Fixture().getFix(fix).getMatch();
 		list.removeIf(Match.filterById(idU));
 		int fecha = list.get(0).getInteger("schedule");

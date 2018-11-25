@@ -72,6 +72,7 @@ public class GeneralController {
 	 * Checks if the user wants bet or view the fixture
 	 */
 	public static TemplateViewRoute actionAdmin = (req, res) -> {
+		map.remove("messageLoadgame");
 		switch (req.queryParams("action")) {
 		case "fixtures":
 			return FixtureController.viewProdeScheduleAdmin.handle(req, res);
@@ -81,6 +82,8 @@ public class GeneralController {
 			return null;
 		case "loadCountry":
 			return FixtureController.saveModel(req, res, new Country(), new String[] {"name"}, new String[]{"sendContrys"});
+		case "loadGame":
+			return FixtureController.loadGame(req,res);
 		case "loadTeam":
 			return FixtureController.saveModel(req, res, new Team(), new String[]{"name"}, new String[]{"team"});
 		case "loadFixture":

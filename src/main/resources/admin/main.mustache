@@ -13,6 +13,10 @@
 			</div>
 			<br>
 			<div>
+				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadGame" name="bloadGame" onclick="hideElem('loadGame')">Cargar Juegos</button>
+			</div>
+			<br>
+			<div>
 				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadCountry" name="bloadCountry" onclick="hideElem('loadCountry')">Cargar paises</button>
 			</div>
 			<br>
@@ -60,6 +64,42 @@
 					<input style="width: 80%" type="text" class="form-control" placeholder="Fixture" id="sendFixture" name="sendFixture" required>
 					<br>
 					<button type="submit" id="sendFixture" name="sendFixture" class="btn btn-primary" data-toggle="button" aria-pressed="false">Enviar</button>
+				</form>
+				<br>
+			</div>
+		</div>
+
+		<div id="loadGame" class="Contenedor" style="{{^messageLoadgame}}display:none;{{/messageLoadgame}}{{#messageLoadgame}}display:block;{{/messageLoadgame}}width: 300px;" align="center">
+			{{messageLoadgame}}
+			<br>
+			<font color="Olive" face="Comic Sans MS,arial">
+				<h1 align="center" style="margin-top: 15px"><i><u>Cargue los datos del partido</u></i></h1>
+			</font>
+			<br>
+			<div class="form-group">
+				<form method="post" action="/admin/main" id="form-registro" name="form-registro">
+					<input id="action" hidden name="action" value="loadGame">
+					<select class="custom-select" id="visitante" name="visitante" required>
+						{{#allTeams}} <option value='{{.}}'>{{.}}</option> {{/allTeams}}
+					</select>
+					<select class="custom-select" id="local" name="local" required>
+						{{#allTeams}} <option value='{{.}}'>{{.}}</option> {{/allTeams}}
+					</select>
+					<br>
+					<select class="custom-select" id="fixture" name="fixture" required>
+						{{#allFixtures}} <option value='{{.}}'>{{.}}</option> {{/allFixtures}}
+					</select>
+					<br>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<label for="fecha" class="input-group-text" id="basic-addon1">Fecha Nro:</label>
+						</div>
+						<input id="fecha" name="fecha" type="number" class="form-control" required>
+					</div>
+					<br>
+					<input id="date" type="date" name="date" required>
+					<br>
+					<button type="submit" id="sendGame" name="sendGame" class="btn btn-primary" data-toggle="button" aria-pressed="false">Enviar</button>
 				</form>
 				<br>
 			</div>
@@ -139,10 +179,37 @@
 			document.getElementById("lastFixture").style.display = "none";
 		}
 		document.getElementById('loadTeam').style.display = "none";
+		document.getElementById('loadGame').style.display = "none";
 		document.getElementById('loadResult').style.display = "none";
 		document.getElementById('loadFixture').style.display = "none";
 		document.getElementById("loadCountry").style.display = "none";
     x.style.display = "block";
 	}
+
+	var team1 = document.getElementById("visitante")
+	var team2 = document.getElementById("local");
+	var fx = document.getElementById("fecha");
+
+	function notSameTeams(){
+	  if(team1.value == team2.value) {
+	    team2.setCustomValidity("Los equipos deben ser diferentes");
+			return false;
+	  } else {
+	    team2.setCustomValidity('');
+	  }
+	}
+
+	function fechaPositive(){
+	  if(fx.value <= 0) {
+	    fx.setCustomValidity("La fecha debe ser positiva");
+			return false;
+	  } else {
+	    fx.setCustomValidity('');
+	  }
+	}
+
+	team1.onchange = notSameTeams;
+	team2.onchange = notSameTeams;
+	fx.onchange = fechaPositive;
 </script>
 {{>../public/footer}}
