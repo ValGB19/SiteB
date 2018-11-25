@@ -174,6 +174,11 @@ public class GeneralController {
 	}
 
 	public static boolean checkQueryParams(Request req, String... s) {
-		return req.queryParams().containsAll(Arrays.asList(s));
+		boolean b = req.queryParams().containsAll(Arrays.asList(s));
+		if (!b) return b;
+		for (String string : s)
+			if ("".equals(req.queryParams(string)))
+				b = false;
+		return b;
 	}
 }
