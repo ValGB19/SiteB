@@ -9,18 +9,16 @@ import org.javalite.activejdbc.Model;
 
 public class PredictionController {
 
-
 	/**
 	 * Save in the data base the user prediction
 	 */
 	public static TemplateViewRoute cargarPrediction = (req, res) -> {
 		String fix = req.session().attribute(Consts.ATTRIBUTELASTFIXTURE);
 		String user = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
-		GeneralController.map.put("nick", user);
 		res.redirect("/loged/perfil");
 		if (fix == null)
 			return null;
-		int idU = new User().getUser(user).getInteger("id");
+		int idU = User.getUser(user).getInteger("id");
 		List<Match> list = new Fixture().getFix(fix).getMatch();
 		list.removeIf(Match.filterById(idU));
 		int fecha = list.get(0).getInteger("schedule");
@@ -53,7 +51,7 @@ public class PredictionController {
 		GeneralController.map.remove(Consts.ATTRIBUTELASTFIXTURE);
 		GeneralController.map.remove(Consts.ATTRIBUTESCHEDULE);
 		GeneralController.map.remove("fixs");
-		
+
 		res.redirect("/admin/main");
 
 		List<Match> l = new Fixture().getFix(fix).getMatch();

@@ -42,7 +42,7 @@
 					<input id="action" hidden name="action" value="signup">
 					<div class="input-group">
 						<div class="input-group-prepend">
-							<label for="nombre" class="input-group-text" id="">Nombre y apellido</label>
+							<label for="nombre" class="input-group-text">Nombre y apellido</label>
 						</div>
 						<input id="nombre" name="nombre" type="text" class="form-control" required>
 						<input id="apellido" name="apellido" type="text" class="form-control" required>
@@ -65,14 +65,14 @@
 					</div>
 					<div class="input-group">
 						<div class="input-group-prepend">
-							<label for="pswRegister" class="input-group-text" id="usernamelogin">Contraseña</label>
+							<label for="pswRegister" class="input-group-text">Contraseña</label>
 						</div>
 						<input id="pswRegister" name="pswRegister" type="password" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
 					</div>
 					<br>
 					<div class="input-group">
 						<div class="input-group-prepend">
-							<label for="pswValida" class="input-group-text" id="usernamelogin">Contraseña otra vez</label>
+							<label for="pswValida" class="input-group-text">Contraseña otra vez</label>
 						</div>
 						<input id="pswValida" name="pswValida" type="password" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
 					</div>
@@ -80,14 +80,14 @@
 					<br>
 					<div class="input-group">
 						<div class="input-group-prepend">
-						<label for="seguro" class="input-group-text" id="seguro">Palabra de Seguridad</label>
+						<label for="seguro" class="input-group-text">Palabra de Seguridad</label>
 						</div>
 						<input id="seguro" name="seguro" type="text" class="form-control" placeholder="Menos de 20 caracteres" required>
 					</div>
 					<br>
 					<div class="input-group">
 						<div class="input-group-prepend">
-						<label for="mail" class="input-group-text" id="email">Email</label>
+						<label for="mail" class="input-group-text">Email</label>
 						</div>
 						<input id="mail" name="mail" type="email" class="form-control" placeholder="example@example.com" required>
 					</div>
@@ -97,13 +97,13 @@
 							<label class="input-group-text" for="inputGroupSelect01" required>Pais</label>
 						</div>
 						<select class="custom-select" id="rpais" name="rpais">
-							<option selected disabled value="Argentina">Seleccione su pais...</option>
+							<option selected value="Argentina">Seleccione su pais...</option>
 							{{#countries}} <option value={{.}}>{{.}}</option> {{/countries}}
 						</select>
 					</div>
 					<div class="input-group">
 						<div class="input-group-prepend">
-						<label for="clave" class="input-group-text" id="clavl">Palabra Clave</label>
+						<label for="clave" class="input-group-text">Palabra Clave</label>
 						</div>
 						<input id="clave" name="clave" type="password" class="form-control" placeholder="Complete correctamente para ser admin">
 					</div>

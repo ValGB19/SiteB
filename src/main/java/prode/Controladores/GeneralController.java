@@ -5,17 +5,15 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
-
-import prode.Fixture;
+import java.util.Arrays;
+import prode.*;
 import prode.Utils.Consts;
 import org.javalite.activejdbc.Base;
-
-
 
 public class GeneralController {
 
 	public static Map<String, Object> map = new HashMap<String, Object>();
-	
+
 	/**
 	 * Open the connection to the data base
 	 */
@@ -38,18 +36,20 @@ public class GeneralController {
 	 * If the user is not login, redirect him to "/"
 	 */
 	public static Filter checkIfLoged = (req, res) -> {
-		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
+		if (req.session().attribute(Consts.ATTRIBUTELOGED) == null)
 			res.redirect("/");
 		else if ((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN))
 			res.redirect("/admin/main");
 	};
-	
+
 	/**
 	 * If the user is not login, redirect him to "/loged/admin"
 	 */
 	public static Filter checkIfAdmin = (req, res) -> {
-		if(req.session().attribute(Consts.ATTRIBUTELOGED) == null)
+		if (req.session().attribute(Consts.ATTRIBUTELOGED) == null) {
 			res.redirect("/");
+			return;
+		}
 		if (!((boolean) req.session().attribute(Consts.ATTRIBUTEADMIN)))
 			res.redirect("/loged/perfil");
 	};
@@ -58,37 +58,43 @@ public class GeneralController {
 	 * Checks if the user wants bet or view the fixture
 	 */
 	public static TemplateViewRoute bet = (req, res) -> {
-		switch(req.queryParams("action")){
-			case "fixtures":
-				return FixtureController.viewProdeSchedulePlayer.handle(req, res);
-			default:
-				return PredictionController.cargarPrediction.handle(req, res);
+		switch (req.queryParams("action")) {
+		case "fixtures":
+			return FixtureController.viewProdeSchedulePlayer.handle(req, res);
+		case "matches":
+			return PredictionController.cargarPrediction.handle(req, res);
 		}
+		res.redirect("/loged/prode");
+		return null;
 	};
-	
+
 	/**
 	 * Checks if the user wants bet or view the fixture
 	 */
 	public static TemplateViewRoute actionAdmin = (req, res) -> {
+		map.remove("messageLoadgame");
 		switch (req.queryParams("action")) {
-			case "fixtures":
-				return FixtureController.viewProdeScheduleAdmin.handle(req, res);
-			case "fixAvailable":
-				GeneralController.map.put("fixs", Fixture.getAllFixturesAvailables().collect("league"));
-				res.redirect("/admin/main");
-				return null;
-			case "loadCountry":
-				return FixtureController.loadCountry.handle(req, res);
-			case "loadTeam":
-				return FixtureController.loadTeam.handle(req, res);
-			case "matches":
-				return PredictionController.cargaResulMatch.handle(req, res);
-			default:
-				res.redirect("/admin/main");
+		case "fixtures":
+			return FixtureController.viewProdeScheduleAdmin.handle(req, res);
+		case "fixAvailable":
+			GeneralController.map.put("fixs", Fixture.getAllFixturesAvailables().collect("league"));
+			res.redirect("/admin/main");
+			return null;
+		case "loadCountry":
+			return FixtureController.saveModel(req, res, new Country(), new String[] {"name"}, new String[]{"sendContrys"});
+		case "loadGame":
+			return FixtureController.loadGame(req,res);
+		case "loadTeam":
+			return FixtureController.saveModel(req, res, new Team(), new String[]{"name"}, new String[]{"team"});
+		case "loadFixture":
+			return FixtureController.saveModel(req, res,new Fixture() , new String[]{"league"}, new String[] {"sendFixture"});
+		case "matches":
+			return PredictionController.cargaResulMatch.handle(req, res);
+		default:
+			res.redirect("/admin/main");
 		}
 		return null;
 	};
-
 
 	/**
 	 * Sum all the items in the List of List and return the accumulated
@@ -165,5 +171,9 @@ public class GeneralController {
 			return arr;
 		}
 		return unGroup(groupByFstField(listOflist));
+	}
+
+	public static boolean checkQueryParams(Request req, String... s) {
+		return req.queryParams().containsAll(Arrays.asList(s));
 	}
 }

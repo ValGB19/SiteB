@@ -17,7 +17,7 @@ public class UserController {
 	 * @param res The response
 	 * @return a <code>HashMap</code> with the info of the errors
 	 */
-	public static HashMap<String, Object> register(Request req, Response res) {
+	public static HashMap<String, Object> register(Request req) {
 		GeneralController.map.remove("errorLogin");
 		GeneralController.map.remove("errorRegister");
 		Map<String, String> data = new HashMap<String, String>();
@@ -41,7 +41,6 @@ public class UserController {
 			ArrayList<String> tmp = errorsRegister(data);
 			mape.put("errorRegister", tmp);
 		}
-		res.redirect("/");
 		return mape;
 	};
 
@@ -57,7 +56,7 @@ public class UserController {
 		addError((User.findFirst("nick = ?", data.get("nick")) != null), "*El nickname ya esta en uso", tmp);
 		addError((User.findFirst("dni = ?", Integer.parseInt(data.get("dni"))) != null), "*Ese dni ya esta registrado",
 				tmp);
-		addError(!(data.get("pwd").equals(data.get("pwd2"))),"*Las contraseñas no coinciden",tmp);
+		addError(!(data.get("pwd").equals(data.get("pwd2"))), "*Las contraseñas no coinciden", tmp);
 		addError((User.findFirst("email = ?", data.get("email")) != null), "*Ese email ya esta registrado", tmp);
 		addError((!Consts.SECRETWORD.equals(data.get("key")) && (data.get("key")) != null),
 				"*Palabla magica incorrecta", tmp);
@@ -86,7 +85,7 @@ public class UserController {
 		String username = req.queryParams("usernamelogin");
 		String psw = req.queryParams("pswLogin");
 		String errorMessage = "";
-		if (User.log(username, psw)) {
+		if (GeneralController.checkQueryParams(req, "usernamelogin", "pswLogin") && User.log(username, psw)) {
 			req.session(true);
 			req.session().attribute(Consts.ATTRIBUTEUSERNAME, username);
 			req.session().attribute(Consts.ATTRIBUTELOGED, true);
@@ -97,7 +96,9 @@ public class UserController {
 			GeneralController.map.put("nick", username);
 			GeneralController.map.put("name", name);
 			GeneralController.map.put("surname", surname);
-			if(adm)
+			GeneralController.map.put("allTeams", Team.getAllTeams());
+			GeneralController.map.put("allFixtures", Fixture.getAllFixtures());
+			if (adm)
 				res.redirect("/admin/main");
 			else
 				res.redirect("/loged/perfil");
@@ -146,22 +147,24 @@ public class UserController {
 	 * Check if the user wants sign in o sign out
 	 */
 	public static TemplateViewRoute pHome = (req, res) -> {
-		if (req.queryParams("action").equals("signin"))
-			return login.handle(req, res);
-		if(req.queryParams("action").equals("signup"))
-			GeneralController.map.putAll(register(req, res));
+		if (GeneralController.checkQueryParams(req, "action")) {
+			if (req.queryParams("action").equals("signin"))
+				return login.handle(req, res);
+			if (req.queryParams("action").equals("signup"))
+				GeneralController.map.putAll(register(req));
+		}
+		res.redirect("/");
 		return null;
 	};
 
 	public static TemplateViewRoute gResetPass = (req, res) -> {
 		return new ModelAndView(GeneralController.map, "./src/main/resources/public/reset.mustache");
 	};
-	
+
 	/**
 	 * Check that the user's password is changed correctly.
 	 */
 	public static TemplateViewRoute pSavePass = (req, res) -> {
-		GeneralController.map.remove("messageReset");
 		String id = req.queryParams("resetID");
 		if (req.queryParams("psw").equals(req.queryParams("pswReset"))) {
 			int i;
@@ -175,13 +178,14 @@ public class UserController {
 				GeneralController.map.put("messageReset", "* Error al guardar");
 		} else {
 			GeneralController.map.put("messageReset", "* Las contraseñas no coinciden ");
-		}	
+		}
 		res.redirect("/reset");
 		return null;
 	};
-		
+
 	/**
-	 * Check that when wanting to change the password the user name or email and the security word are valid
+	 * Check that when wanting to change the password the user name or email and the
+	 * security word are valid
 	 */
 	public static TemplateViewRoute pResetPass = (req, res) -> {
 		GeneralController.map.remove("messageReset");
@@ -189,30 +193,33 @@ public class UserController {
 		String id = req.queryParams("resetID");
 		String seguro = req.queryParams("seguro");
 		User us;
+		if (!GeneralController.checkQueryParams(req, "resetID", "seguro", "psw", "pswReset")) {
+			GeneralController.map.put("messageReset", "* Faltan datos");
+			res.redirect("/reset");
+			return null;
+		}
+
 		if (id.contains("@"))
 			us = User.getUserforMail(id);
 		else
 			us = User.getUser(id);
-		if(us != null) {
-			if(us.getString("clave").equals(seguro))
+		if (us != null) {
+			if (us.getString("clave").equals(seguro))
 				return pSavePass.handle(req, res);
-			else 
+			else
 				GeneralController.map.put("messageReset", "* Palabra de seguridad incorrecta");
-		}
-		else
+		} else
 			GeneralController.map.put("messageReset", "* Usuario inexistente");
 		res.redirect("/reset");
-		
 		return null;
 	};
-	
 
 	/**
 	 * If the user was logged, it close his session and clear the map.
 	 */
 	public static Filter closeSession = (req, res) -> {
-		for (String attribute: req.session().attributes())
-			req.session().removeAttribute(attribute);		
+		for (String attribute : req.session().attributes())
+			req.session().removeAttribute(attribute);
 		GeneralController.map.clear();
 		res.redirect("/");
 	};
