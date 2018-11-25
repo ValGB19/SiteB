@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.javalite.activejdbc.Model;
-
 import spark.*;
 import prode.*;
 import prode.Utils.Consts;
@@ -14,8 +11,7 @@ import prode.Utils.Consts;
 public class UserController {
 
 	/**
-	 * Register the user or place the reasons why they did not register it in the
-	 * hashmap
+	 * Register the user or place the reasons why they did not register it in the hashmap
 	 * 
 	 * @param req The request
 	 * @param res The response
