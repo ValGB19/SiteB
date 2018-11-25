@@ -9,6 +9,10 @@
 			</font>
 			<br>
 			<div>
+				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadFixture" name="bloadFixture" onclick="hideElem('loadFixture')">Cargar Fixtures</button>
+			</div>
+			<br>
+			<div>
 				<button style="width: 80%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="bloadCountry" name="bloadCountry" onclick="hideElem('loadCountry')">Cargar paises</button>
 			</div>
 			<br>
@@ -40,6 +44,22 @@
 					<input style="width: 80%" type="text" class="form-control" placeholder="Country" id="sendContrys" name="sendContrys" required>
 					<br>
 					<button type="submit" id="sendContry" name="sendContry" class="btn btn-primary" data-toggle="button" aria-pressed="false">Enviar</button>
+				</form>
+				<br>
+			</div>
+		</div>
+
+		<div id="loadFixture" class="Contenedor" style="display:none;width: 300px;" align="center">
+			<font color="Olive" face="Comic Sans MS,arial">
+				<h1 align="center" style="margin-top: 15px"><i><u>Cargue el nombre del Fixtures</u></i></h1>
+			</font>
+			<br>
+			<div class="form-group">
+				<form method="post" action="/admin/main" id="form-registro" name="form-registro">
+					<input id="action" hidden name="action" value="loadFixture">
+					<input style="width: 80%" type="text" class="form-control" placeholder="Fixture" id="sendFixture" name="sendFixture" required>
+					<br>
+					<button type="submit" id="sendFixture" name="sendFixture" class="btn btn-primary" data-toggle="button" aria-pressed="false">Enviar</button>
 				</form>
 				<br>
 			</div>
@@ -118,7 +138,9 @@
 		if (document.getElementById("lastFixture") !== null){
 			document.getElementById("lastFixture").style.display = "none";
 		}
+		document.getElementById('loadTeam').style.display = "none";
 		document.getElementById('loadResult').style.display = "none";
+		document.getElementById('loadFixture').style.display = "none";
 		document.getElementById("loadCountry").style.display = "none";
     x.style.display = "block";
 	}

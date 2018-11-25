@@ -106,13 +106,14 @@ public class FixtureController {
 		return null;
 	};
 
-	public static ModelAndView saveModel(Request req, Response res, String s, Model c) {
-		if (!GeneralController.checkQueryParams(req, s)) {
+	public static ModelAndView saveModel(Request req, Response res, Model c, String[] fields, String[] info) {
+		if (!GeneralController.checkQueryParams(req, info)) {
 			res.redirect("/admin/main");
 			return null;
 		}
-		String modelName = req.queryParams(s);
-		c.set("name", modelName);
+		for (int i = 0; i< fields.length; i++) {
+			c.set(fields[i], req.queryParams(info[i]));
+		}
 		c.save();
 		res.redirect("/admin/main");
 		return null;

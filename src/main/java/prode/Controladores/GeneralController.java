@@ -80,9 +80,11 @@ public class GeneralController {
 			res.redirect("/admin/main");
 			return null;
 		case "loadCountry":
-			return FixtureController.saveModel(req, res, "sendContrys", new Country());
+			return FixtureController.saveModel(req, res, new Country(), new String[] {"name"}, new String[]{"sendContrys"});
 		case "loadTeam":
-			return FixtureController.saveModel(req, res, "team", new Team());
+			return FixtureController.saveModel(req, res, new Team(), new String[]{"name"}, new String[]{"team"});
+		case "loadFixture":
+			return FixtureController.saveModel(req, res,new Fixture() , new String[]{"league"}, new String[] {"sendFixture"});
 		case "matches":
 			return PredictionController.cargaResulMatch.handle(req, res);
 		default:
