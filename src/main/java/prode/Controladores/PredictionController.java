@@ -99,7 +99,8 @@ public class PredictionController {
 			allUs.add(GeneralController.getAcum(p));
 		}
 		if (!allUs.isEmpty()) {
-			GeneralController.map.put("players", allUs);
+			allUs.removeIf((x) -> x == null);
+			GeneralController.map.put("kkk", allUs);
 		}
 		return new ModelAndView(GeneralController.map, "./src/main/resources/public/results.mustache");
 	};

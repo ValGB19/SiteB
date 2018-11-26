@@ -97,8 +97,6 @@ public class UserController {
 			GeneralController.map.put("nick", username);
 			GeneralController.map.put("name", name);
 			GeneralController.map.put("surname", surname);
-			GeneralController.map.put("allTeams", Team.getAllTeams());
-			GeneralController.map.put("allFixtures", Fixture.getAllFixtures());
 			if (adm)
 				res.redirect("/admin/main");
 			else

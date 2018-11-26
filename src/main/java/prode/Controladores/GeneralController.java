@@ -73,6 +73,8 @@ public class GeneralController {
 	 */
 	public static TemplateViewRoute actionAdmin = (req, res) -> {
 		map.remove("messageLoadgame");
+		map.put("allTeams", Team.getAllTeams());
+		map.put("allFixtures", Fixture.getAllFixtures());
 		switch (req.queryParams("action")) {
 		case "fixtures":
 			return FixtureController.viewProdeScheduleAdmin.handle(req, res);
