@@ -1,4 +1,4 @@
 insert into fixtures(id,league)values
-	(0,"MundialRusia-2018"),
-	(0,"SAF-2018"),
-	(0,"CopaLibertadores");
+	(0,"Mundial Rusia 2018"),
+	(0,"SAF 2018"),
+	(0,"Copa Libertadores");

@@ -1,12 +1,39 @@
-﻿body{
-	background: rgba(73,155,234,1);
-	background: -moz-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(73,155,234,1)), color-stop(20%, rgba(98,208,227,1)), color-stop(32%, rgba(82,201,66,1)), color-stop(51%, rgba(117,227,102,1)), color-stop(64%, rgba(82,201,66,1)), color-stop(100%, rgba(73,155,234,1)));
-	background: -webkit-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
-	background: -o-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
-	background: -ms-linear-gradient(top, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
-	background: linear-gradient(to bottom, rgba(73,155,234,1) 0%, rgba(98,208,227,1) 20%, rgba(82,201,66,1) 32%, rgba(117,227,102,1) 51%, rgba(82,201,66,1) 64%, rgba(73,155,234,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#499bea', GradientType=0 );
+.wrapper{ /*Credits: https://codepen.io/nohoid/pen/kIfto*/
+  min-height: 100vh;
+  min-width: 100vw;
+  left:0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: scroll;
+  position: absolute;
+background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+background-size: 1800% 1800%;
+
+-webkit-animation: rainbow 18s ease infinite;
+-z-animation: rainbow 18s ease infinite;
+-o-animation: rainbow 18s ease infinite;
+  animation: rainbow 18s ease infinite;}
+
+@-webkit-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@-moz-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@-o-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
 }
 
 .btn-group button {
@@ -53,77 +80,20 @@
 
 #botjugar {
   margin-top: 50px auto;
-  
+
 }
 
-#Contenedor{
-	width: 400px;
+.Contenedor{
 	margin: 50px auto;
 	background-color: #F3EDED;
   border: 1px solid #ECE8E8;
-	height: 470px;
+	height: 100%;
 	border-radius:8px;
 	padding: 0px 9px 0px 9px;
-}
-
-#Contenedor0{
-  width: 400px;
-  margin: 50px auto; 
-  margin-top: 0px;
-  height: 470px;
-}
-
-#Contenedor1{
-	width: 700px;
-	margin: 50px auto;
-	background-color: #F3EDED;
-  border: 1px solid #ECE8E8;
-	height: 645px;
-	border-radius:8px;
-	padding: 0px 9px 0px 9px;
-}
-
-#ContenedorPred{
-  width: 700px;
-  margin: 50px auto;
-  background-color: #F3EDED;
-  border: 1px solid #ECE8E8;
-  height: 750px;
-  border-radius:8px;
-  padding: 0px 9px 0px 9px;
 }
 
 #perfil{
   margin-right: 50px;
-}
-
-#Contenedor2{
-  width: 400px;
-  margin: 50px auto;
-  background-color: #F3EDED;
-    border: 1px solid #ECE8E8;
-  height: 345px;
-  border-radius:8px;
-  padding: 0px 9px 0px 9px;
-}
-#Contenedor3{
-  width: 400px;
-  margin: 50px auto;
-  background-color: #F3EDED;
-    border: 1px solid #ECE8E8;
-  height: 260px;
-  border-radius:8px;
-  padding: 0px 9px 0px 9px;
-}
-
-#Contenedor4{
-  width: 700px;
-  margin: 50px auto;
-  background-color: #F3EDED;
-  border: 1px solid #ECE8E8;
-  height: 645px;
-  border-radius:8px;
-  padding: 0px 9px 0px 9px;
 }
 
 /**
@@ -142,7 +112,7 @@
  */
 .Icon{
      margin-top: 10px;
-     margin-bottom:10px; 
+     margin-bottom:10px;
      color: #FFF;
      font-size: 50px;
      text-align: center;
@@ -159,7 +129,7 @@
 
 .pie {
     font-size: 13px;
-    margin-top: -3em; 
+    margin-top: -3em;
 }
 
 /*tabla prode prediccion*/

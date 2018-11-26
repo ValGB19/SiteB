@@ -1,8 +1,8 @@
-{{>header}}
+{{>../public/header}}
 <title>A Jugar! | PRODE</title>
-<div class="container-fluid"> 
+<div class="container-fluid">
 	<div class="row">
-		<div id="Contenedor" align="center">
+		<div class="Contenedor" align="center">
 			<br>
 			<font color="Olive" face="Comic Sans MS,arial">
 				<h1 align="center"><i><u>Fixtures disponibles</u></i></h1>
@@ -11,26 +11,28 @@
 			<img src="/fixture.png" width="150" height="150" align="justify" />
 			<br>
 			<br>
-			<ul>
-			<form method="post" action="/x" id="form-list-apuestas" name="form-list-apuestas">
-				{{#fixs}}<div> <button class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
+			<form method="post" action="/loged/prode" id="form-list-apuestas" name="form-list-apuestas">
+				<input id="action" notab="" type="hidden" name="action" value="fixtures">
+				{{#fixs}}<div> <button style="width: 70%" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{.}}" name="{{.}}" type="submit">{{.}}</button></div><br> {{/fixs}}
 			</form>
-			</ul>
+			<br>
 		</div>
-		<div id="ContenedorPred" align="center">
+		{{#lastFixture}}
+		<div class="Contenedor" style="width: 700px;" align="center">
 			<div class="form-group">
 				<font color="Olive" face="Comic Sans MS,arial">
 					<h1 align="center"><i><u>{{lastFixture}}</u></i></h1>
-					<h1 align="center"><i><u>Fecha N°{{fechaVig}}</u></i></h1>
+					<h1 align="center"><i><u>Fecha N°{{scheduleCurrent}}</u></i></h1>
 				</font>
-				<form method="post" action="/j" id="form-registro" name="form-registro">
+				<form method="post" action="/loged/prode" id="form-registro" name="form-registro">
+				<input id="action" notab="" type="hidden" name="action" value="matches">
 				<table id="customers">
 				  <tr>
 					<th>Local</th>
 					<th>Tu jugada</th>
 					<th>Visitante</th>
 				  </tr>
-				  	{{#jugarFix}} 
+				  	{{#fixtureCurrent}}
 				  	<tr>
 				  		{{#.}}
 					<td>{{visit}}</td>
@@ -44,14 +46,15 @@
 					<td>{{local}}</td>
 						{{/.}}
 				    </tr>
-				    {{/jugarFix}}
+				    {{/fixtureCurrent}}
 				</table>
 				<br>
-				<button class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Apostar</button>
-				  </form>
+				<button {{^fixtureCurrent}} hidden {{/fixtureCurrent}} class="btn btn-primary" data-toggle="button" aria-pressed="false" id= "apostar" name="apostar" type="submit">Apostar</button>
+				</form>
 			</div>
 		</div>
+		{{/lastFixture}}
 	</div>
 </div>
 
-{{>footer}}
+{{>../public/footer}}

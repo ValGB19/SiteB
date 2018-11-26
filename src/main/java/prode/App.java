@@ -3,50 +3,58 @@ package prode;
 import static spark.Spark.*;
 import spark.template.mustache.MustacheTemplateEngine;
 import prode.Controladores.*;
+import prode.Utils.Consts;
 
-public class App{
-    
-    public static void main( String[] args ){
+public class App {
 
-	   	staticFiles.location("/public");
-	   	
+	public static void main(String[] args) {
+
+		staticFiles.location("/public");
+
 		notFound((req, res) -> {
-			if (req.session().attribute("logueado") == null) {
-	    		res.redirect("/");
-	    	}
-       		res.redirect("/loged/perfil");
-    		return null;
+			if (req.session().attribute(Consts.ATTRIBUTELOGED) == null)
+				res.redirect("/");
+			else
+				res.redirect("/loged/profile");
+			return null;
 		});
 
-	   	before("/loged/*", GeneralController.redicInic);
-	   	
-        before("*", GeneralController.getCountrys);
-        
-        after("*", GeneralController.conecBase);
+		before("*", GeneralController.openConectionToDataBase);
 
-        after("/exit", UserController.closeSesion);
-        
-        get("/", UserController.redicPerfil, new MustacheTemplateEngine());
-        
-        post("/", UserController.login, new MustacheTemplateEngine());
+		after("*", GeneralController.disconectDataBase);
 
-        post("/r", UserController.redicInicSesion,new MustacheTemplateEngine());
-        
-        post("/x", FixtureController.vistaProdeFecha,new MustacheTemplateEngine());
+		before("/loged/*", GeneralController.checkIfLoged);
 
-        post("/y", FixtureController.vistaProdeFecha2,new MustacheTemplateEngine());
+		before("/admin/*", GeneralController.checkIfAdmin);
 
-        post("/j", PredictionController.cargarPrediction,new MustacheTemplateEngine());
-	    
-	    post("/a", PredictionController.cargaResulMatch,new MustacheTemplateEngine());
+		after("/exit", UserController.closeSession);
 
-	    get("/loged/perfil", UserController.contain2Perfil, new MustacheTemplateEngine());
+		get("/", UserController.gHome, new MustacheTemplateEngine());
 
-	    get("/loged/prode", FixtureController.mainFixtures, new MustacheTemplateEngine());
-	    
-	    get("/loged/results", PredictionController.verResults, new MustacheTemplateEngine());
+		post("/", UserController.pHome, new MustacheTemplateEngine());
 
-	    get("/loged/admin", FixtureController.mainFixtu, new MustacheTemplateEngine());
-    }    
-    
+		get("/reset", UserController.gResetPass, new MustacheTemplateEngine());
+
+		post("/reset", UserController.pResetPass, new MustacheTemplateEngine());
+		
+		get("/loged/resetEmail", UserController.gResetEmail, new MustacheTemplateEngine());
+		
+		post("/loged/resetEmail", UserController.pResetEmail, new MustacheTemplateEngine());
+		
+		get("/admin/resetEmail", UserController.gResetEmailAdmin, new MustacheTemplateEngine());
+		
+		post("/admin/resetEmail", UserController.pResetEmail, new MustacheTemplateEngine());
+
+		get("/loged/perfil", UserController.viewPerfil, new MustacheTemplateEngine());
+
+		get("/loged/prode", FixtureController.betView, new MustacheTemplateEngine());
+
+		post("/loged/prode", GeneralController.bet, new MustacheTemplateEngine());
+
+		get("/results", PredictionController.verResults, new MustacheTemplateEngine());
+
+		get("/admin/main", FixtureController.mainFixtures, new MustacheTemplateEngine());
+
+		post("/admin/main", GeneralController.actionAdmin, new MustacheTemplateEngine());
+	}
 }

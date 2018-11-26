@@ -2,18 +2,12 @@ package prode;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.UniquenessValidator;
+import prode.Utils.Consts;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class User extends Model {
-
-	public int totalScore() {
-		List<MatchPrediction> puntajes = MatchPrediction.where("user_id = ? and score <>", this.getId(), null);
-		int res = 0;
-		for (MatchPrediction x : puntajes)
-			res += x.getInteger("score");
-		return res;
-	}
 
 	static {
 		validatePresenceOf("nick").message("Please, provide your username");
@@ -27,43 +21,118 @@ public class User extends Model {
 		validateWith(new UniquenessValidator("email")).message("This email is already registered.");
 	}
 
-	public User getUser(String us) {
-		return User.findFirst("nick = ?", us);
+	/**
+	 * Return the total score of the user
+	 * 
+	 * @return a int that is the total score of the user
+	 */
+	public int totalScore() {
+		List<MatchPrediction> scores = MatchPrediction.where("user_id = ? and score <>", this.getId(), null);
+		int res = 0;
+		for (MatchPrediction x : scores)
+			res += x.getInteger("score");
+		return res;
+	}
+
+	/**
+	 * @param username : user name
+	 * @return user with the username 'username'
+	 */
+	public static User getUser(String username) {
+		return User.findFirst("nick = ?", username);
 
 	}
 
-	public User getUser(int us) {
-		return User.findFirst("id = ?", us);
+	/**
+	 * @param id : ID of the user that you want to find
+	 * @return User with the id equal to 'id'
+	 */
+	public User getUser(int id) {
+		return User.findFirst("id = ?", id);
 	}
 
+	/**
+	 * @param mail : email of the user that you want to find
+	 * @return User with the email equal to 'mail'
+	 */
+	public static User getUserforMail(String mail) {
+		return User.findFirst("email = ?", mail);
+	}
+
+	/**
+	 * @return Name of the User
+	 */
 	public String getNameUser() {
 		return this.getString("name");
 	}
 
+	/**
+	 * @return Surname of the User
+	 */
 	public String getSurnameUser() {
 		return this.getString("surname");
 	}
 
+	/**
+	 * @return List of fixtures in which a user participates
+	 */
 	public List<Fixture> getFixtures() {
 		return this.getAll(Fixture.class);
 	}
 
-	// lista predictions de user que tienen un puntaje
+	/**
+	 * @return List of user predictions in which you scored
+	 */
 	public List<MatchPrediction> getMatchPrediction() {
-		List<MatchPrediction> l = new ArrayList<MatchPrediction>();
-		l.addAll(this.getAll(MatchPrediction.class));
-		l.removeIf((MatchPrediction p) -> p.getInteger("score") == null);
-		return l;
+		List<MatchPrediction> listPred = new ArrayList<MatchPrediction>();
+		listPred.addAll(this.getAll(MatchPrediction.class));
+		listPred.removeIf((MatchPrediction p) -> p.getInteger("score") == null);
+		return listPred;
 	}
 
-//lista de todas las predicciones
+	/**
+	 * @return List of user predictions
+	 */
 	public List<MatchPrediction> getTotalMatchPrediction() {
 		List<MatchPrediction> l = new ArrayList<MatchPrediction>();
 		l.addAll(this.getAll(MatchPrediction.class));
 		return l;
 	}
 
+	/**
+	 * Check that the username and password for the login correspond to a registered
+	 * user
+	 * 
+	 * @param user : username
+	 * @param psw  : user password
+	 * @return true if the user and password correspond to a registered user
+	 */
 	public static boolean log(String user, String psw) {
 		return User.findFirst("nick = ? and password = ?", user, psw) != null;
+	}
+
+	/**
+	 * Check that if a user is stored correctly in the database
+	 * 
+	 * @param data a map which contains the data of the user to set
+	 * @return if the user could be saved in the persistence system
+	 */
+	public boolean setUserTemp(Map<String, String> data) {
+		boolean e = false;
+		this.set("name", data.get("name"));
+		this.set("surname", data.get("surname"));
+		this.set("nick", data.get("nick"));
+		this.set("email", data.get("email"));
+		this.set("password", data.get("pwd"));
+		this.set("clave", data.get("clave"));
+		this.set("dni", Integer.parseInt(data.get("dni")));
+		this.set("country_id", Country.findFirst("name = ?", data.get("country")).get("id"));
+		boolean isAdmin = Consts.SECRETWORD.equals(data.get("key"));
+		this.set("admin", isAdmin);
+		String k = (String) data.get("key");
+		if (isAdmin || k == null || k.isEmpty()) {
+			e = this.save();
+		}
+		return e;
 	}
 }

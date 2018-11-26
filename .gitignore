@@ -2,5 +2,8 @@
 *.gif
 *.class
 /bin
+.classpath
 .project
-
+.settings
+*.cmd
+*.sh

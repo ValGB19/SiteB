@@ -1,32 +1,37 @@
-{{>header}}
+{{>../public/header}}
 <title>Mi Perfil | PRODE</title>
-<div class="container-fluid"> 
+<div class="container-fluid">
 	<div class="row" align="left">
-		<div id="Contenedor0" align="center">
-			<div class="form-group">	
-				<div id ="Contenedor2" class="form-group">
+		<div id="Contenedor" style="margin: 50px auto;margin-top: 0px;">
+			<div class="form-group">
+				<div class="Contenedor" style="width: 400px;" class="form-group" align="center">
 					<br>
 					<h3><u> MI PERFIL</u></h3>
 					<br>
 					<img src="/club9_car3.png" width="100" height="100"/>
 					<br>
 					<br>
-					<p><b><font size="4">Bienvenido <i>{{name}} {{surname}}!</i></font></b></p>	
-					<p><b><font size="4"><u><font color="green">Fixtures jugados:</font></u> {{cantFix}} </font></b></p>	
-					<p><b><font size="4"><u><font color="green">Predicciones realizadas:</font></u> {{cantPred}}</font></b></p>	
+					<p><b><font size="4">Bienvenido <i>{{name}} {{surname}}!</i></font></b></p>
+					<p><b><font size="4"><u><font color="green">Fixtures jugados:</font></u> {{totalFixtures}} </font></b></p>
+					<p><b><font size="4"><u><font color="green">Predicciones realizadas:</font></u> {{totalPredictions}}</font></b></p>
 				</div>
-				<div  align="center">
-					<div  class="form-group">			
+				<div align="center">
+					<div class="form-group">
 						<div class="btn-group float-right mt-2" align="justify">
-							<button {{#admin}} type="button" {{/admin}} {{^admin}} hidden="true" {{/admin}} class="btn btn-danger" onclick="location.href = '/loged/admin'">Carga</button>
-				 			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/prode'">APOSTAR</button>
-				  			<button type="button" class="btn btn-danger"  onclick="location.href ='/loged/results'">Ver resultados</button>
+				 			<button type="button" class="btn btn-danger" onclick="location.href ='/loged/prode'">APOSTAR</button>
+				  			<button type="button" class="btn btn-danger"  onclick="location.href ='/results'">Ver resultados</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="btn-group float-right mt-2" align="justify">
+								<button type="button" class="btn btn-danger" onclick="location.href ='/reset'">Cambiar Contraseña</button>
+								<button type="button" class="btn btn-danger" onclick="location.href ='/loged/resetEmail'">Cambiar Email</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div id="Contenedor1" align="center">
+		<div class="Contenedor" style="width: 700px;" align="center">
 			<div class="form-group">
 				<br>
 				<font color="Olive" face="Comic Sans MS,arial">
@@ -51,5 +56,4 @@
 		</div>
 	</div>
 </div>
-{{>footer}}
-
+{{>../public/footer}}
