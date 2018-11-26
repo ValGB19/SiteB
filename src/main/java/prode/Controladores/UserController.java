@@ -209,7 +209,7 @@ public class UserController {
 			us = User.getUser(id);
 		if (us != null) {
 			if (req.session().attribute(Consts.ATTRIBUTEUSERNAME) != null) 
-					if(req.session().attribute(Consts.ATTRIBUTEUSERNAME).equals(us.getString("name")))
+					if(req.session().attribute(Consts.ATTRIBUTEUSERNAME).equals(us.getString("nick")))
 						if (us.getString("clave").equals(seguro))
 							return pSavePass.handle(req, res);
 						else
@@ -231,9 +231,14 @@ public class UserController {
 		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/resetEmail.mustache");
 	};
 	
+	public static TemplateViewRoute gResetEmailAdmin = (req, res) -> {
+		return new ModelAndView(GeneralController.map, "./src/main/resources/admin/resetEmail.mustache");
+	};
+	
 	public static TemplateViewRoute pSaveEmail = (req, res) -> {
 		GeneralController.map.remove("messageResetEmail");
 		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
+		boolean ad = req.session().attribute(Consts.ATTRIBUTEADMIN);
 		if(User.findFirst("email = ?", req.queryParams("mail")) == null) {
 			int i =	User.update("email = ?", "nick = ?", req.queryParams("mail"), username);
 			if (i == 1)
@@ -242,7 +247,10 @@ public class UserController {
 				GeneralController.map.put("messageResetEmail", "* Error al guardar");
 		}else
 			GeneralController.map.put("messageResetEmail", "* Ese Email ya esta registrado");
-		res.redirect("/resetEmail");
+		if(ad)
+			res.redirect("/admin/resetEmail");
+		else
+			res.redirect("/loged/resetEmail");
 		return null;
 	};
 	
@@ -251,9 +259,13 @@ public class UserController {
 	 */
 	public static TemplateViewRoute pResetEmail = (req, res) -> {
 		GeneralController.map.remove("messageResetEmail");
+		boolean ad = req.session().attribute(Consts.ATTRIBUTEADMIN);
 		if (!GeneralController.checkQueryParams(req, "mail", "pass")) {
 			GeneralController.map.put("messageResetEmail", "* Faltan datos");
-			res.redirect("/resetEmail");
+			if(ad)
+				res.redirect("/admin/resetEmail");
+			else
+				res.redirect("/loged/resetEmail");
 			return null;
 		}
 		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
@@ -262,7 +274,10 @@ public class UserController {
 			return pSaveEmail.handle(req, res);
 		}else
 			GeneralController.map.put("messageResetEmail", "* Contraseña incorrecta");
-		res.redirect("/resetEmail");
+		if(ad)
+			res.redirect("/admin/resetEmail");
+		else
+			res.redirect("/loged/resetEmail");
 		return null;
 	};
 

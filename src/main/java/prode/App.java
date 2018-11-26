@@ -40,6 +40,10 @@ public class App {
 		get("/loged/resetEmail", UserController.gResetEmail, new MustacheTemplateEngine());
 		
 		post("/loged/resetEmail", UserController.pResetEmail, new MustacheTemplateEngine());
+		
+		get("/admin/resetEmail", UserController.gResetEmailAdmin, new MustacheTemplateEngine());
+		
+		post("/admin/resetEmail", UserController.pResetEmail, new MustacheTemplateEngine());
 
 		get("/loged/perfil", UserController.viewPerfil, new MustacheTemplateEngine());
 
