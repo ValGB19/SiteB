@@ -11,8 +11,7 @@ import prode.Utils.Consts;
 public class UserController {
 
 	/**
-	 * Register the user or place the reasons why they did not register it in the
-	 * hashmap
+	 * Register the user or place the reasons why they did not register it in the hashmap
 	 * 
 	 * @param req The request
 	 * @param res The response
@@ -21,6 +20,7 @@ public class UserController {
 	public static HashMap<String, Object> register(Request req) {
 		GeneralController.map.remove("errorLogin");
 		GeneralController.map.remove("errorRegister");
+		GeneralController.map.remove("messageReset");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("nick", req.queryParams("rUsername"));
 		data.put("pwd", req.queryParams("pswRegister"));
@@ -156,6 +156,7 @@ public class UserController {
 	 * Check if the user wants sign in o sign out
 	 */
 	public static TemplateViewRoute pHome = (req, res) -> {
+		GeneralController.map.remove("messageReset");
 		if (GeneralController.checkQueryParams(req, "action")) {
 			if (req.queryParams("action").equals("signin"))
 				return login.handle(req, res);
@@ -181,8 +182,11 @@ public class UserController {
 				i = User.update("password = ?", "email = ?", req.queryParams("psw"), id);
 			else
 				i = User.update("password = ?", "nick = ?", req.queryParams("psw"), id);
-			if (i == 1)
-				GeneralController.map.put("messageReset", "Tu contraseña fue cambiada exitosamente ! ");
+			if (i == 1) {
+				GeneralController.map.put("resetPass", true);
+				res.redirect("/exit");
+				return null;
+			}
 			else
 				GeneralController.map.put("messageReset", "* Error al guardar");
 		} else {
@@ -207,19 +211,81 @@ public class UserController {
 			res.redirect("/reset");
 			return null;
 		}
-
 		if (id.contains("@"))
 			us = User.getUserforMail(id);
 		else
 			us = User.getUser(id);
 		if (us != null) {
-			if (us.getString("clave").equals(seguro))
-				return pSavePass.handle(req, res);
+			if (req.session().attribute(Consts.ATTRIBUTEUSERNAME) != null) 
+					if(req.session().attribute(Consts.ATTRIBUTEUSERNAME).equals(us.getString("nick")))
+						if (us.getString("clave").equals(seguro))
+							return pSavePass.handle(req, res);
+						else
+							GeneralController.map.put("messageReset", "* Palabra de seguridad incorrecta");
+					else
+						GeneralController.map.put("messageReset", "* Ingresa correctamente tu nombre de usuario");
 			else
-				GeneralController.map.put("messageReset", "* Palabra de seguridad incorrecta");
+				if (us.getString("clave").equals(seguro))
+					return pSavePass.handle(req, res);
+				else
+					GeneralController.map.put("messageReset", "* Palabra de seguridad incorrecta");					
 		} else
 			GeneralController.map.put("messageReset", "* Usuario inexistente");
 		res.redirect("/reset");
+		return null;
+	};
+	
+	public static TemplateViewRoute gResetEmail = (req, res) -> {
+		return new ModelAndView(GeneralController.map, "./src/main/resources/loged/resetEmail.mustache");
+	};
+	
+	public static TemplateViewRoute gResetEmailAdmin = (req, res) -> {
+		return new ModelAndView(GeneralController.map, "./src/main/resources/admin/resetEmail.mustache");
+	};
+	
+	public static TemplateViewRoute pSaveEmail = (req, res) -> {
+		GeneralController.map.remove("messageResetEmail");
+		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
+		boolean ad = req.session().attribute(Consts.ATTRIBUTEADMIN);
+		if(User.findFirst("email = ?", req.queryParams("mail")) == null) {
+			int i =	User.update("email = ?", "nick = ?", req.queryParams("mail"), username);
+			if (i == 1)
+				GeneralController.map.put("messageResetEmail", "El Email fue cambiado exitosamente ! ");
+			else
+				GeneralController.map.put("messageResetEmail", "* Error al guardar");
+		}else
+			GeneralController.map.put("messageResetEmail", "* Ese Email ya esta registrado");
+		if(ad)
+			res.redirect("/admin/resetEmail");
+		else
+			res.redirect("/loged/resetEmail");
+		return null;
+	};
+	
+	/**
+	 * 
+	 */
+	public static TemplateViewRoute pResetEmail = (req, res) -> {
+		GeneralController.map.remove("messageResetEmail");
+		boolean ad = req.session().attribute(Consts.ATTRIBUTEADMIN);
+		if (!GeneralController.checkQueryParams(req, "mail", "pass")) {
+			GeneralController.map.put("messageResetEmail", "* Faltan datos");
+			if(ad)
+				res.redirect("/admin/resetEmail");
+			else
+				res.redirect("/loged/resetEmail");
+			return null;
+		}
+		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
+		User us = User.getUser(username);
+		if (us.getString("password").equals(req.queryParams("pass"))) {
+			return pSaveEmail.handle(req, res);
+		}else
+			GeneralController.map.put("messageResetEmail", "* Contraseña incorrecta");
+		if(ad)
+			res.redirect("/admin/resetEmail");
+		else
+			res.redirect("/loged/resetEmail");
 		return null;
 	};
 
@@ -229,7 +295,11 @@ public class UserController {
 	public static Filter closeSession = (req, res) -> {
 		for (String attribute : req.session().attributes())
 			req.session().removeAttribute(attribute);
-		GeneralController.map.clear();
+		if (GeneralController.map.get("resetPass") != null) {
+			GeneralController.map.clear();
+			GeneralController.map.put("messageResetPass", "---> Tu contraseña fue cambiada exitosamente! <--- Inicie Sesion!");
+		}else
+			GeneralController.map.clear();
 		res.redirect("/");
 	};
 }
