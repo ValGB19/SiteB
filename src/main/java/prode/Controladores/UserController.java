@@ -241,6 +241,9 @@ public class UserController {
 		return new ModelAndView(GeneralController.map, "./src/main/resources/admin/resetEmail.mustache");
 	};
 	
+	/**
+	 * Check that when you want to change the email, the one entered is not registered
+	 */
 	public static TemplateViewRoute pSaveEmail = (req, res) -> {
 		GeneralController.map.remove("messageResetEmail");
 		String username = req.session().attribute(Consts.ATTRIBUTEUSERNAME);
@@ -261,7 +264,7 @@ public class UserController {
 	};
 	
 	/**
-	 * 
+	 * Check that when you want to change the email the password entered is valid
 	 */
 	public static TemplateViewRoute pResetEmail = (req, res) -> {
 		GeneralController.map.remove("messageResetEmail");
